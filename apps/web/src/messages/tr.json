@@ -1,0 +1,236 @@
+{
+  "brand": "Nourri",
+  "nav": {
+    "home": "Ana sayfa",
+    "shop": "Mağaza",
+    "cart": "Sepet",
+    "account": "Hesabım",
+    "login": "Giriş",
+    "register": "Kayıt ol",
+    "logout": "Çıkış"
+  },
+  "hero": {
+    "badge": "Seçici patiler için",
+    "title": "Ruhlu dostlara bilinçli tarifler",
+    "subtitle": "Akdeniz'den esinlenen dengeli mamalar, özenli aksesuarlar ve neşeli ritüeller.",
+    "ctaPrimary": "Öne çıkanlar",
+    "ctaSecondary": "Kasesini oluştur"
+  },
+  "home": {
+    "meta": {
+      "title": "Lupeti — Bilinçli beslenme ritüelleri",
+      "description": "Premium mamalar, aksesuarlar ve iyi yaşam ritüelleri; tasarımı önemseyen patili aileler için."
+    },
+    "hero": {
+      "badge": "Neşeli dostlar için günlük ritüeller",
+      "title": "Sadık dostlara şef dokunuşlu menüler",
+      "subtitle": "Etik içerikler seçiyor, mamaları yavaş pişiriyor ve hem hayvanları hem de insanları sakinleştiren objelerle eşleştiriyoruz.",
+      "ctaPrimary": "Şimdi alışveriş yap",
+      "ctaSecondary": "Ürünleri keşfet"
+    },
+    "trust": {
+      "quality": {
+        "title": "Üst seviye içerikler",
+        "copy": "Denetlenmiş Türk çiftliklerinden tek kökenli proteinler ve ata tohumlu tahıllar."
+      },
+      "delivery": {
+        "title": "Hızlı teslimat",
+        "copy": "Büyük şehirlerde ertesi gün teslim; izole, çevreci paketleme."
+      },
+      "payment": {
+        "title": "Güvenli ödeme",
+        "copy": "3D Secure ve PayTR tamamen şifrelenmiş altyapı üzerinde çalışır."
+      },
+      "vet": {
+        "title": "Veteriner onaylı",
+        "copy": "Uzun vadeli bağırsak sağlığı konusunda uzman vet hekimlerle hazırlanır."
+      }
+    },
+    "featured": {
+      "eyebrow": "Şefin önerileri",
+      "title": "Öne çıkan ürünler",
+      "subtitle": "Sezona özel tarifler ve sınırlı sayıda aksesuarlar tadım ekibi tarafından seçildi."
+    },
+    "categories": {
+      "eyebrow": "Ritüele göre alışveriş",
+      "title": "Küratörlü kategoriler",
+      "cta": "Koleksiyonu gör",
+      "dog": {
+        "badge": "Köpekler",
+        "title": "Enerjik köpekler için",
+        "copy": "Protein dolu mamalar ve güvenli çiğneme aksesuarları."
+      },
+      "cat": {
+        "badge": "Kediler",
+        "title": "Sofistike kediler için",
+        "copy": "Hafif menüler ve sakinleştirici dinlenme objeleri."
+      },
+      "accessories": {
+        "badge": "Objeler",
+        "title": "Aksesuar & araçlar",
+        "copy": "Seramik kaseler, yavaş besleyiciler ve seyahat kitleri."
+      }
+    },
+    "story": {
+      "eyebrow": "Manifestomuz",
+      "title": "İstanbul'da doğdu, Akdeniz kilerinden besleniyor",
+      "body": "Lupeti; beslenme ritüellerinin evde uyum yarattığına inanan yemek stilistleri ve davranış uzmanları tarafından kuruldu. Mağazamızdaki her sos, kumaş ve arayüz hayvanlarla ve aileleriyle test edilir.",
+      "highlight": "Her siparişin bir kısmı bağımsız barınaklara ve Marmara bölgesindeki ağaçlandırma projelerine aktarılır."
+    },
+    "final": {
+      "eyebrow": "Yemek saatini yükseltelim mi?",
+      "title": "Evcil dostunuz için bilinçli bir kiler tasarlayın",
+      "subtitle": "Tek akışkan ödeme deneyiminde mamaları, atıştırmalıkları ve aksesuarları birleştirin.",
+      "cta": "Mağazayı ziyaret et"
+    }
+  },
+  "shop": {
+    "title": "Evcil dost marketi",
+    "headline": "Minik dostunuzun ihtiyacı olan her şey",
+    "search": "Ürün ara",
+    "searchPlaceholder": "Mama, tasma, oyuncak...",
+    "category": "Kategori",
+    "allCategories": "Tüm kategoriler",
+    "ctaFilter": "Filtrele",
+    "reset": "Sıfırla",
+    "minPrice": "Min (TRY)",
+    "maxPrice": "Maks (TRY)",
+    "pagination": "Sayfa {page} / {totalPages}",
+    "prev": "Önceki",
+    "next": "Sonraki",
+    "empty": "Filtrelerinize uyan ürün bulunamadı."
+  },
+  "product": {
+    "details": "Detaylar",
+    "addToCart": "Sepete ekle",
+    "outOfStock": "Stokta yok",
+    "specs": {
+      "title": "Ürün bilgisi",
+      "currency": "Para birimi",
+      "stock": "Stok",
+      "slug": "Referans"
+    }
+  },
+  "cart": {
+    "title": "Sepet",
+    "headline": "Ödül zamanı mı?",
+    "loginPrompt": "Sepetinizi görmek için giriş yapın.",
+    "loading": "Sepet yükleniyor...",
+    "empty": "Sepetiniz boş.",
+    "refresh": "Yenile",
+    "summary": "Sipariş özeti",
+    "shipping": "Kargo",
+    "shippingNote": "Kasada hesaplanır",
+    "subtotal": "Ara toplam",
+    "total": "Toplam",
+    "checkout": "Ödeme",
+    "note": "3D Secure ödeme ve düşük emisyonlu kuryeler.",
+    "updateErrorTitle": "Ürün güncellenemedi",
+    "removeErrorTitle": "Ürün kaldırılamadı",
+    "genericError": "Lütfen tekrar deneyin.",
+    "removeItem": "Kaldır",
+    "stockLabel": "Stokta {count} adet",
+    "quantity": "Adet"
+  },
+  "checkout": {
+    "title": "Ödeme",
+    "headline": "Siparişinizi onaylayın",
+    "summary": "Sepet özeti",
+    "loading": "Sepet yükleniyor...",
+    "empty": "Ödenecek ürün yok.",
+    "loginPrompt": "Ödeme için giriş yapın.",
+    "orderCreated": "Sipariş oluşturuldu",
+    "failed": "Ödeme başlatılamadı",
+    "genericError": "Lütfen kısa süre sonra tekrar deneyin.",
+    "address": {
+      "line1": "Adres",
+      "city": "Şehir",
+      "postalCode": "Posta kodu",
+      "country": "Ülke"
+    },
+    "submit": "PayTR ile öde"
+  },
+  "auth": {
+    "email": "E-posta",
+    "password": "Şifre",
+    "login": "Giriş",
+    "register": "Kayıt",
+    "loginTitle": "Tekrar hoş geldiniz",
+    "registerTitle": "Lupeti hesabı oluştur",
+    "loginCta": "Giriş",
+    "registerCta": "Kayıt ol",
+    "switchToRegister": "Lupeti'de yeni misiniz?",
+    "switchToLogin": "Zaten hesabınız var mı?"
+  },
+  "account": {
+    "title": "Siparişlerim",
+    "subtitle": "Siparişlerinizi yönetin, durumu takip edin.",
+    "greeting": "Merhaba {email}",
+    "refresh": "Siparişleri yenile",
+    "loading": "Hesabınız yükleniyor...",
+    "loadingOrders": "Siparişler yükleniyor...",
+    "loginPrompt": "Siparişleri görmek için giriş yapın.",
+    "login": "Giriş",
+    "register": "Kayıt",
+    "orderId": "Sipariş no",
+    "status": "Durum",
+    "placedOn": "Tarih",
+    "total": "Toplam",
+    "itemsCount": "{count} ürün",
+    "empty": "Henüz sipariş vermediniz."
+  },
+  "notifications": {
+    "addedToCart": "Sepete eklendi",
+    "orderPlaced": "Sipariş oluşturuldu",
+    "authRequired": "Giriş gerekli",
+    "authHint": "Ürün eklemek için lütfen giriş yapın.",
+    "failedCart": "Sepete eklenemedi",
+    "genericError": "Lütfen tekrar deneyin.",
+    "addToCartButton": "Sepete ekle"
+  },
+  "footer": {
+    "tagline": "Bilinci besleyen tarifler ve objeler.",
+    "columns": {
+      "shop": {
+        "title": "Mağaza",
+        "links": {
+          "croquettes": "Mamaları",
+          "accessories": "Aksesuarlar",
+          "snacks": "Atıştırmalıklar"
+        }
+      },
+      "support": {
+        "title": "Destek",
+        "links": {
+          "contact": "İletişim",
+          "shipping": "Kargo & iade",
+          "privacy": "Gizlilik"
+        }
+      }
+    },
+    "contact": {
+      "title": "İletişim",
+      "email": "support@lupeti.com",
+      "phone": "+90 212 000 0000",
+      "rights": "Tüm hakları saklıdır."
+    }
+  },
+  "admin": {
+    "loginPrompt": "Yönetim paneli için giriş yapın.",
+    "loginCta": "Giriş",
+    "denied": "Erişim engellendi — admin rolü gerekli.",
+    "title": "Yönetici özeti",
+    "headline": "Operasyon kokpiti",
+    "description": "Örnek paneldir. Hazır olduğunda KPI ve moderasyon araçlarına bağlayın.",
+    "metrics": {
+      "revenue": "Gelir",
+      "orders": "Sipariş",
+      "customers": "Müşteri"
+    },
+    "vsLastWeek": "geçen haftaya göre"
+  },
+  "status": {
+    "success": "Ödeme başarılı",
+    "fail": "Ödeme başarısız"
+  }
+}

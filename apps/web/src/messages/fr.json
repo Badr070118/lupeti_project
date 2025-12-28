@@ -1,0 +1,236 @@
+{
+  "brand": "Nourri",
+  "nav": {
+    "home": "Accueil",
+    "shop": "Boutique",
+    "cart": "Panier",
+    "account": "Mon compte",
+    "login": "Connexion",
+    "register": "Inscription",
+    "logout": "Déconnexion"
+  },
+  "hero": {
+    "badge": "Conçu pour les palais exigeants",
+    "title": "Cuisine sensible pour animaux sensibles",
+    "subtitle": "Croquettes équilibrées, accessoires réfléchis et rituels joyeux issus de la Méditerranée.",
+    "ctaPrimary": "Produits en vedette",
+    "ctaSecondary": "Composer mon bol"
+  },
+  "home": {
+    "meta": {
+      "title": "Lupeti — Rituels alimentaires conscients",
+      "description": "Croquettes premium, accessoires et rituels bien-être pour des animaux apaisés et stylés."
+    },
+    "hero": {
+      "badge": "Rituels quotidiens pour compagnons heureux",
+      "title": "Des repas inspirés par les chefs pour vos fidèles amis",
+      "subtitle": "Ingrédients éthiques, cuisson lente et objets tactiles qui apaisent les animaux autant que leurs humains.",
+      "ctaPrimary": "Voir la boutique",
+      "ctaSecondary": "Découvrir les produits"
+    },
+    "trust": {
+      "quality": {
+        "title": "Ingrédients nobles",
+        "copy": "Protéines d'origine unique et céréales anciennes sourcées auprès de fermes turques auditées."
+      },
+      "delivery": {
+        "title": "Livraison express",
+        "copy": "Expédition en 24h dans les grandes villes avec emballage isolant éco-conçu."
+      },
+      "payment": {
+        "title": "Paiement sécurisé",
+        "copy": "3D Secure et PayTR opérés sur une infrastructure entièrement chiffrée."
+      },
+      "vet": {
+        "title": "Validé par des vétérinaires",
+        "copy": "Formules co-designées avec des spécialistes du microbiome et du bien-être durable."
+      }
+    },
+    "featured": {
+      "eyebrow": "Sélection du chef",
+      "title": "Produits mis en avant",
+      "subtitle": "Recettes saisonnières et accessoires en série limitée suggérés par notre panel dégustation."
+    },
+    "categories": {
+      "eyebrow": "Acheter par rituel",
+      "title": "Catégories sélectionnées",
+      "cta": "Voir la collection",
+      "dog": {
+        "badge": "Chiens",
+        "title": "Pour chiens expressifs",
+        "copy": "Croquettes protéinées et accessoires sûrs à mâchouiller."
+      },
+      "cat": {
+        "badge": "Chats",
+        "title": "Pour félins raffinés",
+        "copy": "Repas aériens et objets apaisants pour leurs siestes."
+      },
+      "accessories": {
+        "badge": "Objets",
+        "title": "Accessoires et outils",
+        "copy": "Bols en céramique, slow feeders et kits nomades."
+      }
+    },
+    "story": {
+      "eyebrow": "Notre manifeste",
+      "title": "Née à Istanbul, nourrie par le garde-manger méditerranéen",
+      "body": "Lupeti est né de stylistes culinaires et de comportementalistes convaincus que les rituels alimentaires créent l'harmonie domestique. Chaque bouillon, tissu ou interface de notre boutique est testé avec des animaux et leurs familles.",
+      "highlight": "Une partie de chaque commande finance des refuges indépendants et la reforestation autour de la région de Marmara."
+    },
+    "final": {
+      "eyebrow": "Prêt à sublimer l'heure du repas ?",
+      "title": "Composez un garde-manger conscient dès aujourd'hui",
+      "subtitle": "Mixez croquettes, snacks et accessoires via une expérience de paiement fluide.",
+      "cta": "Accéder à la boutique"
+    }
+  },
+  "shop": {
+    "title": "Garde-manger animalier",
+    "headline": "Tout pour votre compagnon",
+    "search": "Rechercher des produits",
+    "searchPlaceholder": "Croquettes, harnais, jouets...",
+    "category": "Catégorie",
+    "allCategories": "Toutes les catégories",
+    "ctaFilter": "Filtrer",
+    "reset": "Réinitialiser",
+    "minPrice": "Min (TRY)",
+    "maxPrice": "Max (TRY)",
+    "pagination": "Page {page} / {totalPages}",
+    "prev": "Préc.",
+    "next": "Suiv.",
+    "empty": "Aucun produit ne correspond à vos filtres."
+  },
+  "product": {
+    "details": "Détails",
+    "addToCart": "Ajouter au panier",
+    "outOfStock": "Rupture de stock",
+    "specs": {
+      "title": "Spécifications",
+      "currency": "Devise",
+      "stock": "En stock",
+      "slug": "Référence"
+    }
+  },
+  "cart": {
+    "title": "Panier",
+    "headline": "Prêt pour la pause friandise ?",
+    "loginPrompt": "Connectez-vous pour retrouver votre panier.",
+    "loading": "Chargement du panier...",
+    "empty": "Votre panier est vide.",
+    "refresh": "Actualiser",
+    "summary": "Récapitulatif",
+    "shipping": "Livraison",
+    "shippingNote": "Calculée au paiement",
+    "subtotal": "Sous-total",
+    "total": "Total",
+    "checkout": "Commander",
+    "note": "Paiement 3D Secure et livraison bas carbone.",
+    "updateErrorTitle": "Impossible de modifier l'article",
+    "removeErrorTitle": "Impossible de retirer l'article",
+    "genericError": "Merci de réessayer.",
+    "removeItem": "Supprimer",
+    "stockLabel": "{count} unités disponibles",
+    "quantity": "Qté"
+  },
+  "checkout": {
+    "title": "Paiement",
+    "headline": "Confirmez votre commande",
+    "summary": "Récapitulatif panier",
+    "loading": "Chargement du panier...",
+    "empty": "Aucun article à régler.",
+    "loginPrompt": "Connectez-vous pour payer.",
+    "orderCreated": "Commande créée",
+    "failed": "Paiement indisponible",
+    "genericError": "Réessayez dans un instant.",
+    "address": {
+      "line1": "Adresse",
+      "city": "Ville",
+      "postalCode": "Code postal",
+      "country": "Pays"
+    },
+    "submit": "Payer avec PayTR"
+  },
+  "auth": {
+    "email": "E-mail",
+    "password": "Mot de passe",
+    "login": "Connexion",
+    "register": "Inscription",
+    "loginTitle": "Ravis de vous revoir",
+    "registerTitle": "Créer un compte Lupeti",
+    "loginCta": "Connexion",
+    "registerCta": "Inscription",
+    "switchToRegister": "Nouveau chez Lupeti ?",
+    "switchToLogin": "Vous avez déjà un compte ?"
+  },
+  "account": {
+    "title": "Mes commandes",
+    "subtitle": "Gérez vos commandes et suivez vos livraisons.",
+    "greeting": "Bonjour {email}",
+    "refresh": "Actualiser les commandes",
+    "loading": "Chargement du compte...",
+    "loadingOrders": "Chargement des commandes...",
+    "loginPrompt": "Connectez-vous pour consulter vos commandes.",
+    "login": "Connexion",
+    "register": "Inscription",
+    "orderId": "N° de commande",
+    "status": "Statut",
+    "placedOn": "Passée le",
+    "total": "Total",
+    "itemsCount": "{count} produits",
+    "empty": "Vous n'avez pas encore passé de commande."
+  },
+  "notifications": {
+    "addedToCart": "Ajouté au panier",
+    "orderPlaced": "Commande enregistrée",
+    "authRequired": "Connexion requise",
+    "authHint": "Connectez-vous pour ajouter des produits.",
+    "failedCart": "Impossible d'ajouter au panier",
+    "genericError": "Veuillez réessayer.",
+    "addToCartButton": "Ajouter au panier"
+  },
+  "footer": {
+    "tagline": "Nutrition consciente et objets pour pets heureux.",
+    "columns": {
+      "shop": {
+        "title": "Boutique",
+        "links": {
+          "croquettes": "Croquettes",
+          "accessories": "Accessoires",
+          "snacks": "Snacks"
+        }
+      },
+      "support": {
+        "title": "Support",
+        "links": {
+          "contact": "Contact",
+          "shipping": "Livraison & retours",
+          "privacy": "Confidentialité"
+        }
+      }
+    },
+    "contact": {
+      "title": "Contact",
+      "email": "support@lupeti.com",
+      "phone": "+33 1 42 42 42 42",
+      "rights": "Tous droits réservés."
+    }
+  },
+  "admin": {
+    "loginPrompt": "Connectez-vous pour accéder au tableau de bord.",
+    "loginCta": "Connexion",
+    "denied": "Accès refusé — rôle admin requis.",
+    "title": "Vue d'ensemble",
+    "headline": "Cockpit opérationnel",
+    "description": "Panneau fictif. Reliez-le aux KPI et outils de modération dès qu'ils sont prêts.",
+    "metrics": {
+      "revenue": "Revenus",
+      "orders": "Commandes",
+      "customers": "Clients"
+    },
+    "vsLastWeek": "vs semaine dernière"
+  },
+  "status": {
+    "success": "Paiement réussi",
+    "fail": "Paiement refusé"
+  }
+}

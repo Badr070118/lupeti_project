@@ -1,0 +1,236 @@
+{
+  "brand": "Nourri",
+  "nav": {
+    "home": "Home",
+    "shop": "Shop",
+    "cart": "Cart",
+    "account": "My Account",
+    "login": "Login",
+    "register": "Register",
+    "logout": "Logout"
+  },
+  "hero": {
+    "badge": "Made for picky pets",
+    "title": "Craft food for soulful pets",
+    "subtitle": "Balanced croquettes, mindful accessories, and joyful rituals sourced across the Mediterranean.",
+    "ctaPrimary": "Explore featured",
+    "ctaSecondary": "Build your bowl"
+  },
+  "home": {
+    "meta": {
+      "title": "Lupeti — Conscious pet food rituals",
+      "description": "Premium croquettes, accessories, and wellness rituals for design-minded pet parents."
+    },
+    "hero": {
+      "badge": "Daily rituals for joyful pets",
+      "title": "Chef-inspired meals for devoted companions",
+      "subtitle": "We curate ethical ingredients, slow-bake croquettes, and pair them with tactile objects that calm both pets and humans.",
+      "ctaPrimary": "Shop now",
+      "ctaSecondary": "Discover products"
+    },
+    "trust": {
+      "quality": {
+        "title": "Premium ingredients",
+        "copy": "Single-origin proteins and ancient grains sourced from vetted Turkish farms."
+      },
+      "delivery": {
+        "title": "Express delivery",
+        "copy": "Next-day delivery in major cities with insulated eco packaging."
+      },
+      "payment": {
+        "title": "Secure checkout",
+        "copy": "3D Secure + PayTR handled entirely on encrypted infrastructure."
+      },
+      "vet": {
+        "title": "Vet approved",
+        "copy": "Formulated with veterinarians who specialise in long-term gut health."
+      }
+    },
+    "featured": {
+      "eyebrow": "Chef's picks",
+      "title": "Featured creations",
+      "subtitle": "Seasonal recipes and limited accessories curated by our tasting panel."
+    },
+    "categories": {
+      "eyebrow": "Shop by ritual",
+      "title": "Curated categories",
+      "cta": "View collection",
+      "dog": {
+        "badge": "Dog cuisine",
+        "title": "For spirited dogs",
+        "copy": "Protein-rich croquettes and chew-safe accessories."
+      },
+      "cat": {
+        "badge": "Cat deli",
+        "title": "For sophisticated cats",
+        "copy": "Feather-light meals and calming lounge objects."
+      },
+      "accessories": {
+        "badge": "Objects",
+        "title": "Accessories & tools",
+        "copy": "Ceramic bowls, slow feeders, and travel-friendly kits."
+      }
+    },
+    "story": {
+      "eyebrow": "Our manifesto",
+      "title": "Born in Istanbul, rooted in the Mediterranean pantry",
+      "body": "Lupeti was founded by food stylists and animal behaviourists who believe nutrition rituals create harmony at home. Every drop of broth, every stitch of fabric, and every interface in our store is tested with pets and their humans.",
+      "highlight": "Part of every order funds independent shelters and reforestation around the Marmara region."
+    },
+    "final": {
+      "eyebrow": "Ready to elevate dinner?",
+      "title": "Design a mindful pantry for your pet today",
+      "subtitle": "Mix croquettes, snacks, and accessories with one fluid checkout experience.",
+      "cta": "Browse the shop"
+    }
+  },
+  "shop": {
+    "title": "Pet pantry",
+    "headline": "Everything your companion needs",
+    "search": "Search products",
+    "searchPlaceholder": "Croquettes, harnesses, toys...",
+    "category": "Category",
+    "allCategories": "All categories",
+    "ctaFilter": "Filter",
+    "reset": "Reset",
+    "minPrice": "Min (TRY)",
+    "maxPrice": "Max (TRY)",
+    "pagination": "Page {page} / {totalPages}",
+    "prev": "Prev",
+    "next": "Next",
+    "empty": "No products match your filters."
+  },
+  "product": {
+    "details": "Details",
+    "addToCart": "Add to cart",
+    "outOfStock": "Out of stock",
+    "specs": {
+      "title": "Product specs",
+      "currency": "Currency",
+      "stock": "In stock",
+      "slug": "Reference"
+    }
+  },
+  "cart": {
+    "title": "Cart",
+    "headline": "Ready for treat time?",
+    "loginPrompt": "Sign in to see your personalised basket.",
+    "loading": "Loading cart...",
+    "empty": "Your cart is empty.",
+    "refresh": "Refresh",
+    "summary": "Order summary",
+    "shipping": "Shipping",
+    "shippingNote": "Calculated at checkout",
+    "subtotal": "Subtotal",
+    "total": "Total",
+    "checkout": "Checkout",
+    "note": "We use secure 3D payments and low-emission couriers.",
+    "updateErrorTitle": "Unable to update item",
+    "removeErrorTitle": "Unable to remove item",
+    "genericError": "Please try again.",
+    "removeItem": "Remove item",
+    "stockLabel": "{count} units in stock",
+    "quantity": "Qty"
+  },
+  "checkout": {
+    "title": "Checkout",
+    "headline": "Confirm your order",
+    "summary": "Cart summary",
+    "loading": "Loading cart...",
+    "empty": "No items ready for checkout.",
+    "loginPrompt": "Sign in to checkout.",
+    "orderCreated": "Order created",
+    "failed": "Unable to start payment",
+    "genericError": "Please try again shortly.",
+    "address": {
+      "line1": "Address line",
+      "city": "City",
+      "postalCode": "Postal code",
+      "country": "Country"
+    },
+    "submit": "Pay with PayTR"
+  },
+  "auth": {
+    "email": "Email",
+    "password": "Password",
+    "login": "Login",
+    "register": "Register",
+    "loginTitle": "Welcome back",
+    "registerTitle": "Create a Lupeti account",
+    "loginCta": "Login",
+    "registerCta": "Register",
+    "switchToRegister": "New to Lupeti?",
+    "switchToLogin": "Already have an account?"
+  },
+  "account": {
+    "title": "My orders",
+    "subtitle": "Manage orders and track delivery rituals.",
+    "greeting": "Hello {email}",
+    "refresh": "Refresh orders",
+    "loading": "Loading your account...",
+    "loadingOrders": "Loading orders...",
+    "loginPrompt": "Sign in to view your orders.",
+    "login": "Login",
+    "register": "Register",
+    "orderId": "Order ID",
+    "status": "Status",
+    "placedOn": "Placed on",
+    "total": "Total",
+    "itemsCount": "{count} products",
+    "empty": "You have not placed any orders yet."
+  },
+  "notifications": {
+    "addedToCart": "Added to cart",
+    "orderPlaced": "Order placed",
+    "authRequired": "Login required",
+    "authHint": "Please sign in to add products to your basket.",
+    "failedCart": "Unable to add to cart",
+    "genericError": "Please try again.",
+    "addToCartButton": "Add to cart"
+  },
+  "footer": {
+    "tagline": "Conscious nutrition and objects for joyful pets.",
+    "columns": {
+      "shop": {
+        "title": "Shop",
+        "links": {
+          "croquettes": "Croquettes",
+          "accessories": "Accessories",
+          "snacks": "Snacks"
+        }
+      },
+      "support": {
+        "title": "Support",
+        "links": {
+          "contact": "Contact",
+          "shipping": "Shipping & returns",
+          "privacy": "Privacy"
+        }
+      }
+    },
+    "contact": {
+      "title": "Contact",
+      "email": "support@lupeti.com",
+      "phone": "+90 212 000 0000",
+      "rights": "All rights reserved."
+    }
+  },
+  "admin": {
+    "loginPrompt": "You must login to access the admin console.",
+    "loginCta": "Login",
+    "denied": "Access denied — admin role required.",
+    "title": "Admin overview",
+    "headline": "Operational cockpit",
+    "description": "Placeholder insights. Wire it to KPIs and moderation tools when available.",
+    "metrics": {
+      "revenue": "Revenue",
+      "orders": "Orders",
+      "customers": "Customers"
+    },
+    "vsLastWeek": "vs last week"
+  },
+  "status": {
+    "success": "Payment successful",
+    "fail": "Payment failed"
+  }
+}
