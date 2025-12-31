@@ -1,107 +1,98 @@
-import type {
-  Cart,
-  Order,
-  Product,
-  ProductCategory,
-  ProductFilters,
-} from '@/types';
+import type { ProductFilters } from '@/types';
 import { formatCurrency } from './utils';
 
-const SAMPLE_IMAGES: Record<ProductCategory, string> = {
-  croquettes:
-    'https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&w=900&q=60',
-  accessories:
-    'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=900&q=60',
-  toys: 'https://images.unsplash.com/photo-1507146426996-ef05306b995a?auto=format&fit=crop&w=900&q=60',
-  wellness:
-    'https://images.unsplash.com/photo-1444212477490-ca407925329e?auto=format&fit=crop&w=900&q=60',
-  bundles:
-    'https://images.unsplash.com/photo-1541364983171-a8ba01e95cfc?auto=format&fit=crop&w=900&q=60',
+const SAMPLE_IMAGES: Record<string, string> = {
+  anatolian: '/products/anatolian-lamb-herbs-kibble.jpg',
+  turkey: '/products/tender-turkey-puppy-bites.jpg',
+  sardine: '/products/coastal-sardine-crunch.jpg',
+  charcoal: '/products/charcoal-digestive-biscuits.jpg',
+  salmon: '/products/highland-salmon-casserole.jpg',
+  quail: '/products/slow-roasted-quail-feast.jpg',
 };
 
-export const mockProducts: Product[] = [
+export const mockProducts = [
   {
-    id: 'prod_croquettes_1',
-    name: 'Salmon & Pumpkin Croquettes',
+    id: 'prod_anatolian_lamb',
+    name: 'Anatolian Lamb & Herbs Kibble',
     description:
-      'Grain-free croquettes with functional superfoods for sensitive tummies.',
-    price: 38.9,
-    currency: 'EUR',
-    imageUrl: SAMPLE_IMAGES.croquettes,
-    category: 'croquettes',
+      'Slow-dried lamb croquettes infused with thyme and sage for active dogs.',
+    price: 189.0,
+    currency: 'TRY',
+    imageUrl: SAMPLE_IMAGES.anatolian,
+    category: 'dog',
     rating: 4.8,
     stock: 120,
-    tags: ['grain-free', 'omega3'],
-    highlights: ['Veterinary approved', 'Prebiotics blend', 'French origin'],
+    tags: ['single-protein', 'herbs'],
+    highlights: ['Veterinary approved', 'Mediterranean herbs', 'Slow baked'],
     isFeatured: true,
   },
   {
-    id: 'prod_croquettes_2',
-    name: 'Puppy Starter Croquettes',
+    id: 'prod_tender_turkey',
+    name: 'Tender Turkey Puppy Bites',
     description:
-      'High-protein chicken croquettes tailored for healthy puppy development.',
-    price: 32.5,
-    currency: 'EUR',
-    imageUrl: SAMPLE_IMAGES.croquettes,
-    category: 'croquettes',
+      'Mini bites with DHA and probiotics crafted for growing puppies.',
+    price: 159.0,
+    currency: 'TRY',
+    imageUrl: SAMPLE_IMAGES.turkey,
+    category: 'dog',
     rating: 4.7,
-    stock: 80,
-    tags: ['puppy', 'high-protein'],
+    stock: 95,
+    tags: ['puppy', 'probiotic'],
   },
   {
-    id: 'prod_accessory_1',
-    name: 'Urban Explorer Harness',
+    id: 'prod_sardine_crunch',
+    name: 'Coastal Sardine Crunch',
     description:
-      'Ergonomic harness with reflective seams and breathable mesh interior.',
-    price: 44.0,
-    currency: 'EUR',
-    imageUrl: SAMPLE_IMAGES.accessories,
-    category: 'accessories',
-    rating: 4.9,
-    stock: 56,
-    tags: ['adjustable', 'reflective'],
-    isFeatured: true,
-  },
-  {
-    id: 'prod_accessory_2',
-    name: 'Nordic Ceramic Bowl',
-    description:
-      'Non-slip ceramic bowl with matte finish. Dishwasher safe, 1L capacity.',
-    price: 24.0,
-    currency: 'EUR',
-    imageUrl: SAMPLE_IMAGES.accessories,
-    category: 'accessories',
+      'Airy sardine snacks rich in omega oils for shiny coats.',
+    price: 99.0,
+    currency: 'TRY',
+    imageUrl: SAMPLE_IMAGES.sardine,
+    category: 'cat',
     rating: 4.6,
-    stock: 200,
-  },
-  {
-    id: 'prod_toy_1',
-    name: 'Mind Puzzle Feeder',
-    description:
-      'Interactive feeder that encourages slow eating and cognitive engagement.',
-    price: 29.5,
-    currency: 'EUR',
-    imageUrl: SAMPLE_IMAGES.toys,
-    category: 'toys',
-    rating: 4.5,
     stock: 140,
+    tags: ['omega', 'snack'],
     isFeatured: true,
   },
   {
-    id: 'prod_wellness_1',
-    name: 'Biotin & Omega Supplement',
+    id: 'prod_charcoal_digestive',
+    name: 'Charcoal Digestive Biscuits',
     description:
-      'Daily supplement supporting healthy skin, shiny coat, and strong claws.',
-    price: 19.9,
-    currency: 'EUR',
-    imageUrl: SAMPLE_IMAGES.wellness,
-    category: 'wellness',
-    rating: 4.4,
-    stock: 210,
+      'Crunchy biscuits with charcoal and fennel to soothe tummies.',
+    price: 69.0,
+    currency: 'TRY',
+    imageUrl: SAMPLE_IMAGES.charcoal,
+    category: 'dog',
+    rating: 4.5,
+    stock: 80,
+  },
+  {
+    id: 'prod_salmon_casserole',
+    name: 'Highland Salmon Casserole',
+    description:
+      'Human-grade salmon and pumpkin casserole for picky cats.',
+    price: 215.0,
+    currency: 'TRY',
+    imageUrl: SAMPLE_IMAGES.salmon,
+    category: 'cat',
+    rating: 4.9,
+    stock: 60,
+    isFeatured: true,
+  },
+  {
+    id: 'prod_quail_feast',
+    name: 'Slow Roasted Quail Feast',
+    description:
+      'Premium quail kibble with cranberries tailored for indoor cats.',
+    price: 205.0,
+    currency: 'TRY',
+    imageUrl: SAMPLE_IMAGES.quail,
+    category: 'cat',
+    rating: 4.7,
+    stock: 90,
   },
 ];
 
-export const mockCart: Cart = {
+export const mockCart = {
   id: 'cart_demo',
   items: [
     {
@@ -122,7 +113,7 @@ export const mockCart: Cart = {
   updatedAt: new Date().toISOString(),
 };
 
-export const mockOrders: Order[] = [
+export const mockOrders = [
   {
     id: 'order_1051',
     status: 'fulfilled',
@@ -142,7 +133,7 @@ export const mockOrders: Order[] = [
 ];
 
 export function filterMockProducts(filters: ProductFilters) {
-  const { category, query, minPrice, maxPrice, page = 1, limit = 12 } = filters;
+  const { category, search, minPrice, maxPrice, page = 1, limit = 12 } = filters;
 
   let data = [...mockProducts];
 
@@ -150,9 +141,9 @@ export function filterMockProducts(filters: ProductFilters) {
     data = data.filter((product) => product.category === category);
   }
 
-  if (query) {
+  if (search) {
     data = data.filter((product) =>
-      product.name.toLowerCase().includes(query.toLowerCase()),
+      product.name.toLowerCase().includes(search.toLowerCase()),
     );
   }
 
@@ -181,7 +172,13 @@ export function filterMockProducts(filters: ProductFilters) {
   };
 }
 
-export function cartSummary(cart: Cart) {
+type SummaryCart = {
+  items: unknown[];
+  total: number;
+  currency: string;
+};
+
+export function cartSummary(cart: SummaryCart) {
   return {
     title: `Subtotal (${cart.items.length} items)`,
     total: formatCurrency(cart.total, cart.currency),

@@ -3,7 +3,7 @@ import { buildMetadata, pickLocalizedCopy } from '@/lib/metadata';
 import { CheckoutContent } from './checkout-content';
 
 type CheckoutPageProps = {
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 };
 
 const metaCopy = {
@@ -26,11 +26,12 @@ const metaCopy = {
 export async function generateMetadata({
   params,
 }: CheckoutPageProps): Promise<Metadata> {
-  const copy = pickLocalizedCopy(params.locale, metaCopy);
+  const { locale } = await params;
+  const copy = pickLocalizedCopy(locale, metaCopy);
   return buildMetadata({
     title: copy.title,
     description: copy.description,
-    path: `/${params.locale}/checkout`,
+    path: `/${locale}/checkout`,
   });
 }
 

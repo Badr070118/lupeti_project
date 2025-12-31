@@ -4,17 +4,24 @@ import type { Product } from '@/types';
 import { formatPrice } from '@/lib/utils';
 import { AddToCartButton } from '@/features/cart/components/add-to-cart-button';
 import { Link } from '@/i18n/routing';
+import { resolveProductImage } from '@/lib/product-images';
 
 interface ProductCardProps {
   product: Product;
 }
 
 export function ProductCard({ product }: ProductCardProps) {
-  const cover = product.images?.[0]?.url;
+  const cover = resolveProductImage(
+    product.slug,
+    product.images?.[0]?.url,
+  );
 
   return (
     <div className="flex flex-col overflow-hidden rounded-3xl border border-slate-100 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
-      <Link href={`/product/${product.slug}`} className="relative block h-56">
+      <Link
+        href={{ pathname: '/product/[slug]', params: { slug: product.slug } }}
+        className="relative block h-56"
+      >
         {cover ? (
           <Image
             src={cover}
@@ -41,7 +48,7 @@ export function ProductCard({ product }: ProductCardProps) {
           </span>
         </div>
         <Link
-          href={`/product/${product.slug}`}
+          href={{ pathname: '/product/[slug]', params: { slug: product.slug } }}
           className="text-lg font-semibold text-slate-900"
         >
           {product.title}

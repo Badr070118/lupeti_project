@@ -5,20 +5,20 @@ const FOOTER_COLUMNS = [
   {
     key: 'shop',
     links: [
-      { key: 'croquettes', href: '/shop?category=dog' },
-      { key: 'accessories', href: '/shop?category=accessories' },
-      { key: 'snacks', href: '/shop?category=cat' },
+      { key: 'croquettes', type: 'route', query: { category: 'dog' } },
+      { key: 'accessories', type: 'route', query: { category: 'accessories' } },
+      { key: 'snacks', type: 'route', query: { category: 'cat' } },
     ],
   },
   {
     key: 'support',
     links: [
-      { key: 'contact', href: '/contact' },
-      { key: 'shipping', href: '/policies/shipping' },
-      { key: 'privacy', href: '/policies/privacy' },
+      { key: 'contact', type: 'external', href: '/contact' },
+      { key: 'shipping', type: 'external', href: '/policies/shipping' },
+      { key: 'privacy', type: 'external', href: '/policies/privacy' },
     ],
   },
-];
+] as const;
 
 export function Footer() {
   const t = useTranslations('footer');
@@ -41,12 +41,21 @@ export function Footer() {
             <ul className="mt-3 space-y-2 text-sm">
               {column.links.map((link) => (
                 <li key={link.key}>
-                  <Link
-                    href={link.href}
-                    className="text-slate-600 transition hover:text-rose-500"
-                  >
-                    {t(`columns.${column.key}.links.${link.key}`)}
-                  </Link>
+                  {link.type === 'route' ? (
+                    <Link
+                      href={{ pathname: '/shop', query: link.query }}
+                      className="text-slate-600 transition hover:text-rose-500"
+                    >
+                      {t(`columns.${column.key}.links.${link.key}`)}
+                    </Link>
+                  ) : (
+                    <a
+                      href={link.href}
+                      className="text-slate-600 transition hover:text-rose-500"
+                    >
+                      {t(`columns.${column.key}.links.${link.key}`)}
+                    </a>
+                  )}
                 </li>
               ))}
             </ul>

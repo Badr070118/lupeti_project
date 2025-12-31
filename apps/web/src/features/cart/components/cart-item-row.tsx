@@ -9,6 +9,7 @@ import { formatPrice } from '@/lib/utils';
 import { cartService } from '@/services/cart.service';
 import { useToast } from '@/hooks/use-toast';
 import { Link } from '@/i18n/routing';
+import { resolveProductImage } from '@/lib/product-images';
 
 interface CartItemRowProps {
   item: CartItem;
@@ -55,12 +56,12 @@ export function CartItemRow({ item, accessToken, onCartUpdated }: CartItemRowPro
     }
   };
 
-  const cover = item.product.imageUrl;
+  const cover = resolveProductImage(item.product.slug, item.product.imageUrl);
 
   return (
     <div className="flex gap-4 rounded-2xl border border-slate-100 bg-white p-4">
       <Link
-        href={`/product/${item.product.slug}`}
+        href={{ pathname: '/product/[slug]', params: { slug: item.product.slug } }}
         className="relative h-24 w-24 overflow-hidden rounded-2xl"
       >
         {cover ? (
@@ -79,7 +80,7 @@ export function CartItemRow({ item, accessToken, onCartUpdated }: CartItemRowPro
       </Link>
       <div className="flex flex-1 flex-col gap-2 text-sm">
         <Link
-          href={`/product/${item.product.slug}`}
+          href={{ pathname: '/product/[slug]', params: { slug: item.product.slug } }}
           className="font-semibold text-slate-900 hover:text-rose-500"
         >
           {item.product.title}

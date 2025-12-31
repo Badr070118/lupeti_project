@@ -3,7 +3,7 @@ import { getTranslations } from 'next-intl/server';
 import { buildMetadata, pickLocalizedCopy } from '@/lib/metadata';
 
 type SuccessPageProps = {
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 };
 
 const metaCopy = {
@@ -24,11 +24,12 @@ const metaCopy = {
 export async function generateMetadata({
   params,
 }: SuccessPageProps): Promise<Metadata> {
-  const copy = pickLocalizedCopy(params.locale, metaCopy);
+  const { locale } = await params;
+  const copy = pickLocalizedCopy(locale, metaCopy);
   return buildMetadata({
     title: copy.title,
     description: copy.description,
-    path: `/${params.locale}/success`,
+    path: `/${locale}/success`,
   });
 }
 

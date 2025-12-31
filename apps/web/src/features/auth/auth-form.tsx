@@ -42,6 +42,8 @@ export function AuthForm({ mode }: AuthFormProps) {
         {mode === 'login' ? t('loginTitle') : t('registerTitle')}
       </h1>
       <Input
+        id="email"
+        name="email"
         type="email"
         placeholder={t('email')}
         required
@@ -49,6 +51,8 @@ export function AuthForm({ mode }: AuthFormProps) {
         onChange={(event) => setForm({ ...form, email: event.target.value })}
       />
       <Input
+        id="password"
+        name="password"
         type="password"
         placeholder={t('password')}
         required

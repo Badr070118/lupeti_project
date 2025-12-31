@@ -14,6 +14,7 @@ export const routing = defineRouting({
     '/login': '/login',
     '/register': '/register',
     '/account': '/account',
+    '/admin': '/admin',
     '/success': '/success',
     '/fail': '/fail',
   },

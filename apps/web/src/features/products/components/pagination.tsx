@@ -20,7 +20,9 @@ export function Pagination({ page, totalPages }: PaginationProps) {
   const setPage = (nextPage: number) => {
     const params = new URLSearchParams(searchParams.toString());
     params.set('page', String(nextPage));
-    router.push(`${pathname}?${params.toString()}`);
+    const query = Object.fromEntries(params.entries());
+    type RouterTarget = Parameters<typeof router.push>[0];
+    router.push({ pathname, query } as RouterTarget);
   };
 
   return (

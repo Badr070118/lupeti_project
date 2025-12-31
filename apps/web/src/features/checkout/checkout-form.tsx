@@ -82,6 +82,8 @@ export function CheckoutForm({
     >
       <div className="grid gap-4 md:grid-cols-2">
         <Input
+          id="shipping-line1"
+          name="line1"
           placeholder={t('address.line1')}
           required
           value={address.line1}
@@ -91,6 +93,8 @@ export function CheckoutForm({
           className="md:col-span-2"
         />
         <Input
+          id="shipping-city"
+          name="city"
           placeholder={t('address.city')}
           required
           value={address.city}
@@ -99,6 +103,8 @@ export function CheckoutForm({
           }
         />
         <Input
+          id="shipping-postal"
+          name="postalCode"
           placeholder={t('address.postalCode')}
           required
           value={address.postalCode}
@@ -107,6 +113,8 @@ export function CheckoutForm({
           }
         />
         <Input
+          id="shipping-country"
+          name="country"
           placeholder={t('address.country')}
           required
           value={address.country}

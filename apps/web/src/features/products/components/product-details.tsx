@@ -4,6 +4,7 @@ import type { Product } from '@/types';
 import { formatPrice } from '@/lib/utils';
 import { AddToCartButton } from '@/features/cart/components/add-to-cart-button';
 import { Badge } from '@/components/ui/badge';
+import { resolveProductImage } from '@/lib/product-images';
 
 interface ProductDetailsProps {
   product: Product;
@@ -12,6 +13,7 @@ interface ProductDetailsProps {
 export function ProductDetails({ product }: ProductDetailsProps) {
   const t = useTranslations('product');
   const cover = product.images?.[0];
+  const coverSrc = resolveProductImage(product.slug, cover?.url);
 
   return (
     <div className="grid gap-8 lg:grid-cols-2">
@@ -19,7 +21,7 @@ export function ProductDetails({ product }: ProductDetailsProps) {
         <div className="relative h-96 overflow-hidden rounded-3xl border border-slate-100">
           {cover ? (
             <Image
-              src={cover.url}
+              src={coverSrc}
               alt={cover.altText ?? product.title}
               fill
               sizes="(max-width: 768px) 100vw, 50vw"
@@ -33,20 +35,23 @@ export function ProductDetails({ product }: ProductDetailsProps) {
         </div>
         {product.images?.length > 1 ? (
           <div className="grid grid-cols-4 gap-3">
-            {product.images.slice(1).map((image) => (
-              <div
-                key={image.id}
-                className="relative h-20 overflow-hidden rounded-2xl border border-slate-100"
-              >
-                <Image
-                  src={image.url}
-                  alt={image.altText ?? product.title}
-                  fill
-                  sizes="80px"
-                  className="object-cover"
-                />
-              </div>
-            ))}
+            {product.images.slice(1).map((image) => {
+              const src = resolveProductImage(product.slug, image.url);
+              return (
+                <div
+                  key={image.id}
+                  className="relative h-20 overflow-hidden rounded-2xl border border-slate-100"
+                >
+                  <Image
+                    src={src}
+                    alt={image.altText ?? product.title}
+                    fill
+                    sizes="80px"
+                    className="object-cover"
+                  />
+                </div>
+              );
+            })}
           </div>
         ) : null}
       </div>

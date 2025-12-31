@@ -3,7 +3,7 @@ import { buildMetadata, pickLocalizedCopy } from '@/lib/metadata';
 import { CartContent } from './cart-content';
 
 type CartPageProps = {
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 };
 
 const metaCopy = {
@@ -25,11 +25,12 @@ const metaCopy = {
 export async function generateMetadata({
   params,
 }: CartPageProps): Promise<Metadata> {
-  const copy = pickLocalizedCopy(params.locale, metaCopy);
+  const { locale } = await params;
+  const copy = pickLocalizedCopy(locale, metaCopy);
   return buildMetadata({
     title: copy.title,
     description: copy.description,
-    path: `/${params.locale}/cart`,
+    path: `/${locale}/cart`,
   });
 }
 

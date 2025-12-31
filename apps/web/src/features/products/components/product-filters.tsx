@@ -63,12 +63,14 @@ export function ProductFilters({ categories }: ProductFiltersProps) {
       params.delete('maxPrice');
     }
     params.delete('page');
-    router.push(`${pathname}?${params.toString()}`);
+    const query = Object.fromEntries(params.entries());
+    type RouterTarget = Parameters<typeof router.push>[0];
+    router.push({ pathname, query } as RouterTarget);
   };
 
   const clearFilters = () => {
     setFilters({ category: 'all', search: '' });
-    router.push(pathname);
+    router.push(pathname as Parameters<typeof router.push>[0]);
   };
 
   return (

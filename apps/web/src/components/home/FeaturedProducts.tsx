@@ -43,9 +43,7 @@ export function FeaturedProducts() {
         </section>
       }
     >
-      {/* @ts-expect-error Async Server Component */}
       <FeaturedProductsContent />
     </Suspense>
   );
 }
-

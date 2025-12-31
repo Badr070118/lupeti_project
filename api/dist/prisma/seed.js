@@ -38,6 +38,11 @@ const argon2 = __importStar(require("argon2"));
 const client_1 = require("@prisma/client");
 (0, dotenv_1.config)();
 const prisma = new client_1.PrismaClient();
+const localImage = (slug, title, sortOrder = 0) => ({
+    url: `/products/${slug}.jpg`,
+    altText: `${title} packaging`,
+    sortOrder,
+});
 async function seedAdminUser() {
     const adminEmail = 'admin@local.test';
     const adminPassword = 'Admin123!ChangeMe';
@@ -105,16 +110,7 @@ async function seedCatalog() {
             stock: 120,
             categorySlug: 'dog',
             images: [
-                {
-                    url: 'https://placehold.co/600x400?text=Lamb+Kibble+1',
-                    altText: 'Anatolian lamb kibble front pack',
-                    sortOrder: 0,
-                },
-                {
-                    url: 'https://placehold.co/600x400?text=Lamb+Kibble+2',
-                    altText: 'Scooped lamb kibble',
-                    sortOrder: 1,
-                },
+                localImage('anatolian-lamb-herbs-kibble', 'Anatolian Lamb & Herbs Kibble'),
             ],
         },
         {
@@ -125,10 +121,7 @@ async function seedCatalog() {
             stock: 95,
             categorySlug: 'dog',
             images: [
-                {
-                    url: 'https://placehold.co/600x400?text=Turkey+Bites',
-                    altText: 'Turkey puppy bites pouch',
-                },
+                localImage('tender-turkey-puppy-bites', 'Tender Turkey Puppy Bites'),
             ],
         },
         {
@@ -139,10 +132,7 @@ async function seedCatalog() {
             stock: 140,
             categorySlug: 'cat',
             images: [
-                {
-                    url: 'https://placehold.co/600x400?text=Sardine+Crunch',
-                    altText: 'Sardine snack bites',
-                },
+                localImage('coastal-sardine-crunch', 'Coastal Sardine Crunch'),
             ],
         },
         {
@@ -153,10 +143,7 @@ async function seedCatalog() {
             stock: 80,
             categorySlug: 'dog',
             images: [
-                {
-                    url: 'https://placehold.co/600x400?text=Digestive+Biscuits',
-                    altText: 'Digestive biscuits bag',
-                },
+                localImage('charcoal-digestive-biscuits', 'Charcoal Digestive Biscuits'),
             ],
         },
         {
@@ -167,10 +154,7 @@ async function seedCatalog() {
             stock: 60,
             categorySlug: 'cat',
             images: [
-                {
-                    url: 'https://placehold.co/600x400?text=Salmon+Casserole',
-                    altText: 'Salmon casserole tray',
-                },
+                localImage('highland-salmon-casserole', 'Highland Salmon Casserole'),
             ],
         },
         {
@@ -181,10 +165,7 @@ async function seedCatalog() {
             stock: 150,
             categorySlug: 'dog',
             images: [
-                {
-                    url: 'https://placehold.co/600x400?text=Coat+Treats',
-                    altText: 'Coat treat bites',
-                },
+                localImage('olive-oil-shine-coat-treats', 'Olive Oil Shine Coat Treats'),
             ],
         },
         {
@@ -195,10 +176,7 @@ async function seedCatalog() {
             stock: 110,
             categorySlug: 'cat',
             images: [
-                {
-                    url: 'https://placehold.co/600x400?text=Kefir+Nibbles',
-                    altText: 'Kefir cat snacks',
-                },
+                localImage('fermented-kefir-nibbles', 'Fermented Kefir Nibbles'),
             ],
         },
         {
@@ -209,10 +187,7 @@ async function seedCatalog() {
             stock: 70,
             categorySlug: 'cat',
             images: [
-                {
-                    url: 'https://placehold.co/600x400?text=Herring+Supper',
-                    altText: 'Herring pâté tin',
-                },
+                localImage('midnight-herring-supper', 'Midnight Herring Supper'),
             ],
         },
         {
@@ -223,10 +198,7 @@ async function seedCatalog() {
             stock: 105,
             categorySlug: 'dog',
             images: [
-                {
-                    url: 'https://placehold.co/600x400?text=Goat+Milk+Bites',
-                    altText: 'Goat milk bite pieces',
-                },
+                localImage('sun-baked-goat-milk-bites', 'Sun-baked Goat Milk Bites'),
             ],
         },
         {
@@ -237,10 +209,7 @@ async function seedCatalog() {
             stock: 90,
             categorySlug: 'cat',
             images: [
-                {
-                    url: 'https://placehold.co/600x400?text=Quail+Feast',
-                    altText: 'Quail feast kibble',
-                },
+                localImage('slow-roasted-quail-feast', 'Slow Roasted Quail Feast'),
             ],
         },
     ];

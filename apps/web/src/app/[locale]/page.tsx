@@ -6,6 +6,9 @@ import { HeroStatic } from '@/components/hero/HeroStatic';
 import { TrustBadges } from '@/components/home/TrustBadges';
 import { FeaturedProducts } from '@/components/home/FeaturedProducts';
 import { CategoryHighlights } from '@/components/home/CategoryHighlights';
+import { buildMetadata } from '@/lib/metadata';
+import heroStaticOg from '@/../public/hero-static.jpg';
+import storyImage from '@/../public/products/slow-roasted-quail-feast.jpg';
 
 const HeroScene = dynamic(
   () => import('@/components/hero/Hero3D').then((mod) => mod.Hero3D),
@@ -21,24 +24,12 @@ export async function generateMetadata({ params }: PageProps) {
   const t = await getTranslations({ locale, namespace: 'home.meta' });
   const title = t('title');
   const description = t('description');
-  return {
+  return buildMetadata({
     title,
     description,
-    openGraph: {
-      title,
-      description,
-      url: `https://lupeti.local/${locale}`,
-      siteName: 'Lupeti',
-      images: [
-        {
-          url: '/hero-static.svg',
-          width: 1200,
-          height: 630,
-          alt: title,
-        },
-      ],
-    },
-  };
+    path: `/${locale}`,
+    images: [heroStaticOg.src],
+  });
 }
 
 export default async function HomePage({ params }: PageProps) {
@@ -65,12 +56,12 @@ export default async function HomePage({ params }: PageProps) {
             >
               {t('hero.ctaPrimary')}
             </Link>
-            <Link
+            <a
               href="#featured"
               className="inline-flex items-center justify-center rounded-full border border-slate-300 px-6 py-3 text-sm font-semibold text-slate-900 transition hover:border-slate-900"
             >
               {t('hero.ctaSecondary')}
-            </Link>
+            </a>
           </div>
         </div>
         <HeroScene />
@@ -95,7 +86,7 @@ export default async function HomePage({ params }: PageProps) {
         </div>
         <div className="relative h-80 w-full overflow-hidden rounded-3xl bg-slate-100">
           <Image
-            src="https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&w=900&q=80"
+            src={storyImage}
             alt={t('story.title')}
             fill
             sizes="(max-width:768px) 100vw, 50vw"

@@ -1,5 +1,9 @@
-import type { NextFetchRequestConfig } from 'next/dist/server/web/spec-extension/request';
 import { env } from './config';
+
+type NextFetchRequestConfig = {
+  revalidate?: number | false;
+  tags?: string[];
+};
 
 export class ApiError extends Error {
   status: number;

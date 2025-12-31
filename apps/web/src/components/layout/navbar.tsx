@@ -13,7 +13,7 @@ import { Link, usePathname } from '@/i18n/routing';
 const NAV_ITEMS = [
   { href: '/', key: 'home' },
   { href: '/shop', key: 'shop' },
-];
+] as const;
 
 export function Navbar() {
   const pathname = usePathname();

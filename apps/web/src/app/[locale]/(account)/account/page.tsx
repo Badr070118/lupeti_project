@@ -3,7 +3,7 @@ import { AccountDashboard } from '@/features/account/account-dashboard';
 import { buildMetadata, pickLocalizedCopy } from '@/lib/metadata';
 
 type AccountPageProps = {
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 };
 
 const metaCopy = {
@@ -25,11 +25,12 @@ const metaCopy = {
 export async function generateMetadata({
   params,
 }: AccountPageProps): Promise<Metadata> {
-  const copy = pickLocalizedCopy(params.locale, metaCopy);
+  const { locale } = await params;
+  const copy = pickLocalizedCopy(locale, metaCopy);
   return buildMetadata({
     title: copy.title,
     description: copy.description,
-    path: `/${params.locale}/account`,
+    path: `/${locale}/account`,
   });
 }
 

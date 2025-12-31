@@ -1,13 +1,14 @@
 import type { NextConfig } from 'next';
 import createNextIntlPlugin from 'next-intl/plugin';
 
-const apiUrl = (process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3000').replace(
-  /\/$/,
-  '',
-);
+const apiUrl = (process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3000').replace(/\/$/, '');
+const scriptSrc = ["'self'", "'unsafe-inline'"];
+if (process.env.NODE_ENV !== 'production') {
+  scriptSrc.push("'unsafe-eval'");
+}
 const ContentSecurityPolicy = [
   "default-src 'self'",
-  "script-src 'self' 'unsafe-inline'",
+  `script-src ${scriptSrc.join(' ')}`,
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' https: data:",
   "font-src 'self' https: data:",
@@ -20,16 +21,7 @@ const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts');
 
 const nextConfig: NextConfig = {
   images: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'images.unsplash.com',
-      },
-      {
-        protocol: 'https',
-        hostname: 'placehold.co',
-      },
-    ],
+    remotePatterns: [],
   },
   async headers() {
     return [
