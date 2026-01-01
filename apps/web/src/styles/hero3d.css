@@ -1,0 +1,72 @@
+.hero3d {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #020202 0%, #051433 40%, #20033d 100%);
+  border-radius: 36px;
+  padding: clamp(1.5rem, 4vw, 3rem);
+  color: #fff;
+  box-shadow: 0 40px 90px rgba(0, 0, 0, 0.35);
+}
+
+.hero3d__glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 60% 40%, rgba(255, 255, 255, 0.2), transparent 55%);
+  pointer-events: none;
+}
+
+.hero3d__content {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: clamp(1.5rem, 3vw, 3rem);
+  align-items: center;
+}
+
+.hero3d__text {
+  max-width: 540px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.hero3d__label {
+  font-size: 0.85rem;
+  letter-spacing: 0.5rem;
+  text-transform: uppercase;
+  color: #fda4af;
+}
+
+.hero3d__title {
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 600;
+  margin: 0;
+}
+
+.hero3d__paragraph {
+  color: rgba(255, 255, 255, 0.75);
+  line-height: 1.6;
+}
+
+.hero3d__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  padding: 0.85rem 2.25rem;
+  background: linear-gradient(120deg, #f472b6, #8b5cf6);
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 25px 45px rgba(139, 92, 246, 0.35);
+}
+
+.hero3d__cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 30px 55px rgba(244, 114, 182, 0.4);
+}
+
+.hero3d__canvas-wrapper {
+  height: clamp(280px, 40vw, 420px);
+}

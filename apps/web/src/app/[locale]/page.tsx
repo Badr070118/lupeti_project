@@ -2,13 +2,13 @@ import Image from 'next/image';
 import { getTranslations } from 'next-intl/server';
 import { Link } from '@/i18n/routing';
 import { TrustBadges } from '@/components/home/TrustBadges';
-import { FeaturedProducts } from '@/components/home/FeaturedProducts';
 import { buildMetadata } from '@/lib/metadata';
 import heroStaticOg from '@/../public/hero-static.jpg';
 import storyImage from '@/../public/images/hero/golden.jpg';
 import { BrandMarquee } from '@/components/home/BrandMarquee';
 import { CategoryCards } from '@/components/home/CategoryCards';
 import { HeroShowcaseClient } from '@/components/hero/HeroShowcase.client';
+import { Hero3D } from '@/components/home/Hero3D';
 
 type PageProps = {
   params: Promise<{ locale: string }>;
@@ -36,7 +36,7 @@ export default async function HomePage({ params }: PageProps) {
       <HeroShowcaseClient />
       <BrandMarquee />
       <TrustBadges />
-      <FeaturedProducts />
+      <Hero3D locale={locale} />
       <CategoryCards />
       <section className="grid gap-10 lg:grid-cols-2 lg:items-center">
         <div className="order-last lg:order-first space-y-4">
