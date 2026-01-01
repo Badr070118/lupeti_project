@@ -15,7 +15,6 @@ import { motion, useReducedMotion } from 'framer-motion';
 import { ShoppingBag, Sparkles } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useMediaQuery } from '@/hooks/use-media-query';
-import { useTranslations } from 'next-intl';
 
 type AnimatedGroupProps = {
   basePosition?: [number, number, number];
@@ -217,20 +216,8 @@ const LowPolyCat = ({ basePosition = [3, 0, 0] }: AnimatedGroupProps) => {
 
 const HeroContent = ({ reduceMotion }: { reduceMotion: boolean }) => {
   const router = useRouter();
-  const t = useTranslations('home.hero3d');
 
   const sharedAnimate = reduceMotion ? undefined : { opacity: 1, y: 0 };
-  const title = t.rich('title', {
-    highlight: (chunks) => (
-      <span className="bg-gradient-to-r from-pink-400 via-purple-400 to-blue-400 bg-clip-text text-transparent">
-        {chunks}
-      </span>
-    ),
-    lineBreak: () => <br />,
-  });
-  const subtitle = t.rich('subtitle', {
-    strong: (chunks) => <span className="font-bold text-pink-300">{chunks}</span>,
-  });
 
   return (
     <div className="pointer-events-none absolute inset-0 z-10 flex flex-col items-center justify-center px-6 text-center">
@@ -242,7 +229,7 @@ const HeroContent = ({ reduceMotion }: { reduceMotion: boolean }) => {
       >
         <span className="inline-flex items-center gap-2">
           <Sparkles className="h-4 w-4" />
-          {t('badge')}
+          Promotions Janvier
         </span>
       </motion.div>
 
@@ -262,7 +249,11 @@ const HeroContent = ({ reduceMotion }: { reduceMotion: boolean }) => {
           textShadow: '0 0 40px rgba(167, 139, 250, 0.5)',
         }}
       >
-        {title}
+        Bienvenue chez
+        <br />
+        <span className="bg-gradient-to-r from-pink-400 via-purple-400 to-blue-400 bg-clip-text text-transparent">
+          Lupeti
+        </span>
       </motion.h1>
 
       <motion.p
@@ -271,7 +262,10 @@ const HeroContent = ({ reduceMotion }: { reduceMotion: boolean }) => {
         transition={{ delay: 0.9, duration: 0.6 }}
         className="mb-10 max-w-2xl text-lg text-slate-200 md:text-2xl"
       >
-        {subtitle}
+        Jusqu&apos;à{' '}
+        <span className="font-bold text-pink-300">-20%</span> sur vos produits préférés.
+        <br />
+        <span className="text-cyan-300">Pour le bonheur de vos compagnons 🐕🐈</span>
       </motion.p>
 
       <motion.div
@@ -290,7 +284,7 @@ const HeroContent = ({ reduceMotion }: { reduceMotion: boolean }) => {
           <div className="absolute inset-0 animate-gradient-shift bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500" />
           <span className="relative z-10 flex items-center gap-2 text-lg">
             <ShoppingBag className="h-5 w-5" />
-            {t('ctaPrimary')}
+            Découvrir
           </span>
         </motion.button>
         <motion.button
@@ -300,7 +294,7 @@ const HeroContent = ({ reduceMotion }: { reduceMotion: boolean }) => {
           onClick={() => router.push('/shop?category=dogs')}
           className="rounded-full border-2 border-white/30 bg-white/10 px-8 py-4 text-lg font-semibold text-white backdrop-blur-md transition hover:bg-white/20"
         >
-          {t('ctaDogs')}
+          Boutique Chiens
         </motion.button>
         <motion.button
           whileHover={reduceMotion ? undefined : { scale: 1.05 }}
@@ -309,7 +303,7 @@ const HeroContent = ({ reduceMotion }: { reduceMotion: boolean }) => {
           onClick={() => router.push('/shop?category=cats')}
           className="rounded-full border-2 border-purple-400/60 bg-white/10 px-8 py-4 text-lg font-semibold text-white backdrop-blur-md transition hover:bg-purple-500/20"
         >
-          {t('ctaCats')}
+          Boutique Chats
         </motion.button>
       </motion.div>
 
@@ -327,7 +321,7 @@ const HeroContent = ({ reduceMotion }: { reduceMotion: boolean }) => {
         transition={{ delay: 1.8 }}
         className="absolute bottom-10 flex flex-col items-center gap-2 text-sm text-cyan-200"
       >
-        <span>{t('scroll')}</span>
+        <span>Scroll pour découvrir</span>
         <div className="flex h-12 w-6 items-start justify-center rounded-full border-2 border-cyan-200/50 p-1">
           <motion.span
             animate={reduceMotion ? undefined : { y: [0, 12, 0] }}

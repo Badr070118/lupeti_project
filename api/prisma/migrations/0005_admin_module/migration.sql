@@ -28,9 +28,8 @@ ADD COLUMN     "promoEndAt" TIMESTAMP(3),
 ADD COLUMN     "promoStartAt" TIMESTAMP(3),
 ADD COLUMN     "sku" TEXT;
 
--- CreateTable
 CREATE TABLE "SupportTicket" (
-    "id" UUID NOT NULL,
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "userId" UUID,
     "email" TEXT NOT NULL,
     "subject" TEXT NOT NULL,
@@ -39,14 +38,14 @@ CREATE TABLE "SupportTicket" (
     "status" "TicketStatus" NOT NULL DEFAULT 'OPEN',
     "assignedToId" UUID,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP(3) NOT NULL,
+    "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "SupportTicket_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "SupportReply" (
-    "id" UUID NOT NULL,
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "ticketId" UUID NOT NULL,
     "authorId" UUID,
     "authorRole" "Role" NOT NULL,

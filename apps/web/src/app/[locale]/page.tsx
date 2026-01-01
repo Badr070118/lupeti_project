@@ -5,7 +5,7 @@ import { TrustBadges } from '@/components/home/TrustBadges';
 import { FeaturedProducts } from '@/components/home/FeaturedProducts';
 import { buildMetadata } from '@/lib/metadata';
 import heroStaticOg from '@/../public/hero-static.jpg';
-import storyImage from '@/../public/products/slow-roasted-quail-feast.jpg';
+import storyImage from '@/../public/images/hero/golden.jpg';
 import { BrandMarquee } from '@/components/home/BrandMarquee';
 import { CategoryCards } from '@/components/home/CategoryCards';
 import { HeroShowcaseClient } from '@/components/hero/HeroShowcase.client';
@@ -81,3 +81,4 @@ export default async function HomePage({ params }: PageProps) {
     </div>
   );
 }
+

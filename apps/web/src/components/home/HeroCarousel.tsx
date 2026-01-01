@@ -10,7 +10,6 @@ import 'swiper/css/pagination';
 import { AnimatedButton } from '@/components/shared/AnimatedButton';
 import { heroVariants } from '@/animations/variants';
 import { useRouter } from 'next/navigation';
-import { useTranslations } from 'next-intl';
 
 type Slide = {
   image: string;
@@ -21,22 +20,28 @@ type Slide = {
   category: 'dogs' | 'cats';
 };
 
-const SLIDE_CONFIG: Array<Omit<Slide, 'title' | 'subtitle' | 'cta'> & { key: 'promo' | 'wellness' | 'rituals' }> = [
+const slides: Slide[] = [
   {
-    key: 'promo',
     image: '/products/slow-roasted-quail-feast.jpg',
+    title: 'Promotions Janvier',
+    subtitle: 'Jusqu’à -20% sur vos recettes préférées',
+    cta: 'Découvrir',
     href: '/shop',
     category: 'dogs',
   },
   {
-    key: 'wellness',
     image: '/products/charcoal-digestive-biscuits.jpg',
+    title: 'Collection Bien-être',
+    subtitle: 'Des snacks fonctionnels pour chats sensibles',
+    cta: 'Voir les nouveautés',
     href: '/shop?category=cats',
     category: 'cats',
   },
   {
-    key: 'rituals',
     image: '/products/anatolian-lamb-herbs-kibble.jpg',
+    title: 'Rituels quotidiens',
+    subtitle: 'Nutrition consciente pour chiens actifs',
+    cta: 'Composer mon panier',
     href: '/shop?category=dogs',
     category: 'dogs',
   },
@@ -44,13 +49,6 @@ const SLIDE_CONFIG: Array<Omit<Slide, 'title' | 'subtitle' | 'cta'> & { key: 'pr
 
 export function HeroCarousel() {
   const router = useRouter();
-  const t = useTranslations('home.carousel');
-  const slides: Slide[] = SLIDE_CONFIG.map((slide) => ({
-    ...slide,
-    title: t(`slides.${slide.key}.title`),
-    subtitle: t(`slides.${slide.key}.subtitle`),
-    cta: t(`slides.${slide.key}.cta`),
-  }));
 
   return (
     <section className="relative rounded-3xl bg-slate-900">
@@ -82,7 +80,7 @@ export function HeroCarousel() {
                   className="inline-flex w-fit items-center gap-2 rounded-full bg-white/15 px-4 py-1 text-sm uppercase tracking-widest"
                   whileHover={{ scale: 1.05 }}
                 >
-                  {t(`categories.${slide.category}`)}
+                  {slide.category === 'dogs' ? 'Chiens' : 'Chats'}
                 </motion.span>
                 <h1 className="text-4xl font-bold leading-tight md:text-6xl">{slide.title}</h1>
                 <p className="max-w-xl text-lg text-white/80">{slide.subtitle}</p>
@@ -97,7 +95,7 @@ export function HeroCarousel() {
                       router.push(slide.category === 'dogs' ? '/shop?category=dogs' : '/shop?category=cats')
                     }
                   >
-                    {t(`categories.${slide.category}`)}
+                    {slide.category === 'dogs' ? 'Boutique Chiens' : 'Boutique Chats'}
                   </AnimatedButton>
                 </div>
               </div>

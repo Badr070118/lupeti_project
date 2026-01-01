@@ -10,7 +10,6 @@ async function FeaturedProductsContent() {
     { limit: 8, featured: true },
     { revalidate: 180 },
   );
-  const badges = ['express', 'returns'].map((key) => t(`badges.${key}`));
 
   return (
     <section id="featured" className="space-y-8 rounded-3xl bg-white/70 p-6 shadow-lg lg:p-10">
@@ -20,13 +19,10 @@ async function FeaturedProductsContent() {
           <h2 className="text-3xl font-semibold text-slate-900 md:text-4xl">{t('title')}</h2>
           <p className="text-sm text-slate-500">{t('subtitle')}</p>
         </div>
-        <div className="flex flex-wrap gap-3 text-sm text-slate-500">
-          {badges.map((badge, index) => (
-            <span key={badge} className="flex items-center gap-3">
-              {badge}
-              {index < badges.length - 1 && <span className="text-slate-300">•</span>}
-            </span>
-          ))}
+        <div className="flex gap-3 text-sm text-slate-500">
+          <span>Livraison 48h</span>
+          <span>•</span>
+          <span>Retours offerts</span>
         </div>
       </div>
       <FeaturedProductsShowcase products={featured.data} />

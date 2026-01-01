@@ -15,8 +15,7 @@
       "en": "Anglais",
       "fr": "Français",
       "tr": "Turc"
-    },
-    "admin": "Admin"
+    }
   },
   "hero": {
     "badge": "Conçu pour les palais exigeants",
@@ -58,17 +57,7 @@
     "featured": {
       "eyebrow": "Sélection du chef",
       "title": "Produits mis en avant",
-      "subtitle": "Recettes saisonnières et accessoires en série limitée suggérés par notre panel dégustation.",
-      "badges": {
-        "express": "Livraison 48h",
-        "returns": "Retours offerts"
-      },
-      "filters": {
-        "all": "Tous",
-        "dogs": "Chiens",
-        "cats": "Chats"
-      },
-      "viewAll": "Voir tout"
+      "subtitle": "Recettes saisonnières et accessoires en série limitée suggérés par notre panel dégustation."
     },
     "categories": {
       "eyebrow": "Acheter par rituel",
@@ -101,53 +90,6 @@
       "title": "Composez un garde-manger conscient dès aujourd'hui",
       "subtitle": "Mixez croquettes, snacks et accessoires via une expérience de paiement fluide.",
       "cta": "Accéder à la boutique"
-    },
-    "hero3d": {
-      "badge": "Promotions du mois",
-      "title": "Bienvenue chez<lineBreak></lineBreak><highlight>Lupeti</highlight>",
-      "subtitle": "Jusqu'? <strong>-20%</strong> sur vos produits pr?f?r?s. Pour le bonheur de vos compagnons.",
-      "ctaPrimary": "D?couvrir",
-      "ctaDogs": "Boutique Chiens",
-      "ctaCats": "Boutique Chats",
-      "scroll": "Faites d?filer pour d?couvrir"
-    },
-    "carousel": {
-      "slides": {
-        "promo": {
-          "title": "Promotions Janvier",
-          "subtitle": "Jusqu'? -20% sur vos recettes pr?f?r?es",
-          "cta": "D?couvrir"
-        },
-        "wellness": {
-          "title": "Collection Bien-?tre",
-          "subtitle": "Snacks fonctionnels pour chats sensibles",
-          "cta": "Voir les nouveaut?s"
-        },
-        "rituals": {
-          "title": "Rituels quotidiens",
-          "subtitle": "Nutrition consciente pour chiens actifs",
-          "cta": "Composer mon panier"
-        }
-      },
-      "categories": {
-        "dogs": "Boutique Chiens",
-        "cats": "Boutique Chats"
-      }
-    },
-    "marquee": {
-      "title": "Nos marques partenaires"
-    },
-    "categoryCards": {
-      "cards": {
-        "dog": {
-          "title": "Pour chiens",
-          "cta": "Voir la s?lection"
-        },
-        "cat": {
-          "title": "Pour chats",
-          "cta": "Voir la s?lection"
-        }
-      }
     }
   },
   "shop": {
