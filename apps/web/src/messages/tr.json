@@ -15,7 +15,8 @@
       "en": "İngilizce",
       "fr": "Fransızca",
       "tr": "Türkçe"
-    }
+    },
+    "admin": "Admin"
   },
   "hero": {
     "badge": "Seçici patiler için",
@@ -57,7 +58,17 @@
     "featured": {
       "eyebrow": "Şefin önerileri",
       "title": "Öne çıkan ürünler",
-      "subtitle": "Sezona özel tarifler ve sınırlı sayıda aksesuarlar tadım ekibi tarafından seçildi."
+      "subtitle": "Sezona özel tarifler ve sınırlı sayıda aksesuarlar tadım ekibi tarafından seçildi.",
+      "badges": {
+        "express": "48 saatte teslimat",
+        "returns": "?cretsiz iade"
+      },
+      "filters": {
+        "all": "T?m?",
+        "dogs": "K?pekler",
+        "cats": "Kediler"
+      },
+      "viewAll": "Hepsini g?r"
     },
     "categories": {
       "eyebrow": "Ritüele göre alışveriş",
@@ -90,6 +101,53 @@
       "title": "Evcil dostunuz için bilinçli bir kiler tasarlayın",
       "subtitle": "Tek akışkan ödeme deneyiminde mamaları, atıştırmalıkları ve aksesuarları birleştirin.",
       "cta": "Mağazayı ziyaret et"
+    },
+    "hero3d": {
+      "badge": "Ayl?k kampanyalar",
+      "title": "<highlight>Lupeti</highlight>'ye ho? geldiniz",
+      "subtitle": "Favori rit?ellerinizde <strong>%20'ye</strong> varan indirim. Dostlar?n?z? mutlu edin.",
+      "ctaPrimary": "Ke?fet",
+      "ctaDogs": "K?pek ma?azas?",
+      "ctaCats": "Kedi ma?azas?",
+      "scroll": "Ke?fetmek i?in kayd?r?n"
+    },
+    "carousel": {
+      "slides": {
+        "promo": {
+          "title": "Ocak kampanyalar?",
+          "subtitle": "En sevilen tariflerde %20'ye varan indirim",
+          "cta": "Ke?fet"
+        },
+        "wellness": {
+          "title": "Wellness koleksiyonu",
+          "subtitle": "Hassas kediler i?in fonksiyonel at??t?rmal?klar",
+          "cta": "Yeni ?r?nleri g?r"
+        },
+        "rituals": {
+          "title": "G?nl?k rit?eller",
+          "subtitle": "Aktif k?pekler i?in bilin?li beslenme",
+          "cta": "Sepetimi olu?tur"
+        }
+      },
+      "categories": {
+        "dogs": "K?pek ma?azas?",
+        "cats": "Kedi ma?azas?"
+      }
+    },
+    "marquee": {
+      "title": "?? ortaklar?m?z"
+    },
+    "categoryCards": {
+      "cards": {
+        "dog": {
+          "title": "K?pekler i?in",
+          "cta": "Se?kiyi g?r"
+        },
+        "cat": {
+          "title": "Kediler i?in",
+          "cta": "Se?kiyi g?r"
+        }
+      }
     }
   },
   "shop": {

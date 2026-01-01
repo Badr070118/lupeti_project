@@ -69,7 +69,7 @@ export function Navbar() {
                 href={user.role === 'ADMIN' ? '/admin' : '/account'}
                 className="text-sm font-semibold text-slate-700 hover:text-rose-500"
               >
-                {user.role === 'ADMIN' ? 'Admin' : t('account')}
+                {user.role === 'ADMIN' ? t('admin', { default: 'Admin' }) : t('account')}
               </Link>
               <Button variant="ghost" onClick={() => void logout()} disabled={loading}>
                 {t('logout', { default: 'Logout' })}

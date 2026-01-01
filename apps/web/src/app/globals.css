@@ -38,12 +38,10 @@
   --overlay-dark: rgba(15, 23, 42, 0.8);
   --glow-purple: rgba(167, 139, 250, 0.35);
   --glow-blue: rgba(96, 165, 250, 0.35);
-  --app-background: radial-gradient(
-    circle at 15% 20%,
-    #fef3f2 0%,
-    #fef9c3 35%,
-    #e0f2fe 65%,
-    #f5f3ff 100%
+  --app-background: linear-gradient(
+    180deg,
+    #f8fafc 0%,
+    #ffffff 100%
   );
 }
 
@@ -60,11 +58,10 @@
   --shadow-lg: 0 30px 60px rgba(2, 6, 23, 0.8);
   --shadow-hover: 0 25px 55px rgba(255, 31, 79, 0.4);
   --app-background: radial-gradient(
-    circle at 15% 20%,
-    #080f24 0%,
-    #111b2f 35%,
-    #0f1f3d 65%,
-    #050914 100%
+    circle at top left,
+    #1a0f2e 0%,
+    #0b1020 35%,
+    #05060a 100%
   );
 }
 
@@ -74,6 +71,10 @@
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
   --color-primary: var(--primary);
+}
+
+html {
+  background: var(--app-background);
 }
 
 body {
@@ -101,7 +102,9 @@ body {
 }
 
 .hero-overlay {
-  background: linear-gradient(105deg, rgba(0, 0, 0, 0.65), transparent 60%);
+  background: linear-gradient(110deg, rgba(5, 6, 10, 0.85), transparent 65%);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.04);
 }
 
 .hero-gradient-dark {
@@ -127,12 +130,30 @@ body {
   box-shadow: var(--shadow-md);
 }
 
+.category-card-overlay {
+  opacity: 0.6;
+  backdrop-filter: blur(4px);
+  transition: opacity 0.3s ease;
+}
+
+.group:hover .category-card-overlay {
+  opacity: 0.8;
+}
+
 .filters-panel {
   background: var(--card);
   border-radius: 24px;
   padding: 1.5rem;
   box-shadow: var(--shadow-md);
   border: 1px solid var(--border);
+  backdrop-filter: blur(18px);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  will-change: transform;
+}
+
+.filters-panel:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
 }
 
 .filters-grid {
@@ -166,20 +187,22 @@ body {
 
 .product-card {
   background: var(--card);
-  border-radius: 20px;
+  border-radius: 24px;
   padding: 1rem;
   display: flex;
   flex-direction: column;
   height: 100%;
   box-shadow: var(--shadow-sm);
-  border: 1px solid transparent;
-  transition: transform 0.25s ease, box-shadow 0.25s ease, border 0.25s ease;
+  border: 1px solid rgba(148, 163, 184, 0.15);
+  backdrop-filter: blur(14px);
+  transition: transform 0.35s ease, box-shadow 0.35s ease, border 0.35s ease;
+  will-change: transform;
 }
 
 .product-card:hover {
-  transform: translateY(-8px);
+  transform: translateY(-10px);
   box-shadow: var(--shadow-hover);
-  border-color: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.12);
 }
 
 .product-card__media {
@@ -235,6 +258,13 @@ body {
   border-radius: 26px;
   box-shadow: var(--shadow-lg);
   border: 1px solid var(--border);
+  backdrop-filter: blur(18px);
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.support-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-hover);
 }
 
 .support-grid {
@@ -255,7 +285,7 @@ body {
 }
 
 .send-btn:hover {
-  transform: translateY(-1px);
+  transform: translateY(-2px) scale(1.02);
   box-shadow: var(--shadow-hover);
 }
 
@@ -273,6 +303,8 @@ body {
   padding: 2rem;
   border: 1px solid var(--border);
   box-shadow: var(--shadow-md);
+  backdrop-filter: blur(16px);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .admin-shell__header p {
@@ -331,6 +363,14 @@ body {
   border: 1px solid var(--border);
   border-radius: 22px;
   box-shadow: var(--shadow-sm);
+  backdrop-filter: blur(14px);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.admin-list-card:hover,
+.admin-shell:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
 }
 
 .admin-form {
@@ -338,6 +378,7 @@ body {
   border-radius: 22px;
   padding: 1.5rem;
   background: var(--bg);
+  transition: border-color 0.3s ease;
 }
 
 .admin-form__section {
@@ -346,6 +387,7 @@ body {
   border-radius: 18px;
   padding: 1rem 1.25rem;
   box-shadow: var(--shadow-sm);
+  backdrop-filter: blur(14px);
 }
 
 .admin-form__heading {
@@ -407,6 +449,7 @@ body {
   font-size: 0.9rem;
   color: var(--text);
   box-shadow: var(--shadow-sm);
+  backdrop-filter: blur(12px);
 }
 
 .support-message.admin {

@@ -15,7 +15,8 @@
       "en": "English",
       "fr": "French",
       "tr": "Turkish"
-    }
+    },
+    "admin": "Admin"
   },
   "hero": {
     "badge": "Made for picky pets",
@@ -57,7 +58,17 @@
     "featured": {
       "eyebrow": "Chef's picks",
       "title": "Featured creations",
-      "subtitle": "Seasonal recipes and limited accessories curated by our tasting panel."
+      "subtitle": "Seasonal recipes and limited accessories curated by our tasting panel.",
+      "badges": {
+        "express": "48h delivery",
+        "returns": "Free returns"
+      },
+      "filters": {
+        "all": "All",
+        "dogs": "Dogs",
+        "cats": "Cats"
+      },
+      "viewAll": "View all"
     },
     "categories": {
       "eyebrow": "Shop by ritual",
@@ -90,6 +101,53 @@
       "title": "Design a mindful pantry for your pet today",
       "subtitle": "Mix croquettes, snacks, and accessories with one fluid checkout experience.",
       "cta": "Browse the shop"
+    },
+    "hero3d": {
+      "badge": "January promotions",
+      "title": "Welcome to<lineBreak></lineBreak><highlight>Lupeti</highlight>",
+      "subtitle": "Up to <strong>-20%</strong> on your favourite rituals. Joy for every companion.",
+      "ctaPrimary": "Discover",
+      "ctaDogs": "Dog shop",
+      "ctaCats": "Cat shop",
+      "scroll": "Scroll to explore"
+    },
+    "carousel": {
+      "slides": {
+        "promo": {
+          "title": "January promotions",
+          "subtitle": "Up to -20% on favourite recipes",
+          "cta": "Discover"
+        },
+        "wellness": {
+          "title": "Wellness collection",
+          "subtitle": "Functional snacks for sensitive cats",
+          "cta": "See new arrivals"
+        },
+        "rituals": {
+          "title": "Daily rituals",
+          "subtitle": "Mindful nutrition for active dogs",
+          "cta": "Build my basket"
+        }
+      },
+      "categories": {
+        "dogs": "Dog shop",
+        "cats": "Cat shop"
+      }
+    },
+    "marquee": {
+      "title": "Our partner brands"
+    },
+    "categoryCards": {
+      "cards": {
+        "dog": {
+          "title": "For dogs",
+          "cta": "View selection"
+        },
+        "cat": {
+          "title": "For cats",
+          "cta": "View selection"
+        }
+      }
     }
   },
   "shop": {

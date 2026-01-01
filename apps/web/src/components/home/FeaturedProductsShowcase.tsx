@@ -8,16 +8,13 @@ import { FilterSidebar } from '@/components/products/FilterSidebar';
 import { ProductGrid } from '@/components/products/ProductGrid';
 import { AnimatedButton } from '@/components/shared/AnimatedButton';
 import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 
 type FeaturedProductsShowcaseProps = {
   products: Product[];
 };
 
-const filterOptions = [
-  { label: 'Tous', value: 'all' },
-  { label: 'Chiens', value: 'dogs' },
-  { label: 'Chats', value: 'cats' },
-];
+const FILTER_VALUES = ['all', 'dogs', 'cats'] as const;
 
 function matchFilter(product: Product, filter: string) {
   if (filter === 'all') return true;
@@ -33,7 +30,12 @@ function matchFilter(product: Product, filter: string) {
 export function FeaturedProductsShowcase({ products }: FeaturedProductsShowcaseProps) {
   const [activeFilter, setActiveFilter] = useState<string>('all');
   const router = useRouter();
+  const t = useTranslations('home.featured');
   const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.2 });
+  const filterOptions = FILTER_VALUES.map((value) => ({
+    value,
+    label: t(`filters.${value}`),
+  }));
 
   const filteredProducts = useMemo(
     () => products.filter((product) => matchFilter(product, activeFilter)),
@@ -60,7 +62,7 @@ export function FeaturedProductsShowcase({ products }: FeaturedProductsShowcaseP
           className="w-full md:w-auto"
           onClick={() => router.push('/shop')}
         >
-          Voir tout
+          {t('viewAll')}
         </AnimatedButton>
       </div>
     </div>
