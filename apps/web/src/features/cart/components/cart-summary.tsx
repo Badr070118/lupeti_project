@@ -31,10 +31,10 @@ export function CartSummary({
     if (!cart) {
       return { subtotal: 0, total: 0 };
     }
-    const subtotal = cart.items.reduce(
-      (sum, item) => sum + item.product.priceCents * item.quantity,
-      0,
-    );
+    const subtotal = cart.items.reduce((sum, item) => {
+      const unit = item.product.pricing?.finalPriceCents ?? item.product.priceCents;
+      return sum + unit * item.quantity;
+    }, 0);
     return {
       subtotal,
       total: subtotal,

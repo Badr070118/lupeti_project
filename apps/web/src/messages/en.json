@@ -3,11 +3,19 @@
   "nav": {
     "home": "Home",
     "shop": "Shop",
+    "support": "Support",
     "cart": "Cart",
     "account": "My Account",
     "login": "Login",
     "register": "Register",
-    "logout": "Logout"
+    "logout": "Logout",
+    "languages": {
+      "label": "Select language",
+      "updatedTitle": "Language updated",
+      "en": "English",
+      "fr": "French",
+      "tr": "Turkish"
+    }
   },
   "hero": {
     "badge": "Made for picky pets",
@@ -95,10 +103,17 @@
     "reset": "Reset",
     "minPrice": "Min (TRY)",
     "maxPrice": "Max (TRY)",
+    "priceLabel": "Price",
+    "stock": "In stock",
+    "soldOut": "Sold out",
     "pagination": "Page {page} / {totalPages}",
     "prev": "Prev",
     "next": "Next",
-    "empty": "No products match your filters."
+    "empty": "No products match your filters.",
+    "categoryLabel": {
+      "dog": "Dog",
+      "cat": "Cat"
+    }
   },
   "product": {
     "details": "Details",
@@ -179,6 +194,29 @@
     "itemsCount": "{count} products",
     "empty": "You have not placed any orders yet."
   },
+  "support": {
+    "eyebrow": "Customer care",
+    "title": "Submit a ticket",
+    "subtitle": "Reach Lupeti support for orders, deliveries, payments, or product advice.",
+    "success": "Ticket received - we will email you shortly.",
+    "error": "Unable to submit ticket",
+    "genericError": "Please try again.",
+    "form": {
+      "email": "Email",
+      "subject": "Subject",
+      "message": "Describe your request",
+      "categoryLabel": "Category",
+      "submit": "Send message",
+      "sending": "Sending..."
+    },
+    "categories": {
+      "order": "Order",
+      "delivery": "Delivery",
+      "payment": "Payment",
+      "product": "Product",
+      "other": "Other"
+    }
+  },
   "notifications": {
     "addedToCart": "Added to cart",
     "orderPlaced": "Order placed",
@@ -186,7 +224,11 @@
     "authHint": "Please sign in to add products to your basket.",
     "failedCart": "Unable to add to cart",
     "genericError": "Please try again.",
-    "addToCartButton": "Add to cart"
+    "addToCartButton": "Add to cart",
+    "loginSuccess": "Welcome back!",
+    "logoutSuccess": "Signed out",
+    "registerSuccess": "Welcome to Lupeti!",
+    "authError": "Authentication failed"
   },
   "footer": {
     "tagline": "Conscious nutrition and objects for joyful pets.",
@@ -216,18 +258,117 @@
     }
   },
   "admin": {
+    "title": "Admin overview",
     "loginPrompt": "You must login to access the admin console.",
     "loginCta": "Login",
-    "denied": "Access denied — admin role required.",
-    "title": "Admin overview",
-    "headline": "Operational cockpit",
-    "description": "Placeholder insights. Wire it to KPIs and moderation tools when available.",
-    "metrics": {
-      "revenue": "Revenue",
-      "orders": "Orders",
-      "customers": "Customers"
+    "denied": "Access denied - admin role required.",
+    "loading": "Loading dashboard...",
+    "backHome": "Back home",
+    "nav": {
+      "dashboard": "Dashboard",
+      "products": "Products",
+      "users": "Users",
+      "support": "Support"
     },
-    "vsLastWeek": "vs last week"
+    "dashboard": {
+      "title": "Operations dashboard",
+      "subtitle": "Monitor essential KPIs at a glance.",
+      "loading": "Fetching metrics...",
+      "error": "Unable to load metrics",
+      "genericError": "Please try again later.",
+      "products": "Products",
+      "stock": "Stock: {value}",
+      "users": "Customers",
+      "active": "Active: {value}",
+      "orders": "Orders",
+      "tickets": "Tickets",
+      "open": "Open: {value}"
+    },
+    "products": {
+      "title": "Manage products",
+      "subtitle": "Create, feature, and pause items.",
+      "loadError": "Unable to load products",
+      "createError": "Unable to create product",
+      "created": "Product created",
+      "updateError": "Unable to update product",
+      "genericError": "Please try again.",
+      "table": {
+        "product": "Product",
+        "stock": "Stock",
+        "price": "Price",
+        "status": "Status"
+      },
+      "form": {
+        "title": "New product",
+        "name": "Name",
+        "description": "Description",
+        "price": "Price (TRY)",
+        "stock": "Stock",
+        "category": "Select category",
+        "discount": "Discount %",
+        "submit": "Publish product",
+        "media": "Media assets",
+        "image": "Featured image"
+      },
+      "active": "Active",
+      "inactive": "Paused",
+      "activate": "Activate",
+      "disable": "Pause"
+    },
+    "users": {
+      "title": "Manage users",
+      "subtitle": "Create staff accounts and control access.",
+      "loadError": "Unable to load users",
+      "createError": "Unable to create user",
+      "created": "User created",
+      "updateError": "Unable to update user",
+      "genericError": "Please try again.",
+      "table": {
+        "user": "User",
+        "role": "Role",
+        "status": "Status"
+      },
+      "form": {
+        "title": "Invite a user",
+        "email": "Email",
+        "name": "Name",
+        "password": "Temporary password",
+        "submit": "Create user"
+      },
+      "roles": {
+        "user": "Customer",
+        "admin": "Admin"
+      },
+      "active": "Active",
+      "inactive": "Inactive",
+      "activate": "Activate",
+      "disable": "Disable"
+    },
+    "support": {
+      "title": "Support tickets",
+      "subtitle": "Update statuses and reply to customers.",
+      "loadError": "Unable to load tickets",
+      "replyError": "Unable to reply",
+      "replySent": "Response sent",
+      "statusError": "Unable to update status",
+      "genericError": "Please try again.",
+      "table": {
+        "subject": "Subject",
+        "email": "Email",
+        "status": "Status"
+      },
+      "status": {
+        "open": "Open",
+        "inProgress": "In progress",
+        "closed": "Closed"
+      },
+      "empty": "Select a ticket to view the conversation.",
+      "history": "Conversation",
+      "form": {
+        "placeholder": "Write a reply",
+        "submit": "Send reply"
+      }
+    }
   },
   "status": {
     "success": "Payment successful",

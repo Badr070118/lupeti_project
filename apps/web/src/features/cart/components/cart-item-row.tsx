@@ -58,6 +58,9 @@ export function CartItemRow({ item, accessToken, onCartUpdated }: CartItemRowPro
 
   const cover = resolveProductImage(item.product.slug, item.product.imageUrl);
 
+  const unitPrice = item.product.pricing?.finalPriceCents ?? item.product.priceCents;
+  const originalUnit = item.product.pricing?.originalPriceCents ?? item.product.priceCents;
+
   return (
     <div className="flex gap-4 rounded-2xl border border-slate-100 bg-white p-4">
       <Link
@@ -113,9 +116,16 @@ export function CartItemRow({ item, accessToken, onCartUpdated }: CartItemRowPro
           </button>
         </div>
       </div>
-      <p className="text-base font-semibold text-slate-900">
-        {formatPrice(item.product.priceCents * item.quantity, item.product.currency)}
-      </p>
+      <div className="text-right">
+        <p className="text-base font-semibold text-slate-900">
+          {formatPrice(unitPrice * item.quantity, item.product.currency)}
+        </p>
+        {unitPrice !== originalUnit && (
+          <p className="text-xs text-slate-400 line-through">
+            {formatPrice(originalUnit * item.quantity, item.product.currency)}
+          </p>
+        )}
+      </div>
     </div>
   );
 }

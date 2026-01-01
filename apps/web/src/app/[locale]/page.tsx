@@ -1,19 +1,14 @@
 import Image from 'next/image';
-import dynamic from 'next/dynamic';
 import { getTranslations } from 'next-intl/server';
 import { Link } from '@/i18n/routing';
-import { HeroStatic } from '@/components/hero/HeroStatic';
 import { TrustBadges } from '@/components/home/TrustBadges';
 import { FeaturedProducts } from '@/components/home/FeaturedProducts';
-import { CategoryHighlights } from '@/components/home/CategoryHighlights';
 import { buildMetadata } from '@/lib/metadata';
 import heroStaticOg from '@/../public/hero-static.jpg';
 import storyImage from '@/../public/products/slow-roasted-quail-feast.jpg';
-
-const HeroScene = dynamic(
-  () => import('@/components/hero/Hero3D').then((mod) => mod.Hero3D),
-  { loading: () => <HeroStatic /> },
-);
+import { BrandMarquee } from '@/components/home/BrandMarquee';
+import { CategoryCards } from '@/components/home/CategoryCards';
+import { HeroShowcaseClient } from '@/components/hero/HeroShowcase.client';
 
 type PageProps = {
   params: Promise<{ locale: string }>;
@@ -37,42 +32,12 @@ export default async function HomePage({ params }: PageProps) {
   const t = await getTranslations({ locale, namespace: 'home' });
 
   return (
-    <div className="space-y-24 pb-16">
-      <section className="grid gap-10 lg:grid-cols-2 lg:items-center">
-        <div className="space-y-6">
-          <p className="inline-flex items-center gap-2 rounded-full bg-amber-100 px-4 py-1 text-sm font-semibold text-amber-700">
-            {t('hero.badge')}
-          </p>
-          <div className="space-y-4">
-            <h1 className="text-4xl font-semibold leading-tight text-slate-900 lg:text-5xl">
-              {t('hero.title')}
-            </h1>
-            <p className="text-lg text-slate-600">{t('hero.subtitle')}</p>
-          </div>
-          <div className="flex flex-wrap gap-3">
-            <Link
-              href="/shop"
-              className="inline-flex items-center justify-center rounded-full bg-slate-900 px-6 py-3 text-sm font-semibold text-white transition hover:bg-slate-800"
-            >
-              {t('hero.ctaPrimary')}
-            </Link>
-            <a
-              href="#featured"
-              className="inline-flex items-center justify-center rounded-full border border-slate-300 px-6 py-3 text-sm font-semibold text-slate-900 transition hover:border-slate-900"
-            >
-              {t('hero.ctaSecondary')}
-            </a>
-          </div>
-        </div>
-        <HeroScene />
-      </section>
-
+    <div className="space-y-20 pb-16">
+      <HeroShowcaseClient />
+      <BrandMarquee />
       <TrustBadges />
-
       <FeaturedProducts />
-
-      <CategoryHighlights />
-
+      <CategoryCards />
       <section className="grid gap-10 lg:grid-cols-2 lg:items-center">
         <div className="order-last lg:order-first space-y-4">
           <p className="text-sm uppercase tracking-wide text-amber-500">

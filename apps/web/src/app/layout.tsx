@@ -2,6 +2,9 @@ import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
 import { buildMetadata } from '@/lib/metadata';
+import { ScrollProgress } from '@/components/shared/ScrollProgress';
+import { HotToaster } from '@/components/shared/HotToaster';
+import { QuickView } from '@/components/products/QuickView';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -26,12 +29,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" data-theme="light">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         suppressHydrationWarning
       >
+        <ScrollProgress />
         {children}
+        <QuickView />
+        <HotToaster />
       </body>
     </html>
   );

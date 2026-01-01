@@ -1,18 +1,12 @@
 'use client';
 
 import { useTransition } from 'react';
-import { useLocale } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
 import { Select } from '@/components/ui/select';
 import { useToast } from '@/hooks/use-toast';
 import { usePathname, useRouter } from '@/i18n/routing';
 import { locales } from '@/i18n/routing';
-
-const LABELS: Record<string, string> = {
-  en: 'English',
-  fr: 'Français',
-  tr: 'Türkçe',
-};
 
 export function LanguageSwitcher() {
   const locale = useLocale();
@@ -21,6 +15,7 @@ export function LanguageSwitcher() {
   const params = useParams();
   const [pending, startTransition] = useTransition();
   const { showToast } = useToast();
+  const t = useTranslations('nav.languages');
 
   const changeLocale = (nextLocale: string) => {
     if (nextLocale === locale) return;
@@ -35,9 +30,10 @@ export function LanguageSwitcher() {
       router.replace(target as RouterTarget, {
         locale: nextLocale as (typeof locales)[number],
       });
+      document.cookie = `NEXT_LOCALE=${nextLocale}; path=/; max-age=31536000`;
       showToast({
-        title: 'Language updated',
-        description: LABELS[nextLocale] ?? nextLocale.toUpperCase(),
+        title: t('updatedTitle'),
+        description: t(nextLocale as (typeof locales)[number]),
         variant: 'info',
       });
     });
@@ -46,14 +42,14 @@ export function LanguageSwitcher() {
   return (
     <div className="w-32">
       <Select
-        aria-label="Select language"
+        aria-label={t('label')}
         disabled={pending}
         value={locale}
         onChange={(event) => changeLocale(event.target.value)}
       >
         {locales.map((code) => (
           <option key={code} value={code}>
-            {LABELS[code] ?? code.toUpperCase()}
+            {t(code)}
           </option>
         ))}
       </Select>

@@ -7,7 +7,15 @@
     "account": "Mon compte",
     "login": "Connexion",
     "register": "Inscription",
-    "logout": "Déconnexion"
+    "logout": "Déconnexion",
+    "support": "Support",
+    "languages": {
+      "label": "Choisir la langue",
+      "updatedTitle": "Langue mise à jour",
+      "en": "Anglais",
+      "fr": "Français",
+      "tr": "Turc"
+    }
   },
   "hero": {
     "badge": "Conçu pour les palais exigeants",
@@ -95,10 +103,17 @@
     "reset": "Réinitialiser",
     "minPrice": "Min (TRY)",
     "maxPrice": "Max (TRY)",
+    "priceLabel": "Prix",
+    "stock": "En stock",
+    "soldOut": "Rupture",
     "pagination": "Page {page} / {totalPages}",
     "prev": "Préc.",
     "next": "Suiv.",
-    "empty": "Aucun produit ne correspond à vos filtres."
+    "empty": "Aucun produit ne correspond à vos filtres.",
+    "categoryLabel": {
+      "dog": "Chien",
+      "cat": "Chat"
+    }
   },
   "product": {
     "details": "Détails",
@@ -186,7 +201,11 @@
     "authHint": "Connectez-vous pour ajouter des produits.",
     "failedCart": "Impossible d'ajouter au panier",
     "genericError": "Veuillez réessayer.",
-    "addToCartButton": "Ajouter au panier"
+    "addToCartButton": "Ajouter au panier",
+    "loginSuccess": "Bon retour !",
+    "logoutSuccess": "Déconnexion effectuée",
+    "registerSuccess": "Bienvenue chez Lupeti !",
+    "authError": "Connexion impossible"
   },
   "footer": {
     "tagline": "Nutrition consciente et objets pour pets heureux.",
@@ -216,21 +235,143 @@
     }
   },
   "admin": {
-    "loginPrompt": "Connectez-vous pour accéder au tableau de bord.",
+    "title": "Console admin",
+    "loginPrompt": "Connectez-vous pour accéder au module admin.",
     "loginCta": "Connexion",
-    "denied": "Accès refusé — rôle admin requis.",
-    "title": "Vue d'ensemble",
-    "headline": "Cockpit opérationnel",
-    "description": "Panneau fictif. Reliez-le aux KPI et outils de modération dès qu'ils sont prêts.",
-    "metrics": {
-      "revenue": "Revenus",
-      "orders": "Commandes",
-      "customers": "Clients"
+    "denied": "Accès refusé - rôle admin requis.",
+    "loading": "Chargement du tableau de bord...",
+    "backHome": "Retour accueil",
+    "nav": {
+      "dashboard": "Tableau de bord",
+      "products": "Produits",
+      "users": "Utilisateurs",
+      "support": "Support"
     },
-    "vsLastWeek": "vs semaine dernière"
+    "dashboard": {
+      "title": "Vue opérationnelle",
+      "subtitle": "Suivez vos KPIs clés en un coup d’œil.",
+      "loading": "Récupération des métriques...",
+      "error": "Impossible de charger les métriques",
+      "genericError": "Réessayez plus tard.",
+      "products": "Produits",
+      "stock": "Stock : {value}",
+      "users": "Clients",
+      "active": "Actifs : {value}",
+      "orders": "Commandes",
+      "tickets": "Tickets",
+      "open": "Ouverts : {value}"
+    },
+    "products": {
+      "title": "Gérer les produits",
+      "subtitle": "Créer, mettre en avant ou désactiver des références.",
+      "loadError": "Impossible de charger les produits",
+      "createError": "Création impossible",
+      "created": "Produit créé",
+      "updateError": "Mise à jour impossible",
+      "genericError": "Merci de réessayer.",
+      "table": {
+        "product": "Produit",
+        "stock": "Stock",
+        "price": "Prix",
+        "status": "Statut"
+      },
+      "form": {
+        "title": "Nouveau produit",
+        "name": "Nom",
+        "description": "Description",
+        "price": "Prix (TRY)",
+        "stock": "Stock",
+        "category": "Choisir une catégorie",
+        "discount": "% promo",
+        "submit": "Publier le produit",
+        "media": "M?dias",
+        "image": "Image du produit"
+      },
+      "active": "Actif",
+      "inactive": "En pause",
+      "activate": "Activer",
+      "disable": "Mettre en pause"
+    },
+    "users": {
+      "title": "Gérer les utilisateurs",
+      "subtitle": "Invitez vos collègues et contrôlez les accès.",
+      "loadError": "Impossible de charger les utilisateurs",
+      "createError": "Création impossible",
+      "created": "Utilisateur créé",
+      "updateError": "Mise à jour impossible",
+      "genericError": "Merci de réessayer.",
+      "table": {
+        "user": "Utilisateur",
+        "role": "Rôle",
+        "status": "Statut"
+      },
+      "form": {
+        "title": "Inviter un utilisateur",
+        "email": "Email",
+        "name": "Nom",
+        "password": "Mot de passe provisoire",
+        "submit": "Créer"
+      },
+      "roles": {
+        "user": "Client",
+        "admin": "Admin"
+      },
+      "active": "Actif",
+      "inactive": "Inactif",
+      "activate": "Activer",
+      "disable": "Désactiver"
+    },
+    "support": {
+      "title": "Tickets support",
+      "subtitle": "Changez le statut et répondez aux clients.",
+      "loadError": "Impossible de charger les tickets",
+      "replyError": "Impossible d'envoyer une réponse",
+      "replySent": "Réponse envoyée",
+      "statusError": "Impossible de mettre à jour le statut",
+      "genericError": "Merci de réessayer.",
+      "table": {
+        "subject": "Sujet",
+        "email": "Email",
+        "status": "Statut"
+      },
+      "status": {
+        "open": "Ouvert",
+        "inProgress": "En cours",
+        "closed": "Fermé"
+      },
+      "empty": "Sélectionnez un ticket pour voir la conversation.",
+      "history": "Historique",
+      "form": {
+        "placeholder": "Écrire une réponse",
+        "submit": "Envoyer"
+      }
+    }
   },
   "status": {
     "success": "Paiement réussi",
     "fail": "Paiement refusé"
+  },
+  "support": {
+    "eyebrow": "Service client",
+    "title": "Envoyer une demande",
+    "subtitle": "Contactez Lupeti pour vos commandes, livraisons, paiements ou questions produits.",
+    "success": "Ticket enregistré - nous revenons vers vous rapidement.",
+    "error": "Impossible d'enregistrer la demande",
+    "genericError": "Merci de réessayer.",
+    "form": {
+      "email": "Email",
+      "subject": "Sujet",
+      "message": "Décrivez votre requête",
+      "categoryLabel": "Catégorie",
+      "submit": "Envoyer",
+      "sending": "Envoi..."
+    },
+    "categories": {
+      "order": "Commande",
+      "delivery": "Livraison",
+      "payment": "Paiement",
+      "product": "Produit",
+      "other": "Autre"
+    }
   }
 }

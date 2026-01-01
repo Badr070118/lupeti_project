@@ -1,6 +1,7 @@
 'use client';
 
 import { PropsWithChildren, useCallback, useEffect, useState } from 'react';
+import { useTranslations } from 'next-intl';
 import { authService } from '@/services/auth.service';
 import { AuthContext } from '@/hooks/use-auth';
 import type { AuthResponse, User } from '@/types';
@@ -11,6 +12,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
   const [accessToken, setAccessToken] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const { showToast } = useToast();
+  const t = useTranslations('notifications');
 
   const applySession = useCallback((session: AuthResponse | null) => {
     setUser(session?.user ?? null);
@@ -40,15 +42,13 @@ export function AuthProvider({ children }: PropsWithChildren) {
         const session = await authService.login(email, password);
         applySession(session);
         showToast({
-          title: 'Welcome back!',
-          description: 'You are now signed in.',
+          title: t('loginSuccess'),
           variant: 'success',
         });
       } catch (error) {
         showToast({
-          title: 'Login failed',
-          description:
-            error instanceof Error ? error.message : 'Unknown error occurred',
+          title: t('authError'),
+          description: error instanceof Error ? error.message : t('genericError'),
           variant: 'error',
         });
         throw error;
@@ -56,7 +56,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
         setLoading(false);
       }
     },
-    [applySession, showToast],
+    [applySession, showToast, t],
   );
 
   const register = useCallback(
@@ -66,15 +66,13 @@ export function AuthProvider({ children }: PropsWithChildren) {
         const session = await authService.register(email, password);
         applySession(session);
         showToast({
-          title: 'Account created',
-          description: 'Welcome to Lupeti! You are now signed in.',
+          title: t('registerSuccess'),
           variant: 'success',
         });
       } catch (error) {
         showToast({
-          title: 'Registration failed',
-          description:
-            error instanceof Error ? error.message : 'Unknown error occurred',
+          title: t('authError'),
+          description: error instanceof Error ? error.message : t('genericError'),
           variant: 'error',
         });
         throw error;
@@ -82,18 +80,17 @@ export function AuthProvider({ children }: PropsWithChildren) {
         setLoading(false);
       }
     },
-    [applySession, showToast],
+    [applySession, showToast, t],
   );
 
   const logout = useCallback(async () => {
     await authService.logout(accessToken);
     applySession(null);
     showToast({
-      title: 'Signed out',
-      description: 'Come back soon!',
+      title: t('logoutSuccess'),
       variant: 'info',
     });
-  }, [accessToken, applySession, showToast]);
+  }, [accessToken, applySession, showToast, t]);
 
   return (
     <AuthContext.Provider

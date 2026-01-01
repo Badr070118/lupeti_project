@@ -7,7 +7,15 @@
     "account": "Hesabım",
     "login": "Giriş",
     "register": "Kayıt ol",
-    "logout": "Çıkış"
+    "logout": "Çıkış",
+    "support": "Destek",
+    "languages": {
+      "label": "Dil seçin",
+      "updatedTitle": "Dil güncellendi",
+      "en": "İngilizce",
+      "fr": "Fransızca",
+      "tr": "Türkçe"
+    }
   },
   "hero": {
     "badge": "Seçici patiler için",
@@ -95,10 +103,17 @@
     "reset": "Sıfırla",
     "minPrice": "Min (TRY)",
     "maxPrice": "Maks (TRY)",
+    "priceLabel": "Fiyat",
+    "stock": "Stokta",
+    "soldOut": "Tükendi",
     "pagination": "Sayfa {page} / {totalPages}",
     "prev": "Önceki",
     "next": "Sonraki",
-    "empty": "Filtrelerinize uyan ürün bulunamadı."
+    "empty": "Filtrelerinize uyan ürün bulunamadı.",
+    "categoryLabel": {
+      "dog": "Köpek",
+      "cat": "Kedi"
+    }
   },
   "product": {
     "details": "Detaylar",
@@ -186,7 +201,11 @@
     "authHint": "Ürün eklemek için lütfen giriş yapın.",
     "failedCart": "Sepete eklenemedi",
     "genericError": "Lütfen tekrar deneyin.",
-    "addToCartButton": "Sepete ekle"
+    "addToCartButton": "Sepete ekle",
+    "loginSuccess": "Tekrar hoş geldiniz!",
+    "logoutSuccess": "Çıkış yapıldı",
+    "registerSuccess": "Lupeti ailesine hoş geldiniz!",
+    "authError": "Kimlik doğrulama başarısız"
   },
   "footer": {
     "tagline": "Bilinci besleyen tarifler ve objeler.",
@@ -216,21 +235,143 @@
     }
   },
   "admin": {
-    "loginPrompt": "Yönetim paneli için giriş yapın.",
-    "loginCta": "Giriş",
-    "denied": "Erişim engellendi — admin rolü gerekli.",
-    "title": "Yönetici özeti",
-    "headline": "Operasyon kokpiti",
-    "description": "Örnek paneldir. Hazır olduğunda KPI ve moderasyon araçlarına bağlayın.",
-    "metrics": {
-      "revenue": "Gelir",
-      "orders": "Sipariş",
-      "customers": "Müşteri"
+    "title": "Admin paneli",
+    "loginPrompt": "Admin modülüne erişmek için giriş yapın.",
+    "loginCta": "Giriş yap",
+    "denied": "Erişim reddedildi - admin yetkisi gerekli.",
+    "loading": "Panel yükleniyor...",
+    "backHome": "Ana sayfa",
+    "nav": {
+      "dashboard": "Gösterge",
+      "products": "Ürünler",
+      "users": "Kullanıcılar",
+      "support": "Destek"
     },
-    "vsLastWeek": "geçen haftaya göre"
+    "dashboard": {
+      "title": "Operasyon özeti",
+      "subtitle": "Önemli KPI’ları tek ekranda görün.",
+      "loading": "Metikler alınıyor...",
+      "error": "Metikler yüklenemedi",
+      "genericError": "Lütfen daha sonra tekrar deneyin.",
+      "products": "Ürünler",
+      "stock": "Stok: {value}",
+      "users": "Müşteriler",
+      "active": "Aktif: {value}",
+      "orders": "Siparişler",
+      "tickets": "Talepler",
+      "open": "Açık: {value}"
+    },
+    "products": {
+      "title": "Ürün yönetimi",
+      "subtitle": "Yeni ürün ekleyin veya kampanya yapın.",
+      "loadError": "Ürünler yüklenemedi",
+      "createError": "Ürün oluşturulamadı",
+      "created": "Ürün oluşturuldu",
+      "updateError": "Güncelleme başarısız",
+      "genericError": "Lütfen tekrar deneyin.",
+      "table": {
+        "product": "Ürün",
+        "stock": "Stok",
+        "price": "Fiyat",
+        "status": "Durum"
+      },
+      "form": {
+        "title": "Yeni ürün",
+        "name": "Ad",
+        "description": "Açıklama",
+        "price": "Fiyat (TRY)",
+        "stock": "Stok",
+        "category": "Kategori seç",
+        "discount": "İndirim %",
+        "submit": "Ürünü yayınla",
+        "media": "Medya",
+        "image": "?r?n g?rseli"
+      },
+      "active": "Aktif",
+      "inactive": "Pasif",
+      "activate": "Aktifleştir",
+      "disable": "Pasifleştir"
+    },
+    "users": {
+      "title": "Kullanıcı yönetimi",
+      "subtitle": "Ekip arkadaşlarınızı davet edin ve rolleri yönetin.",
+      "loadError": "Kullanıcı listesi yüklenemedi",
+      "createError": "Kullanıcı oluşturulamadı",
+      "created": "Kullanıcı oluşturuldu",
+      "updateError": "Güncelleme başarısız",
+      "genericError": "Lütfen tekrar deneyin.",
+      "table": {
+        "user": "Kullanıcı",
+        "role": "Rol",
+        "status": "Durum"
+      },
+      "form": {
+        "title": "Yeni kullanıcı",
+        "email": "E-posta",
+        "name": "Ad",
+        "password": "Geçici şifre",
+        "submit": "Oluştur"
+      },
+      "roles": {
+        "user": "Müşteri",
+        "admin": "Admin"
+      },
+      "active": "Aktif",
+      "inactive": "Pasif",
+      "activate": "Aktifleştir",
+      "disable": "Pasifleştir"
+    },
+    "support": {
+      "title": "Destek talepleri",
+      "subtitle": "Durumu değiştirin ve cevap yazın.",
+      "loadError": "Talepler yüklenemedi",
+      "replyError": "Yanıt gönderilemedi",
+      "replySent": "Yanıt gönderildi",
+      "statusError": "Durum güncellenemedi",
+      "genericError": "Lütfen tekrar deneyin.",
+      "table": {
+        "subject": "Konu",
+        "email": "E-posta",
+        "status": "Durum"
+      },
+      "status": {
+        "open": "Açık",
+        "inProgress": "Yanıtlanıyor",
+        "closed": "Kapalı"
+      },
+      "empty": "Konuşmayı görmek için bir ticket seçin.",
+      "history": "Geçmiş",
+      "form": {
+        "placeholder": "Yanıt yazın",
+        "submit": "Gönder"
+      }
+    }
   },
   "status": {
     "success": "Ödeme başarılı",
     "fail": "Ödeme başarısız"
+  },
+  "support": {
+    "eyebrow": "Müşteri hizmetleri",
+    "title": "Destek talebi gönderin",
+    "subtitle": "Sipariş, teslimat, ödeme veya ürün soruları için Lupeti ekibine ulaşın.",
+    "success": "Talebiniz alındı - en kısa sürede mail ile döneceğiz.",
+    "error": "Talep kaydedilemedi",
+    "genericError": "Lütfen tekrar deneyin.",
+    "form": {
+      "email": "E-posta",
+      "subject": "Konu",
+      "message": "Talebinizi anlatın",
+      "categoryLabel": "Kategori",
+      "submit": "Gönder",
+      "sending": "Gönderiliyor..."
+    },
+    "categories": {
+      "order": "Sipariş",
+      "delivery": "Teslimat",
+      "payment": "Ödeme",
+      "product": "Ürün",
+      "other": "Diğer"
+    }
   }
 }

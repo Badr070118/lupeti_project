@@ -12,10 +12,10 @@ export function CheckoutContent() {
   const t = useTranslations('checkout');
 
   const totals = cart
-    ? cart.items.reduce(
-        (sum, item) => sum + item.product.priceCents * item.quantity,
-        0,
-      )
+    ? cart.items.reduce((sum, item) => {
+        const unit = item.product.pricing?.finalPriceCents ?? item.product.priceCents;
+        return sum + unit * item.quantity;
+      }, 0)
     : 0;
 
   return (
@@ -49,7 +49,8 @@ export function CheckoutContent() {
                     </span>
                     <span>
                       {formatPrice(
-                        item.product.priceCents * item.quantity,
+                        (item.product.pricing?.finalPriceCents ?? item.product.priceCents) *
+                          item.quantity,
                         item.product.currency,
                       )}
                     </span>

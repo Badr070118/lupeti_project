@@ -1,9 +1,20 @@
 export type UserRole = 'USER' | 'ADMIN';
+export type UserStatus = 'ACTIVE' | 'INACTIVE';
+export type DiscountType = 'PERCENT' | 'AMOUNT';
+export type TicketStatus = 'OPEN' | 'IN_PROGRESS' | 'CLOSED';
+export type TicketCategory =
+  | 'ORDER'
+  | 'DELIVERY'
+  | 'PAYMENT'
+  | 'PRODUCT'
+  | 'OTHER';
 
 export interface User {
   id: string;
   email: string;
   role: UserRole;
+  name?: string | null;
+  status: UserStatus;
   createdAt: string;
 }
 
@@ -28,19 +39,36 @@ export interface ProductImage {
   createdAt: string;
 }
 
+export interface ProductPricing {
+  originalPriceCents: number;
+  finalPriceCents: number;
+  discountType: DiscountType | null;
+  discountValue: number | null;
+  savingsCents: number;
+  isPromoActive: boolean;
+}
+
 export interface Product {
   id: string;
   slug: string;
+  sku: string | null;
   title: string;
   description: string;
   priceCents: number;
+  originalPriceCents: number | null;
+  discountType: DiscountType | null;
+  discountValue: number | null;
+  promoStartAt: string | null;
+  promoEndAt: string | null;
   currency: string;
   stock: number;
   isActive: boolean;
+  isFeatured: boolean;
   createdAt: string;
   updatedAt: string;
   category: Category;
   images: ProductImage[];
+  pricing: ProductPricing;
 }
 
 export interface PaginatedResult<T> {
@@ -69,9 +97,11 @@ export interface CartProductSummary {
   slug: string;
   title: string;
   priceCents: number;
+  originalPriceCents: number | null;
   currency: string;
   stock: number;
   isActive: boolean;
+  pricing: ProductPricing;
   imageUrl?: string;
 }
 
@@ -96,7 +126,8 @@ export type OrderStatus =
   | 'PAID'
   | 'FAILED'
   | 'CANCELLED'
-  | 'SHIPPED';
+  | 'SHIPPED'
+  | 'DELIVERED';
 
 export interface OrderItem {
   id: string;
@@ -134,4 +165,81 @@ export interface PaytrInitiateResponse {
   merchantId: string;
   amountCents: number;
   currency: string;
+}
+
+export interface SupportReply {
+  id: string;
+  body: string;
+  authorRole: UserRole;
+  createdAt: string;
+  author?: {
+    id: string;
+    email: string;
+    name?: string | null;
+  } | null;
+}
+
+export interface SupportTicket {
+  id: string;
+  email: string;
+  subject: string;
+  message: string;
+  category: TicketCategory;
+  status: TicketStatus;
+  createdAt: string;
+  updatedAt: string;
+  replies: SupportReply[];
+}
+
+export interface SupportTicketPayload {
+  email: string;
+  subject: string;
+  message: string;
+  category: TicketCategory;
+}
+
+export interface AdminOverview {
+  products: {
+    total: number;
+    stock: number;
+  };
+  users: {
+    total: number;
+    active: number;
+  };
+  orders: {
+    total: number;
+    revenueCents: number;
+  };
+  tickets: {
+    total: number;
+    open: number;
+  };
+}
+
+export interface AdminProductInput {
+  title: string;
+  description: string;
+  priceCents: number;
+  stock: number;
+  categoryId: string;
+  currency?: string;
+  isActive?: boolean;
+  isFeatured?: boolean;
+  originalPriceCents?: number | null;
+  discountType?: DiscountType | null;
+  discountValue?: number | null;
+  promoStartAt?: string | null;
+  promoEndAt?: string | null;
+  sku?: string | null;
+  imageUrl?: string | null;
+  images?: Array<{ url: string; altText?: string | null; sortOrder?: number }>;
+}
+
+export interface AdminUserInput {
+  email: string;
+  password: string;
+  role: UserRole;
+  name?: string;
+  status?: UserStatus;
 }

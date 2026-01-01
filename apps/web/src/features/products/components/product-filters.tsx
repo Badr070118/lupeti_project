@@ -74,21 +74,23 @@ export function ProductFilters({ categories }: ProductFiltersProps) {
   };
 
   return (
-    <div className="rounded-3xl border border-slate-100 bg-white p-6 shadow-sm">
-      <div className="grid gap-4 md:grid-cols-4">
+    <div className="filters-panel">
+      <div className="filters-grid">
         <div className="md:col-span-2">
-          <p className="text-xs font-semibold uppercase text-slate-400">{t('search')}</p>
+          <label htmlFor="search">{t('search')}</label>
           <Input
+            id="search"
+            className="soft-input"
             placeholder={t('searchPlaceholder')}
             value={filters.search ?? ''}
             onChange={(event) => updateFilters({ search: event.target.value })}
           />
         </div>
         <div>
-          <p className="text-xs font-semibold uppercase text-slate-400">
-            {t('category')}
-          </p>
+          <label htmlFor="category">{t('category')}</label>
           <Select
+            id="category"
+            className="soft-input"
             value={filters.category ?? 'all'}
             onChange={(event) =>
               updateFilters({
@@ -104,41 +106,46 @@ export function ProductFilters({ categories }: ProductFiltersProps) {
             ))}
           </Select>
         </div>
-        <div className="grid grid-cols-2 gap-3">
-          <div>
-            <p className="text-xs font-semibold uppercase text-slate-400">
-              {t('minPrice')}
-            </p>
-            <Input
-              type="number"
-              value={filters.minPrice ?? ''}
-              onChange={(event) =>
-                updateFilters({
-                  minPrice: event.target.value ? Number(event.target.value) : undefined,
-                })
-              }
-            />
-          </div>
-          <div>
-            <p className="text-xs font-semibold uppercase text-slate-400">
-              {t('maxPrice')}
-            </p>
-            <Input
-              type="number"
-              value={filters.maxPrice ?? ''}
-              onChange={(event) =>
-                updateFilters({
-                  maxPrice: event.target.value ? Number(event.target.value) : undefined,
-                })
-              }
-            />
-          </div>
+        <div>
+          <label htmlFor="min-price">{t('minPrice')}</label>
+          <Input
+            id="min-price"
+            type="number"
+            className="soft-input"
+            value={filters.minPrice ?? ''}
+            onChange={(event) =>
+              updateFilters({
+                minPrice: event.target.value ? Number(event.target.value) : undefined,
+              })
+            }
+          />
+        </div>
+        <div>
+          <label htmlFor="max-price">{t('maxPrice')}</label>
+          <Input
+            id="max-price"
+            type="number"
+            className="soft-input"
+            value={filters.maxPrice ?? ''}
+            onChange={(event) =>
+              updateFilters({
+                maxPrice: event.target.value ? Number(event.target.value) : undefined,
+              })
+            }
+          />
         </div>
       </div>
 
-      <div className="mt-4 flex flex-wrap gap-3">
-        <Button onClick={applyFilters}>{t('ctaFilter')}</Button>
-        <Button variant="ghost" onClick={clearFilters} disabled={!hasFilters}>
+      <div className="filters-actions">
+        <Button onClick={applyFilters} className="flex-1 sm:flex-none">
+          {t('ctaFilter')}
+        </Button>
+        <Button
+          variant="ghost"
+          onClick={clearFilters}
+          disabled={!hasFilters}
+          className="flex-1 sm:flex-none"
+        >
           {t('reset')}
         </Button>
       </div>

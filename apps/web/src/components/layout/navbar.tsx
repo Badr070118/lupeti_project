@@ -9,10 +9,12 @@ import { LanguageSwitcher } from '@/components/common/language-switcher';
 import { CartIndicator } from '@/components/common/cart-indicator';
 import { Button } from '@/components/ui/button';
 import { Link, usePathname } from '@/i18n/routing';
+import { ThemeToggle } from '@/components/common/theme-toggle';
 
 const NAV_ITEMS = [
   { href: '/', key: 'home' },
   { href: '/shop', key: 'shop' },
+  { href: '/support', key: 'support' },
 ] as const;
 
 export function Navbar() {
@@ -58,6 +60,7 @@ export function Navbar() {
         </div>
 
         <div className="flex items-center gap-4">
+          <ThemeToggle />
           <LanguageSwitcher />
           <CartIndicator />
           {user && accessToken ? (

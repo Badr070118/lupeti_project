@@ -14,6 +14,15 @@ export function ProductDetails({ product }: ProductDetailsProps) {
   const t = useTranslations('product');
   const cover = product.images?.[0];
   const coverSrc = resolveProductImage(product.slug, cover?.url);
+  const pricing =
+    product.pricing ?? {
+      originalPriceCents: product.priceCents,
+      finalPriceCents: product.priceCents,
+      discountType: null,
+      discountValue: null,
+      savingsCents: 0,
+      isPromoActive: false,
+    };
 
   return (
     <div className="grid gap-8 lg:grid-cols-2">
@@ -82,9 +91,16 @@ export function ProductDetails({ product }: ProductDetailsProps) {
           </dl>
         </div>
         <div className="flex items-center gap-4">
-          <p className="text-3xl font-bold text-slate-900">
-            {formatPrice(product.priceCents, product.currency)}
-          </p>
+          <div>
+            <p className="text-3xl font-bold text-slate-900">
+              {formatPrice(pricing.finalPriceCents, product.currency)}
+            </p>
+            {pricing.isPromoActive && (
+              <p className="text-sm text-slate-400 line-through">
+                {formatPrice(pricing.originalPriceCents, product.currency)}
+              </p>
+            )}
+          </div>
           <AddToCartButton productId={product.id} className="px-6 py-3" />
         </div>
       </div>
