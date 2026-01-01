@@ -15,12 +15,20 @@ const roles_decorator_1 = require("../common/decorators/roles.decorator");
 const role_enum_1 = require("../common/enums/role.enum");
 const roles_guard_1 = require("../common/guards/roles.guard");
 const jwt_auth_guard_1 = require("../auth/guards/jwt-auth.guard");
+const admin_service_1 = require("./admin.service");
 let AdminController = class AdminController {
+    adminService;
+    constructor(adminService) {
+        this.adminService = adminService;
+    }
     ping() {
         return {
             message: 'pong',
             timestamp: new Date().toISOString(),
         };
+    }
+    overview() {
+        return this.adminService.getOverview();
     }
 };
 exports.AdminController = AdminController;
@@ -31,8 +39,16 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], AdminController.prototype, "ping", null);
+__decorate([
+    (0, common_1.Get)('overview'),
+    (0, roles_decorator_1.Roles)(role_enum_1.Role.ADMIN),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], AdminController.prototype, "overview", null);
 exports.AdminController = AdminController = __decorate([
     (0, common_1.Controller)('admin'),
-    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard)
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
+    __metadata("design:paramtypes", [admin_service_1.AdminService])
 ], AdminController);
 //# sourceMappingURL=admin.controller.js.map

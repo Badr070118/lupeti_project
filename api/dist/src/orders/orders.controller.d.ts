@@ -22,16 +22,16 @@ export declare class OrdersController {
         }[];
     } & {
         id: string;
+        status: import(".prisma/client").$Enums.OrderStatus;
         createdAt: Date;
         updatedAt: Date;
         currency: string;
         userId: string;
-        shippingAddress: import("@prisma/client/runtime/library").JsonValue;
-        shippingMethod: string | null;
-        status: import(".prisma/client").$Enums.OrderStatus;
+        totalCents: number;
         subtotalCents: number;
         shippingCents: number;
-        totalCents: number;
+        shippingAddress: import("@prisma/client/runtime/library").JsonValue;
+        shippingMethod: string | null;
     }>;
     myOrders(req: Request & {
         user?: JwtPayload;
@@ -47,16 +47,16 @@ export declare class OrdersController {
         }[];
     } & {
         id: string;
+        status: import(".prisma/client").$Enums.OrderStatus;
         createdAt: Date;
         updatedAt: Date;
         currency: string;
         userId: string;
-        shippingAddress: import("@prisma/client/runtime/library").JsonValue;
-        shippingMethod: string | null;
-        status: import(".prisma/client").$Enums.OrderStatus;
+        totalCents: number;
         subtotalCents: number;
         shippingCents: number;
-        totalCents: number;
+        shippingAddress: import("@prisma/client/runtime/library").JsonValue;
+        shippingMethod: string | null;
     })[]>;
     myOrder(req: Request & {
         user?: JwtPayload;
@@ -72,16 +72,16 @@ export declare class OrdersController {
         }[];
     } & {
         id: string;
+        status: import(".prisma/client").$Enums.OrderStatus;
         createdAt: Date;
         updatedAt: Date;
         currency: string;
         userId: string;
-        shippingAddress: import("@prisma/client/runtime/library").JsonValue;
-        shippingMethod: string | null;
-        status: import(".prisma/client").$Enums.OrderStatus;
+        totalCents: number;
         subtotalCents: number;
         shippingCents: number;
-        totalCents: number;
+        shippingAddress: import("@prisma/client/runtime/library").JsonValue;
+        shippingMethod: string | null;
     }>;
     listAll(query: OrdersQueryDto): Promise<{
         data: ({
@@ -101,16 +101,16 @@ export declare class OrdersController {
             }[];
         } & {
             id: string;
+            status: import(".prisma/client").$Enums.OrderStatus;
             createdAt: Date;
             updatedAt: Date;
             currency: string;
             userId: string;
-            shippingAddress: import("@prisma/client/runtime/library").JsonValue;
-            shippingMethod: string | null;
-            status: import(".prisma/client").$Enums.OrderStatus;
+            totalCents: number;
             subtotalCents: number;
             shippingCents: number;
-            totalCents: number;
+            shippingAddress: import("@prisma/client/runtime/library").JsonValue;
+            shippingMethod: string | null;
         })[];
         meta: {
             page: number;
@@ -131,15 +131,15 @@ export declare class OrdersController {
         }[];
     } & {
         id: string;
+        status: import(".prisma/client").$Enums.OrderStatus;
         createdAt: Date;
         updatedAt: Date;
         currency: string;
         userId: string;
-        shippingAddress: import("@prisma/client/runtime/library").JsonValue;
-        shippingMethod: string | null;
-        status: import(".prisma/client").$Enums.OrderStatus;
+        totalCents: number;
         subtotalCents: number;
         shippingCents: number;
-        totalCents: number;
+        shippingAddress: import("@prisma/client/runtime/library").JsonValue;
+        shippingMethod: string | null;
     }>;
 }

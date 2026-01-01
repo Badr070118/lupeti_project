@@ -18,16 +18,46 @@ enum Role {
   ADMIN
 }
 
+enum UserStatus {
+  ACTIVE
+  INACTIVE
+}
+
+enum DiscountType {
+  PERCENT
+  AMOUNT
+}
+
+enum TicketStatus {
+  OPEN
+  IN_PROGRESS
+  CLOSED
+}
+
+enum TicketCategory {
+  ORDER
+  DELIVERY
+  PAYMENT
+  PRODUCT
+  OTHER
+}
+
 model User {
-  id           String         @id @default(uuid()) @db.Uuid
-  email        String         @unique
-  passwordHash String
-  role         Role           @default(USER)
-  createdAt    DateTime       @default(now())
-  updatedAt    DateTime       @updatedAt
-  tokens       RefreshToken[]
-  cart         Cart?
-  orders       Order[]
+  id              String         @id @default(uuid()) @db.Uuid
+  email           String         @unique
+  passwordHash    String
+  role            Role           @default(USER)
+  name            String?
+  status          UserStatus     @default(ACTIVE)
+  deletedAt       DateTime?
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+  tokens          RefreshToken[]
+  cart            Cart?
+  orders          Order[]
+  supportTickets  SupportTicket[] @relation("TicketOwner")
+  assignedTickets SupportTicket[] @relation("TicketAssignment")
+  supportReplies  SupportReply[]
 }
 
 model RefreshToken {
@@ -55,12 +85,20 @@ model Category {
 model Product {
   id          String         @id @default(uuid()) @db.Uuid
   slug        String         @unique
+  sku         String?        @unique
   title       String
   description String
   priceCents  Int
+  originalPriceCents Int?
+  discountType DiscountType?
+  discountValue Int?
+  promoStartAt DateTime?
+  promoEndAt   DateTime?
   currency    String         @default("TRY")
   stock       Int
   isActive    Boolean        @default(true)
+  isFeatured  Boolean        @default(false)
+  deletedAt   DateTime?
   categoryId  String         @db.Uuid
   createdAt   DateTime       @default(now())
   updatedAt   DateTime       @updatedAt
@@ -70,6 +108,7 @@ model Product {
   orderItems  OrderItem[]
 
   @@index([categoryId])
+  @@index([isFeatured])
 }
 
 model ProductImage {
@@ -90,6 +129,7 @@ enum OrderStatus {
   FAILED
   CANCELLED
   SHIPPED
+  DELIVERED
 }
 
 enum PaymentProvider {
@@ -189,4 +229,38 @@ model PaymentEvent {
   payment Payment @relation(fields: [paymentId], references: [id], onDelete: Cascade)
 
   @@index([paymentId])
+}
+
+model SupportTicket {
+  id           String         @id @default(uuid()) @db.Uuid
+  userId       String?        @db.Uuid
+  email        String
+  subject      String
+  message      String
+  category     TicketCategory
+  status       TicketStatus   @default(OPEN)
+  assignedToId String?        @db.Uuid
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  user         User?          @relation("TicketOwner", fields: [userId], references: [id])
+  assignedTo   User?          @relation("TicketAssignment", fields: [assignedToId], references: [id])
+  replies      SupportReply[]
+
+  @@index([status])
+  @@index([category])
+  @@index([createdAt])
+}
+
+model SupportReply {
+  id        String   @id @default(uuid()) @db.Uuid
+  ticketId  String   @db.Uuid
+  authorId  String?  @db.Uuid
+  authorRole Role
+  body      String
+  createdAt DateTime @default(now())
+  ticket    SupportTicket @relation(fields: [ticketId], references: [id], onDelete: Cascade)
+  author    User?    @relation(fields: [authorId], references: [id])
+
+  @@index([ticketId])
+  @@index([authorId])
 }

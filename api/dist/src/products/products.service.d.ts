@@ -1,34 +1,29 @@
-import { Prisma } from '@prisma/client';
+import type { File as MulterFile } from 'multer';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { CreateProductImageDto } from './dto/create-product-image.dto';
 import { ProductQueryDto } from './dto/product-query.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
-declare const productInclude: {
-    category: boolean;
-    images: {
-        orderBy: ({
-            sortOrder: "asc";
-            createdAt?: undefined;
-        } | {
-            createdAt: "asc";
-            sortOrder?: undefined;
-        })[];
-    };
-};
-type ProductWithRelations = Prisma.ProductGetPayload<{
-    include: typeof productInclude;
-}>;
+import { ProductMediaService } from './product-media.service';
 export declare class ProductsService {
     private readonly prisma;
-    constructor(prisma: PrismaService);
+    private readonly mediaService;
+    constructor(prisma: PrismaService, mediaService: ProductMediaService);
     listPublic(query: ProductQueryDto): Promise<{
-        data: ({
+        data: {
+            pricing: {
+                originalPriceCents: number;
+                finalPriceCents: number;
+                isPromoActive: boolean;
+                discountType: import(".prisma/client").$Enums.DiscountType | null;
+                discountValue: number | null;
+                savingsCents: number;
+            };
             category: {
                 id: string;
+                name: string;
                 createdAt: Date;
                 updatedAt: Date;
-                name: string;
                 slug: string;
             };
             images: {
@@ -39,19 +34,26 @@ export declare class ProductsService {
                 sortOrder: number;
                 productId: string;
             }[];
-        } & {
             id: string;
+            deletedAt: Date | null;
             createdAt: Date;
             updatedAt: Date;
             slug: string;
+            discountType: import(".prisma/client").$Enums.DiscountType | null;
+            originalPriceCents: number | null;
+            isFeatured: boolean;
+            promoStartAt: Date | null;
             currency: string;
+            sku: string | null;
             title: string;
             description: string;
             priceCents: number;
+            discountValue: number | null;
+            promoEndAt: Date | null;
             stock: number;
             isActive: boolean;
             categoryId: string;
-        })[];
+        }[];
         meta: {
             page: number;
             limit: number;
@@ -59,13 +61,72 @@ export declare class ProductsService {
             totalPages: number;
         };
     }>;
-    getPublic(slug: string): Promise<ProductWithRelations>;
-    create(dto: CreateProductDto): Promise<{
-        category: {
+    listAdmin(query: ProductQueryDto): Promise<{
+        data: {
+            pricing: {
+                originalPriceCents: number;
+                finalPriceCents: number;
+                isPromoActive: boolean;
+                discountType: import(".prisma/client").$Enums.DiscountType | null;
+                discountValue: number | null;
+                savingsCents: number;
+            };
+            category: {
+                id: string;
+                name: string;
+                createdAt: Date;
+                updatedAt: Date;
+                slug: string;
+            };
+            images: {
+                id: string;
+                createdAt: Date;
+                url: string;
+                altText: string | null;
+                sortOrder: number;
+                productId: string;
+            }[];
             id: string;
+            deletedAt: Date | null;
             createdAt: Date;
             updatedAt: Date;
+            slug: string;
+            discountType: import(".prisma/client").$Enums.DiscountType | null;
+            originalPriceCents: number | null;
+            isFeatured: boolean;
+            promoStartAt: Date | null;
+            currency: string;
+            sku: string | null;
+            title: string;
+            description: string;
+            priceCents: number;
+            discountValue: number | null;
+            promoEndAt: Date | null;
+            stock: number;
+            isActive: boolean;
+            categoryId: string;
+        }[];
+        meta: {
+            page: number;
+            limit: number;
+            total: number;
+            totalPages: number;
+        };
+    }>;
+    getPublic(slug: string): Promise<{
+        pricing: {
+            originalPriceCents: number;
+            finalPriceCents: number;
+            isPromoActive: boolean;
+            discountType: import(".prisma/client").$Enums.DiscountType | null;
+            discountValue: number | null;
+            savingsCents: number;
+        };
+        category: {
+            id: string;
             name: string;
+            createdAt: Date;
+            updatedAt: Date;
             slug: string;
         };
         images: {
@@ -76,25 +137,128 @@ export declare class ProductsService {
             sortOrder: number;
             productId: string;
         }[];
-    } & {
         id: string;
+        deletedAt: Date | null;
         createdAt: Date;
         updatedAt: Date;
         slug: string;
+        discountType: import(".prisma/client").$Enums.DiscountType | null;
+        originalPriceCents: number | null;
+        isFeatured: boolean;
+        promoStartAt: Date | null;
         currency: string;
+        sku: string | null;
         title: string;
         description: string;
         priceCents: number;
+        discountValue: number | null;
+        promoEndAt: Date | null;
+        stock: number;
+        isActive: boolean;
+        categoryId: string;
+    }>;
+    getById(id: string): Promise<{
+        pricing: {
+            originalPriceCents: number;
+            finalPriceCents: number;
+            isPromoActive: boolean;
+            discountType: import(".prisma/client").$Enums.DiscountType | null;
+            discountValue: number | null;
+            savingsCents: number;
+        };
+        category: {
+            id: string;
+            name: string;
+            createdAt: Date;
+            updatedAt: Date;
+            slug: string;
+        };
+        images: {
+            id: string;
+            createdAt: Date;
+            url: string;
+            altText: string | null;
+            sortOrder: number;
+            productId: string;
+        }[];
+        id: string;
+        deletedAt: Date | null;
+        createdAt: Date;
+        updatedAt: Date;
+        slug: string;
+        discountType: import(".prisma/client").$Enums.DiscountType | null;
+        originalPriceCents: number | null;
+        isFeatured: boolean;
+        promoStartAt: Date | null;
+        currency: string;
+        sku: string | null;
+        title: string;
+        description: string;
+        priceCents: number;
+        discountValue: number | null;
+        promoEndAt: Date | null;
+        stock: number;
+        isActive: boolean;
+        categoryId: string;
+    }>;
+    create(dto: CreateProductDto): Promise<{
+        pricing: {
+            originalPriceCents: number;
+            finalPriceCents: number;
+            isPromoActive: boolean;
+            discountType: import(".prisma/client").$Enums.DiscountType | null;
+            discountValue: number | null;
+            savingsCents: number;
+        };
+        category: {
+            id: string;
+            name: string;
+            createdAt: Date;
+            updatedAt: Date;
+            slug: string;
+        };
+        images: {
+            id: string;
+            createdAt: Date;
+            url: string;
+            altText: string | null;
+            sortOrder: number;
+            productId: string;
+        }[];
+        id: string;
+        deletedAt: Date | null;
+        createdAt: Date;
+        updatedAt: Date;
+        slug: string;
+        discountType: import(".prisma/client").$Enums.DiscountType | null;
+        originalPriceCents: number | null;
+        isFeatured: boolean;
+        promoStartAt: Date | null;
+        currency: string;
+        sku: string | null;
+        title: string;
+        description: string;
+        priceCents: number;
+        discountValue: number | null;
+        promoEndAt: Date | null;
         stock: number;
         isActive: boolean;
         categoryId: string;
     }>;
     update(id: string, dto: UpdateProductDto): Promise<{
+        pricing: {
+            originalPriceCents: number;
+            finalPriceCents: number;
+            isPromoActive: boolean;
+            discountType: import(".prisma/client").$Enums.DiscountType | null;
+            discountValue: number | null;
+            savingsCents: number;
+        };
         category: {
             id: string;
+            name: string;
             createdAt: Date;
             updatedAt: Date;
-            name: string;
             slug: string;
         };
         images: {
@@ -105,15 +269,22 @@ export declare class ProductsService {
             sortOrder: number;
             productId: string;
         }[];
-    } & {
         id: string;
+        deletedAt: Date | null;
         createdAt: Date;
         updatedAt: Date;
         slug: string;
+        discountType: import(".prisma/client").$Enums.DiscountType | null;
+        originalPriceCents: number | null;
+        isFeatured: boolean;
+        promoStartAt: Date | null;
         currency: string;
+        sku: string | null;
         title: string;
         description: string;
         priceCents: number;
+        discountValue: number | null;
+        promoEndAt: Date | null;
         stock: number;
         isActive: boolean;
         categoryId: string;
@@ -132,7 +303,15 @@ export declare class ProductsService {
     removeImage(imageId: string): Promise<{
         success: boolean;
     }>;
+    uploadProductImage(file: MulterFile): Promise<{
+        url: string;
+    }>;
     private generateProductSlug;
     private handlePrismaError;
+    private resolvePagination;
+    private buildWhere;
+    private buildSort;
+    private mapProduct;
+    private assertPromoWindow;
+    private normalizeCurrency;
 }
-export {};

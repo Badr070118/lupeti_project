@@ -7,4 +7,5 @@ export declare class ProductQueryDto {
     limit?: number;
     sort?: 'newest' | 'price_asc' | 'price_desc';
     featured?: boolean;
+    includeInactive?: boolean;
 }

@@ -6,23 +6,23 @@ export declare class CategoriesController {
     constructor(categoriesService: CategoriesService);
     findAll(): import(".prisma/client").Prisma.PrismaPromise<{
         id: string;
+        name: string;
         createdAt: Date;
         updatedAt: Date;
-        name: string;
         slug: string;
     }[]>;
     create(dto: CreateCategoryDto): Promise<{
         id: string;
+        name: string;
         createdAt: Date;
         updatedAt: Date;
-        name: string;
         slug: string;
     }>;
     update(id: string, dto: UpdateCategoryDto): Promise<{
         id: string;
+        name: string;
         createdAt: Date;
         updatedAt: Date;
-        name: string;
         slug: string;
     }>;
     remove(id: string): Promise<{

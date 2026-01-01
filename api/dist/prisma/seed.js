@@ -38,14 +38,15 @@ const argon2 = __importStar(require("argon2"));
 const client_1 = require("@prisma/client");
 (0, dotenv_1.config)();
 const prisma = new client_1.PrismaClient();
+const adminEmail = process.env.SEED_ADMIN_EMAIL?.toLowerCase() ?? 'admin@local.test';
+const adminPassword = process.env.SEED_ADMIN_PASSWORD ?? 'Admin123!ChangeMe';
+const supportEmail = process.env.SUPPORT_EMAIL ?? 'support@lupeti.local';
 const localImage = (slug, title, sortOrder = 0) => ({
     url: `/products/${slug}.jpg`,
     altText: `${title} packaging`,
     sortOrder,
 });
 async function seedAdminUser() {
-    const adminEmail = 'admin@local.test';
-    const adminPassword = 'Admin123!ChangeMe';
     const passwordHash = await argon2.hash(adminPassword, {
         type: argon2.argon2id,
     });
@@ -54,11 +55,15 @@ async function seedAdminUser() {
         update: {
             passwordHash,
             role: client_1.Role.ADMIN,
+            status: client_1.UserStatus.ACTIVE,
+            name: 'Lupeti Admin',
         },
         create: {
             email: adminEmail,
             passwordHash,
             role: client_1.Role.ADMIN,
+            status: client_1.UserStatus.ACTIVE,
+            name: 'Lupeti Admin',
         },
     });
 }
@@ -73,11 +78,14 @@ async function seedCustomerUser() {
         update: {
             passwordHash,
             role: client_1.Role.USER,
+            name: 'Demo Customer',
         },
         create: {
             email,
             passwordHash,
             role: client_1.Role.USER,
+            status: client_1.UserStatus.ACTIVE,
+            name: 'Demo Customer',
         },
     });
 }
@@ -109,6 +117,10 @@ async function seedCatalog() {
             currency: 'TRY',
             stock: 120,
             categorySlug: 'dog',
+            isFeatured: true,
+            originalPriceCents: 21900,
+            discountType: client_1.DiscountType.PERCENT,
+            discountValue: 15,
             images: [
                 localImage('anatolian-lamb-herbs-kibble', 'Anatolian Lamb & Herbs Kibble'),
             ],
@@ -120,6 +132,10 @@ async function seedCatalog() {
             priceCents: 15900,
             stock: 95,
             categorySlug: 'dog',
+            promoStartAt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 3),
+            promoEndAt: new Date(Date.now() + 1000 * 60 * 60 * 24 * 4),
+            discountType: client_1.DiscountType.AMOUNT,
+            discountValue: 1500,
             images: [
                 localImage('tender-turkey-puppy-bites', 'Tender Turkey Puppy Bites'),
             ],
@@ -131,6 +147,7 @@ async function seedCatalog() {
             priceCents: 9900,
             stock: 140,
             categorySlug: 'cat',
+            isFeatured: true,
             images: [
                 localImage('coastal-sardine-crunch', 'Coastal Sardine Crunch'),
             ],
@@ -153,6 +170,7 @@ async function seedCatalog() {
             priceCents: 21500,
             stock: 60,
             categorySlug: 'cat',
+            originalPriceCents: 23900,
             images: [
                 localImage('highland-salmon-casserole', 'Highland Salmon Casserole'),
             ],
@@ -175,6 +193,9 @@ async function seedCatalog() {
             priceCents: 8500,
             stock: 110,
             categorySlug: 'cat',
+            discountType: client_1.DiscountType.PERCENT,
+            discountValue: 10,
+            isFeatured: true,
             images: [
                 localImage('fermented-kefir-nibbles', 'Fermented Kefir Nibbles'),
             ],
@@ -226,6 +247,12 @@ async function seedCatalog() {
                 currency: product.currency ?? 'TRY',
                 stock: product.stock,
                 isActive: product.isActive ?? true,
+                isFeatured: product.isFeatured ?? false,
+                originalPriceCents: product.originalPriceCents ?? null,
+                discountType: product.discountType ?? null,
+                discountValue: product.discountValue ?? null,
+                promoStartAt: product.promoStartAt ?? null,
+                promoEndAt: product.promoEndAt ?? null,
                 categoryId,
                 images: {
                     deleteMany: {},
@@ -244,6 +271,12 @@ async function seedCatalog() {
                 currency: product.currency ?? 'TRY',
                 stock: product.stock,
                 isActive: product.isActive ?? true,
+                isFeatured: product.isFeatured ?? false,
+                originalPriceCents: product.originalPriceCents ?? null,
+                discountType: product.discountType ?? null,
+                discountValue: product.discountValue ?? null,
+                promoStartAt: product.promoStartAt ?? null,
+                promoEndAt: product.promoEndAt ?? null,
                 categoryId,
                 images: {
                     create: product.images.map((img, index) => ({
@@ -256,11 +289,40 @@ async function seedCatalog() {
         });
     }
 }
+async function seedSupportTickets() {
+    const admin = await prisma.user.findFirst({
+        where: { role: client_1.Role.ADMIN },
+    });
+    if (!admin)
+        return;
+    const ticket = await prisma.supportTicket.upsert({
+        where: { id: '00000000-0000-0000-0000-000000000001' },
+        update: {},
+        create: {
+            id: '00000000-0000-0000-0000-000000000001',
+            email: 'customer@local.test',
+            subject: 'Livraison en retard',
+            message: 'Bonjour, ma commande Lupeti #1001 semble bloquée depuis 48h. Pouvez-vous vérifier ?',
+            category: client_1.TicketCategory.DELIVERY,
+            status: client_1.TicketStatus.OPEN,
+            userId: null,
+        },
+    });
+    await prisma.supportReply.create({
+        data: {
+            ticketId: ticket.id,
+            authorId: admin.id,
+            authorRole: client_1.Role.ADMIN,
+            body: 'Nous vérifions auprès du transporteur et revenons vers vous sous 24h.',
+        },
+    });
+}
 async function main() {
     await seedAdminUser();
     await seedCustomerUser();
     await seedCatalog();
-    console.log('Seed data applied: admin & customer users, categories, products');
+    await seedSupportTickets();
+    console.log(`Seed data applied: admin (${adminEmail}), customer users, categories, products, support ticket`);
 }
 main()
     .catch((error) => {

@@ -5,6 +5,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
+import { computeProductPricing } from '../products/product-pricing.util';
 import { AddCartItemDto } from './dto/add-cart-item.dto';
 import { UpdateCartItemDto } from './dto/update-cart-item.dto';
 
@@ -17,6 +18,11 @@ const cartInclude = {
           slug: true,
           title: true,
           priceCents: true,
+          originalPriceCents: true,
+          discountType: true,
+          discountValue: true,
+          promoStartAt: true,
+          promoEndAt: true,
           currency: true,
           stock: true,
           isActive: true,
@@ -181,10 +187,12 @@ export class CartService {
       items: cart.items.map((item) => {
         const { images: imageRecords, ...product } = item.product;
         const [image] = imageRecords ?? [];
+        const pricing = computeProductPricing(product);
         return {
           ...item,
           product: {
             ...product,
+            pricing,
             imageUrl: image?.url ?? null,
           },
         };

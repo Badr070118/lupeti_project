@@ -14,7 +14,7 @@ import { LoginDto } from './dto/login.dto';
 import { RegisterDto } from './dto/register.dto';
 import { AuthResponseDto, AuthenticatedUser } from './dto/auth-response.dto';
 import { JwtPayload } from './interfaces/jwt-payload.interface';
-import { User } from '@prisma/client';
+import { User, UserStatus } from '@prisma/client';
 
 const ACCESS_TOKEN_TTL = '15m';
 const REFRESH_TOKEN_TTL = '7d';
@@ -49,6 +49,7 @@ export class AuthService {
         email: normalizedEmail,
         passwordHash,
         role: Role.USER,
+        name: dto.name?.trim() || null,
       },
     });
 
@@ -64,6 +65,10 @@ export class AuthService {
 
     if (!user) {
       throw new UnauthorizedException('Invalid credentials');
+    }
+
+    if (user.deletedAt || user.status !== UserStatus.ACTIVE) {
+      throw new UnauthorizedException('Account is inactive');
     }
 
     const passwordValid = await this.verifyHash(
@@ -127,8 +132,12 @@ export class AuthService {
       where: { id: payload.sub },
     });
 
-    if (!user) {
+    if (!user || user.deletedAt) {
       throw new UnauthorizedException('User not found');
+    }
+
+    if (user.status !== UserStatus.ACTIVE) {
+      throw new UnauthorizedException('Account is inactive');
     }
 
     await this.revokeTokenById(tokenRecord.id);
@@ -145,8 +154,12 @@ export class AuthService {
       where: { id: userId },
     });
 
-    if (!user) {
+    if (!user || user.deletedAt) {
       throw new UnauthorizedException('User not found');
+    }
+
+    if (user.status !== UserStatus.ACTIVE) {
+      throw new UnauthorizedException('Account is inactive');
     }
 
     return this.mapUser(user);
@@ -247,6 +260,8 @@ export class AuthService {
       id: user.id,
       email: user.email,
       role: user.role,
+      name: user.name,
+      status: user.status,
       createdAt: user.createdAt,
     };
   }

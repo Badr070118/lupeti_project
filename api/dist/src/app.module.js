@@ -20,6 +20,8 @@ const categories_module_1 = require("./categories/categories.module");
 const cart_module_1 = require("./cart/cart.module");
 const orders_module_1 = require("./orders/orders.module");
 const payments_module_1 = require("./payments/payments.module");
+const users_module_1 = require("./users/users.module");
+const support_module_1 = require("./support/support.module");
 let AppModule = class AppModule {
     configure(consumer) {
         consumer.apply(request_context_middleware_1.RequestContextMiddleware).forRoutes('*');
@@ -47,6 +49,8 @@ exports.AppModule = AppModule = __decorate([
             cart_module_1.CartModule,
             orders_module_1.OrdersModule,
             payments_module_1.PaymentsModule,
+            users_module_1.UsersModule,
+            support_module_1.SupportModule,
         ],
         providers: [
             {

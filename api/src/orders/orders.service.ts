@@ -6,6 +6,7 @@ import {
 } from '@nestjs/common';
 import { OrderStatus, Prisma } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
+import { computeProductPricing } from '../products/product-pricing.util';
 import { CheckoutDto } from './dto/checkout.dto';
 import { OrdersQueryDto } from './dto/orders-query.dto';
 import { UpdateOrderStatusDto } from './dto/update-order-status.dto';
@@ -53,7 +54,8 @@ export class OrdersService {
             `Insufficient stock for ${item.product.title}`,
           );
         }
-        subtotal += item.product.priceCents * item.quantity;
+        const pricing = computeProductPricing(item.product);
+        subtotal += pricing.finalPriceCents * item.quantity;
       }
 
       const shippingMethod = (
@@ -74,13 +76,16 @@ export class OrdersService {
           shippingAddress:
             dto.shippingAddress as unknown as Prisma.InputJsonValue,
           items: {
-            create: cart.items.map((item) => ({
-              productId: item.productId,
-              titleSnapshot: item.product.title,
-              priceCentsSnapshot: item.product.priceCents,
-              quantity: item.quantity,
-              lineTotalCents: item.product.priceCents * item.quantity,
-            })),
+            create: cart.items.map((item) => {
+              const pricing = computeProductPricing(item.product);
+              return {
+                productId: item.productId,
+                titleSnapshot: item.product.title,
+                priceCentsSnapshot: pricing.finalPriceCents,
+                quantity: item.quantity,
+                lineTotalCents: pricing.finalPriceCents * item.quantity,
+              };
+            }),
           },
         },
         include: orderInclude,

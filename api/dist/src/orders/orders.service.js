@@ -13,6 +13,7 @@ exports.OrdersService = void 0;
 const common_1 = require("@nestjs/common");
 const client_1 = require("@prisma/client");
 const prisma_service_1 = require("../prisma/prisma.service");
+const product_pricing_util_1 = require("../products/product-pricing.util");
 const orderInclude = {
     items: {
         orderBy: { id: 'asc' },
@@ -49,7 +50,8 @@ let OrdersService = class OrdersService {
                 if (item.product.stock < item.quantity) {
                     throw new common_1.ConflictException(`Insufficient stock for ${item.product.title}`);
                 }
-                subtotal += item.product.priceCents * item.quantity;
+                const pricing = (0, product_pricing_util_1.computeProductPricing)(item.product);
+                subtotal += pricing.finalPriceCents * item.quantity;
             }
             const shippingMethod = (dto.shippingMethod ?? 'STANDARD').toUpperCase();
             const shippingCents = this.calculateShipping(shippingMethod);
@@ -65,13 +67,16 @@ let OrdersService = class OrdersService {
                     shippingMethod,
                     shippingAddress: dto.shippingAddress,
                     items: {
-                        create: cart.items.map((item) => ({
-                            productId: item.productId,
-                            titleSnapshot: item.product.title,
-                            priceCentsSnapshot: item.product.priceCents,
-                            quantity: item.quantity,
-                            lineTotalCents: item.product.priceCents * item.quantity,
-                        })),
+                        create: cart.items.map((item) => {
+                            const pricing = (0, product_pricing_util_1.computeProductPricing)(item.product);
+                            return {
+                                productId: item.productId,
+                                titleSnapshot: item.product.title,
+                                priceCentsSnapshot: pricing.finalPriceCents,
+                                quantity: item.quantity,
+                                lineTotalCents: pricing.finalPriceCents * item.quantity,
+                            };
+                        }),
                     },
                 },
                 include: orderInclude,

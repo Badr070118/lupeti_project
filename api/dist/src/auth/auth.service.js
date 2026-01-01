@@ -50,6 +50,7 @@ const jwt_1 = require("@nestjs/jwt");
 const argon2 = __importStar(require("argon2"));
 const role_enum_1 = require("../common/enums/role.enum");
 const prisma_service_1 = require("../prisma/prisma.service");
+const client_1 = require("@prisma/client");
 const ACCESS_TOKEN_TTL = '15m';
 const REFRESH_TOKEN_TTL = '7d';
 const REFRESH_COOKIE_NAME = 'refresh_token';
@@ -78,6 +79,7 @@ let AuthService = AuthService_1 = class AuthService {
                 email: normalizedEmail,
                 passwordHash,
                 role: role_enum_1.Role.USER,
+                name: dto.name?.trim() || null,
             },
         });
         return this.createSession(user);
@@ -88,6 +90,9 @@ let AuthService = AuthService_1 = class AuthService {
         });
         if (!user) {
             throw new common_1.UnauthorizedException('Invalid credentials');
+        }
+        if (user.deletedAt || user.status !== client_1.UserStatus.ACTIVE) {
+            throw new common_1.UnauthorizedException('Account is inactive');
         }
         const passwordValid = await this.verifyHash(user.passwordHash, dto.password);
         if (!passwordValid) {
@@ -131,8 +136,11 @@ let AuthService = AuthService_1 = class AuthService {
         const user = await this.prisma.user.findUnique({
             where: { id: payload.sub },
         });
-        if (!user) {
+        if (!user || user.deletedAt) {
             throw new common_1.UnauthorizedException('User not found');
+        }
+        if (user.status !== client_1.UserStatus.ACTIVE) {
+            throw new common_1.UnauthorizedException('Account is inactive');
         }
         await this.revokeTokenById(tokenRecord.id);
         return this.createSession(user, { revokeExisting: false });
@@ -144,8 +152,11 @@ let AuthService = AuthService_1 = class AuthService {
         const user = await this.prisma.user.findUnique({
             where: { id: userId },
         });
-        if (!user) {
+        if (!user || user.deletedAt) {
             throw new common_1.UnauthorizedException('User not found');
+        }
+        if (user.status !== client_1.UserStatus.ACTIVE) {
+            throw new common_1.UnauthorizedException('Account is inactive');
         }
         return this.mapUser(user);
     }
@@ -223,6 +234,8 @@ let AuthService = AuthService_1 = class AuthService {
             id: user.id,
             email: user.email,
             role: user.role,
+            name: user.name,
+            status: user.status,
             createdAt: user.createdAt,
         };
     }

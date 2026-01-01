@@ -21,6 +21,7 @@ class ProductQueryDto {
     limit = 12;
     sort = 'newest';
     featured;
+    includeInactive;
 }
 exports.ProductQueryDto = ProductQueryDto;
 __decorate([
@@ -80,4 +81,16 @@ __decorate([
     }),
     __metadata("design:type", Boolean)
 ], ProductQueryDto.prototype, "featured", void 0);
+__decorate([
+    (0, class_validator_1.IsOptional)(),
+    (0, class_transformer_1.Transform)(({ value }) => {
+        if (typeof value === 'boolean')
+            return value;
+        if (typeof value === 'string') {
+            return value.toLowerCase() === 'true';
+        }
+        return undefined;
+    }),
+    __metadata("design:type", Boolean)
+], ProductQueryDto.prototype, "includeInactive", void 0);
 //# sourceMappingURL=product-query.dto.js.map

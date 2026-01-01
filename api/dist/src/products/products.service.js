@@ -14,52 +14,31 @@ const common_1 = require("@nestjs/common");
 const client_1 = require("@prisma/client");
 const slugify_1 = require("../common/utils/slugify");
 const prisma_service_1 = require("../prisma/prisma.service");
+const product_pricing_util_1 = require("./product-pricing.util");
+const product_media_service_1 = require("./product-media.service");
 const productInclude = {
     category: true,
     images: {
         orderBy: [{ sortOrder: 'asc' }, { createdAt: 'asc' }],
     },
 };
+const CATEGORY_SLUG_MAP = {
+    chien: 'dog',
+    dog: 'dog',
+    chat: 'cat',
+    cat: 'cat',
+};
 let ProductsService = class ProductsService {
     prisma;
-    constructor(prisma) {
+    mediaService;
+    constructor(prisma, mediaService) {
         this.prisma = prisma;
+        this.mediaService = mediaService;
     }
     async listPublic(query) {
-        const page = query.page ?? 1;
-        const limit = Math.min(Math.max(query.limit ?? 12, 1), 50);
-        const skip = (page - 1) * limit;
-        const where = {
-            isActive: true,
-        };
-        const categorySlug = query.category?.trim();
-        if (categorySlug) {
-            where.category = {
-                slug: categorySlug,
-            };
-        }
-        const searchTerm = query.search?.trim();
-        if (searchTerm) {
-            where.OR = [
-                { title: { contains: searchTerm, mode: 'insensitive' } },
-                { description: { contains: searchTerm, mode: 'insensitive' } },
-            ];
-        }
-        if (query.minPrice !== undefined || query.maxPrice !== undefined) {
-            const priceFilter = {};
-            if (query.minPrice !== undefined) {
-                priceFilter.gte = query.minPrice;
-            }
-            if (query.maxPrice !== undefined) {
-                priceFilter.lte = query.maxPrice;
-            }
-            where.priceCents = priceFilter;
-        }
-        const orderBy = query.sort === 'price_asc'
-            ? { priceCents: 'asc' }
-            : query.sort === 'price_desc'
-                ? { priceCents: 'desc' }
-                : { createdAt: 'desc' };
+        const { page, limit, skip } = this.resolvePagination(query);
+        const where = this.buildWhere(query, { forAdmin: false });
+        const orderBy = this.buildSort(query);
         const [items, total] = await this.prisma.$transaction([
             this.prisma.product.findMany({
                 where,
@@ -71,7 +50,33 @@ let ProductsService = class ProductsService {
             this.prisma.product.count({ where }),
         ]);
         return {
-            data: items,
+            data: items.map((item) => this.mapProduct(item)),
+            meta: {
+                page,
+                limit,
+                total,
+                totalPages: Math.max(1, Math.ceil(total / limit)),
+            },
+        };
+    }
+    async listAdmin(query) {
+        const page = query.page ?? 1;
+        const limit = Math.min(Math.max(query.limit ?? 12, 1), 50);
+        const skip = (page - 1) * limit;
+        const where = this.buildWhere(query, { forAdmin: true });
+        const orderBy = this.buildSort(query);
+        const [items, total] = await this.prisma.$transaction([
+            this.prisma.product.findMany({
+                where,
+                skip,
+                take: limit,
+                orderBy,
+                include: productInclude,
+            }),
+            this.prisma.product.count({ where }),
+        ]);
+        return {
+            data: items.map((item) => this.mapProduct(item)),
             meta: {
                 page,
                 limit,
@@ -85,32 +90,61 @@ let ProductsService = class ProductsService {
             where: {
                 slug,
                 isActive: true,
+                deletedAt: null,
             },
             include: productInclude,
         });
         if (!product) {
             throw new common_1.NotFoundException('Product not found');
         }
-        return product;
+        return this.mapProduct(product);
+    }
+    async getById(id) {
+        const product = await this.prisma.product.findFirst({
+            where: { id },
+            include: productInclude,
+        });
+        if (!product) {
+            throw new common_1.NotFoundException('Product not found');
+        }
+        return this.mapProduct(product);
     }
     async create(dto) {
+        this.assertPromoWindow(dto.promoStartAt, dto.promoEndAt);
         const slug = await this.generateProductSlug((0, slugify_1.ensureSlug)(dto.slug ?? dto.title, dto.title));
         try {
-            return await this.prisma.product.create({
+            const product = await this.prisma.product.create({
                 data: {
                     slug,
+                    sku: dto.sku?.trim() || null,
                     title: dto.title,
                     description: dto.description,
                     priceCents: dto.priceCents,
-                    currency: (dto.currency ?? 'TRY').toUpperCase(),
+                    originalPriceCents: dto.originalPriceCents ?? null,
+                    discountType: dto.discountType ?? null,
+                    discountValue: dto.discountValue ?? null,
+                    promoStartAt: dto.promoStartAt ?? null,
+                    promoEndAt: dto.promoEndAt ?? null,
+                    isFeatured: dto.isFeatured ?? false,
+                    currency: this.normalizeCurrency(dto.currency),
                     stock: dto.stock,
                     isActive: dto.isActive ?? true,
                     category: {
                         connect: { id: dto.categoryId },
                     },
+                    images: dto.images?.length
+                        ? {
+                            create: dto.images.map((image, index) => ({
+                                url: image.url,
+                                altText: image.altText ?? null,
+                                sortOrder: image.sortOrder ?? index,
+                            })),
+                        }
+                        : undefined,
                 },
                 include: productInclude,
             });
+            return this.mapProduct(product);
         }
         catch (error) {
             this.handlePrismaError(error);
@@ -123,6 +157,7 @@ let ProductsService = class ProductsService {
         if (!existing) {
             throw new common_1.NotFoundException('Product not found');
         }
+        this.assertPromoWindow(dto.promoStartAt, dto.promoEndAt);
         const data = {};
         if (dto.title)
             data.title = dto.title;
@@ -131,12 +166,26 @@ let ProductsService = class ProductsService {
         if (dto.priceCents !== undefined)
             data.priceCents = dto.priceCents;
         if (dto.currency !== undefined) {
-            data.currency = dto.currency.toUpperCase();
+            data.currency = this.normalizeCurrency(dto.currency);
         }
         if (dto.stock !== undefined)
             data.stock = dto.stock;
         if (dto.isActive !== undefined)
             data.isActive = dto.isActive;
+        if (dto.isFeatured !== undefined)
+            data.isFeatured = dto.isFeatured;
+        if (dto.sku !== undefined)
+            data.sku = dto.sku || null;
+        if (dto.discountType !== undefined)
+            data.discountType = dto.discountType ?? null;
+        if (dto.discountValue !== undefined)
+            data.discountValue = dto.discountValue ?? null;
+        if (dto.originalPriceCents !== undefined)
+            data.originalPriceCents = dto.originalPriceCents ?? null;
+        if (dto.promoStartAt !== undefined)
+            data.promoStartAt = dto.promoStartAt ?? null;
+        if (dto.promoEndAt !== undefined)
+            data.promoEndAt = dto.promoEndAt ?? null;
         if (dto.categoryId) {
             data.category = {
                 connect: { id: dto.categoryId },
@@ -146,11 +195,12 @@ let ProductsService = class ProductsService {
             data.slug = await this.generateProductSlug((0, slugify_1.ensureSlug)(dto.slug, dto.slug), id);
         }
         try {
-            return await this.prisma.product.update({
+            const product = await this.prisma.product.update({
                 where: { id },
                 data,
                 include: productInclude,
             });
+            return this.mapProduct(product);
         }
         catch (error) {
             this.handlePrismaError(error);
@@ -158,8 +208,12 @@ let ProductsService = class ProductsService {
     }
     async remove(id) {
         try {
-            await this.prisma.product.delete({
+            await this.prisma.product.update({
                 where: { id },
+                data: {
+                    isActive: false,
+                    deletedAt: new Date(),
+                },
             });
             return { success: true };
         }
@@ -202,6 +256,9 @@ let ProductsService = class ProductsService {
             throw error;
         }
     }
+    async uploadProductImage(file) {
+        return this.mediaService.saveProductImage(file);
+    }
     async generateProductSlug(desired, excludeId) {
         let base = desired || 'product';
         base = (0, slugify_1.slugify)(base) || 'product';
@@ -221,7 +278,7 @@ let ProductsService = class ProductsService {
     handlePrismaError(error) {
         if (error instanceof client_1.Prisma.PrismaClientKnownRequestError &&
             error.code === 'P2002') {
-            throw new common_1.ConflictException('Product slug already exists');
+            throw new common_1.ConflictException('Product with same slug or SKU exists');
         }
         if (error instanceof client_1.Prisma.PrismaClientKnownRequestError &&
             error.code === 'P2003') {
@@ -229,10 +286,78 @@ let ProductsService = class ProductsService {
         }
         throw error;
     }
+    resolvePagination(query) {
+        const page = query.page ?? 1;
+        const limit = Math.min(Math.max(query.limit ?? 12, 1), 50);
+        const skip = (page - 1) * limit;
+        return { page, limit, skip };
+    }
+    buildWhere(query, options) {
+        const where = {
+            deletedAt: null,
+        };
+        if (!options.forAdmin || !query.includeInactive) {
+            where.isActive = true;
+        }
+        const categorySlug = query.category?.trim().toLowerCase();
+        if (categorySlug) {
+            const normalized = CATEGORY_SLUG_MAP[categorySlug] ?? categorySlug.toLowerCase();
+            where.category = {
+                slug: normalized,
+            };
+        }
+        const searchTerm = query.search?.trim();
+        if (searchTerm) {
+            where.OR = [
+                { title: { contains: searchTerm, mode: 'insensitive' } },
+                { description: { contains: searchTerm, mode: 'insensitive' } },
+            ];
+        }
+        if (query.minPrice !== undefined || query.maxPrice !== undefined) {
+            const priceFilter = {};
+            if (query.minPrice !== undefined) {
+                priceFilter.gte = query.minPrice;
+            }
+            if (query.maxPrice !== undefined) {
+                priceFilter.lte = query.maxPrice;
+            }
+            where.priceCents = priceFilter;
+        }
+        if (query.featured !== undefined) {
+            where.isFeatured = query.featured;
+        }
+        return where;
+    }
+    buildSort(query) {
+        const isFeaturedFirst = typeof query.featured === 'undefined'
+            ? [{ isFeatured: 'desc' }]
+            : [];
+        const sort = query.sort === 'price_asc'
+            ? [{ priceCents: 'asc' }]
+            : query.sort === 'price_desc'
+                ? [{ priceCents: 'desc' }]
+                : [{ createdAt: 'desc' }];
+        return [...isFeaturedFirst, ...sort];
+    }
+    mapProduct(product) {
+        return {
+            ...product,
+            pricing: (0, product_pricing_util_1.computeProductPricing)(product),
+        };
+    }
+    assertPromoWindow(start, end) {
+        if (start && end && start > end) {
+            throw new common_1.BadRequestException('Promo start date must be before end date');
+        }
+    }
+    normalizeCurrency(currency) {
+        return (currency ?? 'TRY').toUpperCase();
+    }
 };
 exports.ProductsService = ProductsService;
 exports.ProductsService = ProductsService = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [prisma_service_1.PrismaService])
+    __metadata("design:paramtypes", [prisma_service_1.PrismaService,
+        product_media_service_1.ProductMediaService])
 ], ProductsService);
 //# sourceMappingURL=products.service.js.map

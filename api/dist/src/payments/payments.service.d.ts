@@ -21,15 +21,15 @@ export declare class PaymentsService {
         data: ({
             order: {
                 id: string;
-                userId: string;
                 status: import(".prisma/client").$Enums.OrderStatus;
+                userId: string;
             };
         } & {
             id: string;
+            status: import(".prisma/client").$Enums.PaymentStatus;
             createdAt: Date;
             updatedAt: Date;
             currency: string;
-            status: import(".prisma/client").$Enums.PaymentStatus;
             orderId: string;
             provider: import(".prisma/client").$Enums.PaymentProvider;
             amountCents: number;

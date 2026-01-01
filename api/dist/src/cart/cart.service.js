@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CartService = void 0;
 const common_1 = require("@nestjs/common");
 const prisma_service_1 = require("../prisma/prisma.service");
+const product_pricing_util_1 = require("../products/product-pricing.util");
 const cartInclude = {
     items: {
         include: {
@@ -21,6 +22,11 @@ const cartInclude = {
                     slug: true,
                     title: true,
                     priceCents: true,
+                    originalPriceCents: true,
+                    discountType: true,
+                    discountValue: true,
+                    promoStartAt: true,
+                    promoEndAt: true,
                     currency: true,
                     stock: true,
                     isActive: true,
@@ -163,10 +169,12 @@ let CartService = class CartService {
             items: cart.items.map((item) => {
                 const { images: imageRecords, ...product } = item.product;
                 const [image] = imageRecords ?? [];
+                const pricing = (0, product_pricing_util_1.computeProductPricing)(product);
                 return {
                     ...item,
                     product: {
                         ...product,
+                        pricing,
                         imageUrl: image?.url ?? null,
                     },
                 };

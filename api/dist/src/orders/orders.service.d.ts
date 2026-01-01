@@ -18,16 +18,16 @@ export declare class OrdersService {
         }[];
     } & {
         id: string;
+        status: import(".prisma/client").$Enums.OrderStatus;
         createdAt: Date;
         updatedAt: Date;
         currency: string;
         userId: string;
-        shippingAddress: Prisma.JsonValue;
-        shippingMethod: string | null;
-        status: import(".prisma/client").$Enums.OrderStatus;
+        totalCents: number;
         subtotalCents: number;
         shippingCents: number;
-        totalCents: number;
+        shippingAddress: Prisma.JsonValue;
+        shippingMethod: string | null;
     }>;
     listMyOrders(userId: string): Prisma.PrismaPromise<({
         items: {
@@ -41,16 +41,16 @@ export declare class OrdersService {
         }[];
     } & {
         id: string;
+        status: import(".prisma/client").$Enums.OrderStatus;
         createdAt: Date;
         updatedAt: Date;
         currency: string;
         userId: string;
-        shippingAddress: Prisma.JsonValue;
-        shippingMethod: string | null;
-        status: import(".prisma/client").$Enums.OrderStatus;
+        totalCents: number;
         subtotalCents: number;
         shippingCents: number;
-        totalCents: number;
+        shippingAddress: Prisma.JsonValue;
+        shippingMethod: string | null;
     })[]>;
     getMyOrder(userId: string, id: string): Promise<{
         items: {
@@ -64,16 +64,16 @@ export declare class OrdersService {
         }[];
     } & {
         id: string;
+        status: import(".prisma/client").$Enums.OrderStatus;
         createdAt: Date;
         updatedAt: Date;
         currency: string;
         userId: string;
-        shippingAddress: Prisma.JsonValue;
-        shippingMethod: string | null;
-        status: import(".prisma/client").$Enums.OrderStatus;
+        totalCents: number;
         subtotalCents: number;
         shippingCents: number;
-        totalCents: number;
+        shippingAddress: Prisma.JsonValue;
+        shippingMethod: string | null;
     }>;
     listAllOrders(query: OrdersQueryDto): Promise<{
         data: ({
@@ -93,16 +93,16 @@ export declare class OrdersService {
             }[];
         } & {
             id: string;
+            status: import(".prisma/client").$Enums.OrderStatus;
             createdAt: Date;
             updatedAt: Date;
             currency: string;
             userId: string;
-            shippingAddress: Prisma.JsonValue;
-            shippingMethod: string | null;
-            status: import(".prisma/client").$Enums.OrderStatus;
+            totalCents: number;
             subtotalCents: number;
             shippingCents: number;
-            totalCents: number;
+            shippingAddress: Prisma.JsonValue;
+            shippingMethod: string | null;
         })[];
         meta: {
             page: number;
@@ -123,16 +123,16 @@ export declare class OrdersService {
         }[];
     } & {
         id: string;
+        status: import(".prisma/client").$Enums.OrderStatus;
         createdAt: Date;
         updatedAt: Date;
         currency: string;
         userId: string;
-        shippingAddress: Prisma.JsonValue;
-        shippingMethod: string | null;
-        status: import(".prisma/client").$Enums.OrderStatus;
+        totalCents: number;
         subtotalCents: number;
         shippingCents: number;
-        totalCents: number;
+        shippingAddress: Prisma.JsonValue;
+        shippingMethod: string | null;
     }>;
     private calculateShipping;
 }

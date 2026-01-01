@@ -1,5 +1,9 @@
+import { Type } from 'class-transformer';
 import {
+  IsArray,
   IsBoolean,
+  IsDate,
+  IsEnum,
   IsInt,
   IsNotEmpty,
   IsOptional,
@@ -7,7 +11,10 @@ import {
   IsUUID,
   Length,
   Min,
+  ValidateNested,
 } from 'class-validator';
+import { DiscountType } from '@prisma/client';
+import { CreateProductImageDto } from './create-product-image.dto';
 
 export class CreateProductDto {
   @IsString()
@@ -39,7 +46,45 @@ export class CreateProductDto {
   categoryId!: string;
 
   @IsOptional()
+  @IsBoolean()
+  isFeatured?: boolean;
+
+  @IsOptional()
   @IsString()
   @IsNotEmpty()
   slug?: string;
+
+  @IsOptional()
+  @IsString()
+  sku?: string;
+
+  @IsOptional()
+  @IsInt()
+  @Min(0)
+  originalPriceCents?: number;
+
+  @IsOptional()
+  @IsEnum(DiscountType)
+  discountType?: DiscountType;
+
+  @IsOptional()
+  @IsInt()
+  @Min(0)
+  discountValue?: number;
+
+  @IsOptional()
+  @Type(() => Date)
+  @IsDate()
+  promoStartAt?: Date;
+
+  @IsOptional()
+  @Type(() => Date)
+  @IsDate()
+  promoEndAt?: Date;
+
+  @IsOptional()
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => CreateProductImageDto)
+  images?: CreateProductImageDto[];
 }

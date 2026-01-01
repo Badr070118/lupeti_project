@@ -49,4 +49,14 @@ export class ProductQueryDto {
     return undefined;
   })
   featured?: boolean;
+
+  @IsOptional()
+  @Transform(({ value }) => {
+    if (typeof value === 'boolean') return value;
+    if (typeof value === 'string') {
+      return value.toLowerCase() === 'true';
+    }
+    return undefined;
+  })
+  includeInactive?: boolean;
 }
