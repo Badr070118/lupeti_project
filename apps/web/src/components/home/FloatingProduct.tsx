@@ -24,7 +24,10 @@ export function FloatingProduct({
   mobile,
 }: FloatingProductProps) {
   const texture = useTexture(image);
-  texture.flipY = false;
+  useEffect(() => {
+    texture.flipY = true;
+    texture.needsUpdate = true;
+  }, [texture]);
 
   const groupRef = useRef<Group>(null);
   const glowRef = useRef<Mesh>(null);
