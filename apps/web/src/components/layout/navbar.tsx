@@ -6,14 +6,16 @@ import { useTranslations } from 'next-intl';
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/hooks/use-auth';
 import { LanguageSwitcher } from '@/components/common/language-switcher';
-import { CartIndicator } from '@/components/common/cart-indicator';
 import { Button } from '@/components/ui/button';
 import { Link, usePathname } from '@/i18n/routing';
 import { ThemeToggle } from '@/components/common/theme-toggle';
+import { MiniCart } from '@/components/common/mini-cart';
+import { SearchBar } from '@/components/common/search-bar';
 
 const NAV_ITEMS = [
   { href: '/', key: 'home' },
   { href: '/shop', key: 'shop' },
+  { href: '/wishlist', key: 'wishlist' },
   { href: '/support', key: 'support' },
 ] as const;
 
@@ -60,9 +62,12 @@ export function Navbar() {
         </div>
 
         <div className="flex items-center gap-4">
+          <div className="hidden w-64 md:block">
+            <SearchBar />
+          </div>
           <ThemeToggle />
           <LanguageSwitcher />
-          <CartIndicator />
+          <MiniCart />
           {user && accessToken ? (
             <div className="hidden items-center gap-3 md:flex">
               <Link

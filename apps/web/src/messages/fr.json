@@ -15,7 +15,8 @@
       "en": "Anglais",
       "fr": "Français",
       "tr": "Turc"
-    }
+    },
+    "wishlist": "Wishlist"
   },
   "hero": {
     "badge": "Conçu pour les palais exigeants",
@@ -90,6 +91,11 @@
       "title": "Composez un garde-manger conscient dès aujourd'hui",
       "subtitle": "Mixez croquettes, snacks et accessoires via une expérience de paiement fluide.",
       "cta": "Accéder à la boutique"
+    },
+    "search": {
+      "eyebrow": "Find products",
+      "title": "Search Lupeti essentials",
+      "subtitle": "Look up croquettes, accessories, or wellness staples."
     }
   },
   "shop": {
@@ -113,7 +119,16 @@
     "categoryLabel": {
       "dog": "Chien",
       "cat": "Chat"
-    }
+    },
+    "searchTitle": "Search",
+    "searchHeadline": "Find products that match your rituals",
+    "sortLabel": "Sort by",
+    "sortNewest": "Newest",
+    "sortPriceAsc": "Price: low to high",
+    "sortPriceDesc": "Price: high to low",
+    "sortBest": "Best sellers",
+    "inStock": "In stock only",
+    "onSale": "Promotions only"
   },
   "product": {
     "details": "Détails",
@@ -124,6 +139,19 @@
       "currency": "Devise",
       "stock": "En stock",
       "slug": "Référence"
+    },
+    "quantity": "Qty",
+    "share": "Share",
+    "shareSuccess": "Link copied to clipboard",
+    "shareError": "Unable to copy link",
+    "stockStatus": {
+      "in": "In stock",
+      "low": "Low stock",
+      "out": "Out of stock"
+    },
+    "related": {
+      "eyebrow": "Keep browsing",
+      "title": "Related products"
     }
   },
   "cart": {
@@ -145,7 +173,12 @@
     "genericError": "Merci de réessayer.",
     "removeItem": "Supprimer",
     "stockLabel": "{count} unités disponibles",
-    "quantity": "Qté"
+    "quantity": "Qté",
+    "freeShipping": "Free",
+    "viewCart": "View cart",
+    "close": "Close",
+    "guestNote": "Guest cart is stored locally. Sign in to checkout.",
+    "clearCart": "Clear cart"
   },
   "checkout": {
     "title": "Paiement",
@@ -161,9 +194,40 @@
       "line1": "Adresse",
       "city": "Ville",
       "postalCode": "Code postal",
-      "country": "Pays"
+      "country": "Pays",
+      "saved": "Saved addresses",
+      "new": "Use a new address",
+      "fullName": "Full name",
+      "phone": "Phone",
+      "line2": "Address line 2",
+      "state": "State"
     },
-    "submit": "Payer avec PayTR"
+    "submit": "Payer avec PayTR",
+    "steps": {
+      "address": "Address",
+      "delivery": "Delivery",
+      "payment": "Payment"
+    },
+    "delivery": {
+      "standard": "Standard delivery",
+      "express": "Express delivery"
+    },
+    "payment": {
+      "cod": "Cash on delivery",
+      "paytr": "PayTR (card)",
+      "disabled": "Unavailable"
+    },
+    "subtotal": "Subtotal",
+    "shipping": "Shipping",
+    "total": "Total",
+    "back": "Back",
+    "next": "Next",
+    "stockError": "One or more items are out of stock.",
+    "paytrDisabled": "PayTR payments are currently disabled.",
+    "successTitle": "Order confirmed",
+    "successBody": "Your order has been placed. We'll email you the updates.",
+    "successOrder": "Order number: {orderId}",
+    "addressMissing": "Please complete the address."
   },
   "auth": {
     "email": "E-mail",
@@ -192,7 +256,44 @@
     "placedOn": "Passée le",
     "total": "Total",
     "itemsCount": "{count} produits",
-    "empty": "Vous n'avez pas encore passé de commande."
+    "empty": "Vous n'avez pas encore passé de commande.",
+    "profileTitle": "Profile",
+    "profileName": "Full name",
+    "profileSave": "Save profile",
+    "profileSaved": "Profile updated",
+    "profileError": "Unable to update profile",
+    "addressesTitle": "Saved addresses",
+    "loadingAddresses": "Loading addresses...",
+    "noAddresses": "No addresses saved yet.",
+    "default": "Default",
+    "edit": "Edit",
+    "remove": "Remove",
+    "addressFormTitle": "Add or edit address",
+    "addressLabel": "Label (e.g. Home)",
+    "addressLabelFallback": "Saved address",
+    "addressFullName": "Full name",
+    "addressPhone": "Phone",
+    "addressLine1": "Address line 1",
+    "addressLine2": "Address line 2",
+    "addressCity": "City",
+    "addressState": "State",
+    "addressPostal": "Postal code",
+    "addressCountry": "Country",
+    "addressDefault": "Set as default",
+    "addressAdd": "Save address",
+    "addressUpdate": "Update address",
+    "addressSaved": "Address saved",
+    "addressRemoved": "Address removed",
+    "addressError": "Unable to save address",
+    "confirmRemoveAddress": "Remove this address?",
+    "cancel": "Cancel",
+    "addressType": {
+      "shipping": "Shipping",
+      "billing": "Billing",
+      "both": "Shipping & billing"
+    },
+    "viewDetails": "View details",
+    "addressMissing": "Please complete the address fields."
   },
   "notifications": {
     "addedToCart": "Ajouté au panier",
@@ -205,7 +306,9 @@
     "loginSuccess": "Bon retour !",
     "logoutSuccess": "Déconnexion effectuée",
     "registerSuccess": "Bienvenue chez Lupeti !",
-    "authError": "Connexion impossible"
+    "authError": "Connexion impossible",
+    "outOfStock": "Rupture de stock",
+    "cartMergePartial": "Some items could not be added to your cart."
   },
   "footer": {
     "tagline": "Nutrition consciente et objets pour pets heureux.",
@@ -223,7 +326,8 @@
         "links": {
           "contact": "Contact",
           "shipping": "Livraison & retours",
-          "privacy": "Confidentialité"
+          "privacy": "Confidentialité",
+          "terms": "Terms"
         }
       }
     },
@@ -245,7 +349,11 @@
       "dashboard": "Tableau de bord",
       "products": "Produits",
       "users": "Utilisateurs",
-      "support": "Support"
+      "support": "Support",
+      "orders": "Commandes",
+      "categories": "Categories",
+      "content": "Contenu",
+      "settings": "Parametres"
     },
     "dashboard": {
       "title": "Vue opérationnelle",
@@ -259,7 +367,22 @@
       "active": "Actifs : {value}",
       "orders": "Commandes",
       "tickets": "Tickets",
-      "open": "Ouverts : {value}"
+      "open": "Ouverts : {value}",
+      "performance": {
+        "title": "Performance",
+        "subtitle": "Apercu des 30 derniers jours",
+        "orders7": "Commandes (7j)",
+        "orders30": "Commandes (30j)",
+        "revenue30": "Revenu (30j)",
+        "average": "Panier moyen",
+        "newCustomers": "Nouveaux clients (30j)"
+      },
+      "bestSellers": {
+        "title": "Meilleures ventes",
+        "subtitle": "Produits les plus vendus",
+        "units": "{count} ventes",
+        "empty": "Aucune donnee de vente."
+      }
     },
     "products": {
       "title": "Gérer les produits",
@@ -273,7 +396,8 @@
         "product": "Produit",
         "stock": "Stock",
         "price": "Prix",
-        "status": "Statut"
+        "status": "Statut",
+        "flags": "Statut"
       },
       "form": {
         "title": "Nouveau produit",
@@ -285,12 +409,42 @@
         "discount": "% promo",
         "submit": "Publier le produit",
         "media": "M?dias",
-        "image": "Image du produit"
+        "image": "Image du produit",
+        "editTitle": "Modifier le produit",
+        "reset": "Reinitialiser",
+        "originalPrice": "Prix d origine",
+        "currency": "Devise",
+        "inventory": "Inventaire",
+        "sku": "SKU",
+        "flags": "Visibilite",
+        "visible": "Visible",
+        "featured": "En vedette",
+        "promotion": "Promotion",
+        "enablePromo": "Activer la promotion",
+        "discountType": "Type de remise",
+        "discountNone": "Aucune remise",
+        "discountPercent": "Pourcentage",
+        "discountAmount": "Montant",
+        "discountValue": "Valeur de remise",
+        "promoStart": "Debut promo",
+        "promoEnd": "Fin promo",
+        "noImages": "Aucune image.",
+        "save": "Enregistrer"
       },
       "active": "Actif",
       "inactive": "En pause",
       "activate": "Activer",
-      "disable": "Mettre en pause"
+      "disable": "Mettre en pause",
+      "updated": "Produit mis a jour",
+      "deleted": "Produit supprime",
+      "deleteError": "Impossible de supprimer le produit",
+      "edit": "Modifier",
+      "feature": "Mettre en avant",
+      "unfeature": "Retirer de la mise en avant",
+      "featured": "En vedette",
+      "standard": "Standard",
+      "delete": "Supprimer",
+      "remove": "Retirer"
     },
     "users": {
       "title": "Gérer les utilisateurs",
@@ -303,7 +457,8 @@
       "table": {
         "user": "Utilisateur",
         "role": "Rôle",
-        "status": "Statut"
+        "status": "Statut",
+        "orders": "Commandes"
       },
       "form": {
         "title": "Inviter un utilisateur",
@@ -319,7 +474,22 @@
       "active": "Actif",
       "inactive": "Inactif",
       "activate": "Activer",
-      "disable": "Désactiver"
+      "disable": "Désactiver",
+      "ordersCount": "{count} commandes",
+      "noOrders": "Aucune commande",
+      "noName": "Sans nom",
+      "details": {
+        "title": "Details utilisateur",
+        "summary": "Resume",
+        "role": "Role: {value}",
+        "status": "Statut: {value}",
+        "orders": "Commandes: {count}",
+        "totalSpent": "Total depense: {value}",
+        "lastOrder": "Derniere commande: {value}",
+        "ordersList": "Commandes recentes",
+        "noOrders": "Aucune commande.",
+        "empty": "Selectionnez un utilisateur pour voir les details."
+      }
     },
     "support": {
       "title": "Tickets support",
@@ -345,6 +515,124 @@
         "placeholder": "Écrire une réponse",
         "submit": "Envoyer"
       }
+    },
+    "categories": {
+      "title": "Gerer les categories",
+      "subtitle": "Creer et organiser les groupes produits.",
+      "created": "Categorie creee",
+      "updated": "Categorie mise a jour",
+      "deleted": "Categorie supprimee",
+      "error": "Impossible d enregistrer la categorie",
+      "deleteError": "Impossible de supprimer la categorie",
+      "genericError": "Veuillez reessayer.",
+      "edit": "Modifier",
+      "delete": "Supprimer",
+      "table": {
+        "name": "Nom",
+        "slug": "Slug"
+      },
+      "form": {
+        "title": "Nouvelle categorie",
+        "editTitle": "Modifier la categorie",
+        "reset": "Reinitialiser",
+        "name": "Nom",
+        "slug": "Slug",
+        "submit": "Creer la categorie",
+        "save": "Enregistrer"
+      }
+    },
+    "orders": {
+      "title": "Gestion des commandes",
+      "subtitle": "Consultez les commandes et mettez a jour les statuts.",
+      "loadError": "Impossible de charger les commandes",
+      "statusUpdated": "Statut de commande mis a jour",
+      "statusError": "Impossible de mettre a jour le statut",
+      "genericError": "Veuillez reessayer.",
+      "table": {
+        "order": "Commande",
+        "customer": "Client",
+        "total": "Total",
+        "status": "Statut"
+      },
+      "details": {
+        "title": "Details de la commande",
+        "status": "Statut",
+        "customer": "Client",
+        "shipping": "Adresse de livraison",
+        "noAddress": "Aucune adresse fournie.",
+        "items": "Articles",
+        "totals": "Totaux",
+        "subtotal": "Sous-total: {value}",
+        "shippingFee": "Livraison: {value}",
+        "total": "Total: {value}",
+        "clear": "Effacer la selection",
+        "empty": "Selectionnez une commande pour voir les details."
+      },
+      "status": {
+        "PENDING_PAYMENT": "En attente",
+        "PAID": "En traitement",
+        "SHIPPED": "En traitement",
+        "DELIVERED": "Livree",
+        "CANCELLED": "Annulee",
+        "FAILED": "Echouee"
+      }
+    },
+    "content": {
+      "title": "Contenu de la page d accueil",
+      "subtitle": "Gerez les visuels et sections premium.",
+      "loadError": "Impossible de charger le contenu",
+      "updateError": "Impossible de mettre a jour le contenu",
+      "updated": "Contenu mis a jour",
+      "genericError": "Veuillez reessayer.",
+      "loading": "Chargement du contenu...",
+      "sections": "Sections",
+      "toggles": {
+        "heroShowcase": "Hero anime",
+        "hero3d": "Hero 3D",
+        "brandMarquee": "Bandeau marques",
+        "featured": "Produits en vedette",
+        "categoryCards": "Cartes categories",
+        "story": "Section histoire",
+        "trustBadges": "Badges de confiance"
+      },
+      "images": {
+        "hero": "Image hero",
+        "story": "Image histoire",
+        "categoryDog": "Image categorie chien",
+        "categoryCat": "Image categorie chat",
+        "upload": "Televerser une image",
+        "empty": "Aucune image configuree."
+      },
+      "save": "Enregistrer le contenu"
+    },
+    "settings": {
+      "title": "Parametres globaux",
+      "subtitle": "Infos boutique, frais de livraison et options.",
+      "loadError": "Impossible de charger les parametres",
+      "updateError": "Impossible de mettre a jour les parametres",
+      "updated": "Parametres mis a jour",
+      "genericError": "Veuillez reessayer.",
+      "loading": "Chargement des parametres...",
+      "store": {
+        "title": "Informations boutique",
+        "name": "Nom de la boutique",
+        "email": "Email support",
+        "phone": "Telephone support",
+        "address": "Adresse support"
+      },
+      "shipping": {
+        "title": "Frais de livraison",
+        "standard": "Livraison standard",
+        "express": "Livraison express",
+        "currency": "Devise"
+      },
+      "features": {
+        "title": "Options",
+        "checkout": "Activer le paiement",
+        "support": "Activer le support",
+        "paytr": "Activer PayTR"
+      },
+      "save": "Enregistrer"
     }
   },
   "status": {
@@ -372,6 +660,91 @@
       "payment": "Paiement",
       "product": "Produit",
       "other": "Autre"
+    }
+  },
+  "orders": {
+    "title": "My orders",
+    "headline": "Track your deliveries",
+    "subtitle": "Review your orders and delivery status.",
+    "refresh": "Refresh orders",
+    "loading": "Loading your account...",
+    "loadingOrders": "Loading orders...",
+    "loginPrompt": "Sign in to view your orders.",
+    "login": "Login",
+    "register": "Register",
+    "orderId": "Order ID",
+    "placedOn": "Placed on",
+    "items": "Items",
+    "subtotal": "Subtotal",
+    "shipping": "Shipping",
+    "total": "Total",
+    "shippingAddress": "Shipping address",
+    "notFound": "Order not found.",
+    "status": {
+      "pending": "Pending",
+      "processing": "Processing",
+      "delivered": "Delivered",
+      "cancelled": "Cancelled"
+    }
+  },
+  "wishlist": {
+    "title": "Wishlist",
+    "headline": "Saved favorites",
+    "loading": "Loading wishlist...",
+    "empty": "Your wishlist is empty.",
+    "add": "Save",
+    "added": "Saved to wishlist",
+    "remove": "Remove",
+    "confirmRemove": "Remove this item from your wishlist?",
+    "error": "Unable to update wishlist",
+    "genericError": "Please try again."
+  },
+  "contact": {
+    "eyebrow": "Contact",
+    "title": "Talk to Lupeti",
+    "subtitle": "We reply within one business day."
+  },
+  "policies": {
+    "shipping": {
+      "eyebrow": "Shipping",
+      "title": "Shipping & returns",
+      "intro": "We ship Lupeti essentials with care and track every parcel.",
+      "points": {
+        "standard": "Standard delivery arrives in 2-4 business days.",
+        "express": "Express delivery arrives next business day in major cities.",
+        "returns": "Returns are accepted within 14 days on unopened items."
+      },
+      "footer": "Need help? Reach out through our contact form."
+    },
+    "privacy": {
+      "eyebrow": "Privacy",
+      "title": "Privacy policy",
+      "intro": "We only collect the data needed to fulfill your orders and improve Lupeti.",
+      "points": {
+        "data": "We store order, account, and support details securely.",
+        "security": "Payment data is handled by certified providers.",
+        "rights": "You can request access or deletion of your data."
+      },
+      "footer": "Contact support for any privacy-related questions."
+    },
+    "terms": {
+      "eyebrow": "Terms",
+      "title": "Terms of service",
+      "intro": "By shopping with Lupeti, you agree to these terms.",
+      "points": {
+        "orders": "Orders are confirmed once payment is authorized or COD is selected.",
+        "shipping": "Delivery timelines depend on the shipping option selected.",
+        "usage": "Use the site responsibly and keep your account secure."
+      },
+      "footer": "Contact us if you need clarification on these terms."
+    }
+  },
+  "category": {
+    "eyebrow": "Category",
+    "subtitle": "Browse curated essentials for your pets.",
+    "breadcrumbs": {
+      "home": "Home",
+      "shop": "Shop"
     }
   }
 }

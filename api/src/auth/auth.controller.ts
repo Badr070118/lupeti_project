@@ -57,6 +57,12 @@ export class AuthController {
     return tokens;
   }
 
+  @Get('session')
+  async session(@Req() req: Request) {
+    const refreshToken = req.cookies?.refresh_token as string | undefined;
+    return { user: await this.authService.getSession(refreshToken ?? '') };
+  }
+
   @Post('logout')
   @HttpCode(HttpStatus.OK)
   @UseGuards(JwtAuthGuard)

@@ -3,9 +3,11 @@
 import { PropsWithChildren, useCallback, useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { authService } from '@/services/auth.service';
+import { cartService } from '@/services/cart.service';
 import { AuthContext } from '@/hooks/use-auth';
 import type { AuthResponse, User } from '@/types';
 import { useToast } from '@/hooks/use-toast';
+import { clearGuestCart, getGuestCart } from '@/lib/guest-cart';
 
 export function AuthProvider({ children }: PropsWithChildren) {
   const [user, setUser] = useState<User | null>(null);
@@ -18,6 +20,30 @@ export function AuthProvider({ children }: PropsWithChildren) {
     setUser(session?.user ?? null);
     setAccessToken(session?.accessToken ?? null);
   }, []);
+
+  const mergeGuestCart = useCallback(
+    async (token: string) => {
+      const guest = getGuestCart();
+      if (!guest.items.length) return;
+      let failures = 0;
+      for (const item of guest.items) {
+        try {
+          await cartService.addItem(token, item.productId, item.quantity);
+        } catch {
+          failures += 1;
+        }
+      }
+      clearGuestCart();
+      window.dispatchEvent(new Event('cart:updated'));
+      if (failures > 0) {
+        showToast({
+          title: t('cartMergePartial', { default: 'Some items could not be added.' }),
+          variant: 'info',
+        });
+      }
+    },
+    [showToast, t],
+  );
 
   const refresh = useCallback(async () => {
     try {
@@ -41,6 +67,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
         setLoading(true);
         const session = await authService.login(email, password);
         applySession(session);
+        await mergeGuestCart(session.accessToken);
         showToast({
           title: t('loginSuccess'),
           variant: 'success',
@@ -65,6 +92,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
         setLoading(true);
         const session = await authService.register(email, password);
         applySession(session);
+        await mergeGuestCart(session.accessToken);
         showToast({
           title: t('registerSuccess'),
           variant: 'success',

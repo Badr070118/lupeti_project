@@ -23,6 +23,12 @@ function buildQuery(filters: ProductFilters = {}) {
   if (typeof filters.featured === 'boolean') {
     params.set('featured', String(filters.featured));
   }
+  if (typeof filters.inStock === 'boolean') {
+    params.set('inStock', String(filters.inStock));
+  }
+  if (typeof filters.onSale === 'boolean') {
+    params.set('onSale', String(filters.onSale));
+  }
   return params.toString();
 }
 
@@ -45,6 +51,15 @@ async function listProducts(
   return fetchApi<PaginatedResult<Product>>(path, buildFetchOptions(options));
 }
 
+async function lookupProducts(ids: string[]): Promise<Product[]> {
+  if (!ids.length) return [];
+  return fetchApi<Product[]>('/products/lookup', {
+    method: 'POST',
+    body: { ids },
+    cache: 'no-store',
+  });
+}
+
 async function getProduct(
   slug: string,
   options?: ProductFetchOptions,
@@ -65,4 +80,5 @@ async function getProduct(
 export const productService = {
   list: listProducts,
   get: getProduct,
+  lookup: lookupProducts,
 };

@@ -4,6 +4,8 @@ import { productService } from '@/services/product.service';
 import { ProductDetails } from '@/features/products/components/product-details';
 import { buildMetadata } from '@/lib/metadata';
 import { env } from '@/lib/config';
+import { ProductGrid } from '@/features/products/components/product-grid';
+import { getTranslations } from 'next-intl/server';
 
 type RouteParams = { locale: string; slug: string };
 
@@ -44,9 +46,34 @@ export default async function ProductPage({ params }: ProductPageProps) {
     notFound();
   }
 
+  const [related, t] = await Promise.all([
+    productService.list(
+      { category: product.category.slug, limit: 4, sort: 'newest' },
+      { revalidate: 300 },
+    ),
+    getTranslations('product'),
+  ]);
+
+  const relatedProducts = related.data
+    .filter((item) => item.id !== product.id)
+    .slice(0, 4);
+
   return (
     <div className="space-y-6">
       <ProductDetails product={product} />
+      {relatedProducts.length ? (
+        <section className="space-y-4">
+          <div>
+            <p className="text-sm uppercase tracking-wide text-slate-400">
+              {t('related.eyebrow', { default: 'Keep browsing' })}
+            </p>
+            <h2 className="text-2xl font-semibold text-slate-900">
+              {t('related.title', { default: 'Related products' })}
+            </h2>
+          </div>
+          <ProductGrid products={relatedProducts} />
+        </section>
+      ) : null}
     </div>
   );
 }

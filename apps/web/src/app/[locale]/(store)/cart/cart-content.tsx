@@ -7,7 +7,7 @@ import { useCart } from '@/hooks/use-cart';
 
 export function CartContent() {
   const { accessToken } = useAuth();
-  const { cart, setCart, loading, refresh } = useCart(accessToken);
+  const { cart, loading, refresh, updateItem, removeItem, clearCart } = useCart(accessToken);
   const t = useTranslations('cart');
 
   return (
@@ -21,8 +21,10 @@ export function CartContent() {
       <CartSummary
         cart={cart}
         accessToken={accessToken}
-        onCartUpdated={(updated) => setCart(updated)}
         onRefresh={refresh}
+        onUpdateItem={updateItem}
+        onRemoveItem={removeItem}
+        onClearCart={clearCart}
         loading={loading}
         showCheckoutCta
       />

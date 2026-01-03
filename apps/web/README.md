@@ -73,6 +73,17 @@ apps/web
 - Product listing and detail fetches opt into `revalidate` caching (120s / 300s) for a balance between freshness and speed.
 - Checkout/cart remain client-driven (no caching) to ensure authenticated accuracy, while static journeys leverage server components for best Lighthouse scores.
 
+## Customer Experience Notes
+
+- **Cart persistence**: guest carts live in `localStorage` plus a `lupeti_cart_id` cookie; once a user logs in, guest items are merged into the server cart and cleared locally.
+- **Payment methods**: COD is always available; PayTR requires the API env vars (`PAYTR_MERCHANT_ID`, `PAYTR_MERCHANT_KEY`, `PAYTR_MERCHANT_SALT`, `PAYTR_OK_URL`, `PAYTR_FAIL_URL`, `PAYTR_CALLBACK_URL`).
+- **Key customer routes**: `/shop`, `/search`, `/category/[slug]`, `/wishlist`, `/cart`, `/checkout`, `/checkout/success`, `/account`, `/orders`, `/orders/[id]`, `/contact`, `/shipping-returns`, `/privacy`, `/terms`.
+- **End-to-end test**:
+  1. Browse `/shop` and add items as a guest.
+  2. Sign in and confirm the cart merges.
+  3. Complete checkout with COD or PayTR.
+  4. Review `/orders` and `/account` for history and addresses.
+
 ## Production Hardening
 
 - Deploy behind a CDN/WAF (Cloudflare, Fastly, etc.) and terminate TLS before Next.js.

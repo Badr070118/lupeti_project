@@ -34,7 +34,7 @@ const slides: Slide[] = [
     title: 'Collection Bien-être',
     subtitle: 'Des snacks fonctionnels pour chats sensibles',
     cta: 'Voir les nouveautés',
-    href: '/shop?category=cats',
+    href: '/category/cat',
     category: 'cats',
   },
   {
@@ -42,7 +42,7 @@ const slides: Slide[] = [
     title: 'Rituels quotidiens',
     subtitle: 'Nutrition consciente pour chiens actifs',
     cta: 'Composer mon panier',
-    href: '/shop?category=dogs',
+    href: '/category/dog',
     category: 'dogs',
   },
 ];
@@ -92,7 +92,7 @@ export function HeroCarousel() {
                     variant="secondary"
                     className="bg-white/10 text-white"
                     onClick={() =>
-                      router.push(slide.category === 'dogs' ? '/shop?category=dogs' : '/shop?category=cats')
+                      router.push(slide.category === 'dogs' ? '/category/dog' : '/category/cat')
                     }
                   >
                     {slide.category === 'dogs' ? 'Boutique Chiens' : 'Boutique Chats'}

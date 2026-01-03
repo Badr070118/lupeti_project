@@ -63,6 +63,9 @@ export default async function ShopPage({ searchParams }: ShopPageProps) {
       ? Number(readParam('maxPrice')) / 100
       : undefined,
     page,
+    sort: (readParam('sort') as Filters['sort']) ?? 'newest',
+    inStock: readParam('inStock') === 'true',
+    onSale: readParam('onSale') === 'true',
   };
 
   const [products, categories, t] = await Promise.all([

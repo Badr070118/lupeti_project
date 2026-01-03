@@ -2,15 +2,23 @@ import type { MetadataRoute } from 'next';
 import { env } from '@/lib/config';
 import { locales } from '@/i18n/routing';
 import { productService } from '@/services/product.service';
+import { categoryService } from '@/services/category.service';
 
 const BASE_PATHS = [
   '',
   '/shop',
+  '/search',
+  '/wishlist',
   '/cart',
   '/checkout',
+  '/checkout/success',
   '/login',
   '/register',
   '/account',
+  '/contact',
+  '/shipping-returns',
+  '/privacy',
+  '/terms',
   '/admin',
   '/success',
   '/fail',
@@ -45,5 +53,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     console.warn('Unable to build product sitemap', error);
   }
 
-  return [...staticEntries, ...productEntries];
+  let categoryEntries: MetadataRoute.Sitemap = [];
+  try {
+    const categories = await categoryService.list();
+    categoryEntries = locales.flatMap((locale) =>
+      categories.map((category) => ({
+        url: `${baseUrl}/${locale}/category/${category.slug}`,
+        lastModified: now,
+      })),
+    );
+  } catch (error) {
+    console.warn('Unable to build category sitemap', error);
+  }
+
+  return [...staticEntries, ...productEntries, ...categoryEntries];
 }

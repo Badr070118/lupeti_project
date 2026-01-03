@@ -7,4 +7,24 @@ async function listCategories() {
 
 export const categoryService = {
   list: listCategories,
+  create(accessToken: string, payload: { name: string; slug?: string }) {
+    return fetchApi<Category>('/categories', {
+      method: 'POST',
+      accessToken,
+      body: payload,
+    });
+  },
+  update(accessToken: string, id: string, payload: { name?: string; slug?: string }) {
+    return fetchApi<Category>(`/categories/${id}`, {
+      method: 'PATCH',
+      accessToken,
+      body: payload,
+    });
+  },
+  remove(accessToken: string, id: string) {
+    return fetchApi(`/categories/${id}`, {
+      method: 'DELETE',
+      accessToken,
+    });
+  },
 };

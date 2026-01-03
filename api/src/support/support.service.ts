@@ -6,6 +6,7 @@ import {
 import { Prisma, TicketCategory, TicketStatus } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 import { JwtPayload } from '../auth/interfaces/jwt-payload.interface';
+import { SettingsService } from '../settings/settings.service';
 import { CreateSupportTicketDto } from './dto/create-support-ticket.dto';
 import { ReplyTicketDto } from './dto/reply-ticket.dto';
 import { SupportQueryDto } from './dto/support-query.dto';
@@ -39,9 +40,14 @@ export class SupportService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly notifier: SupportNotifierService,
+    private readonly settingsService: SettingsService,
   ) {}
 
   async createTicket(dto: CreateSupportTicketDto, user?: JwtPayload | null) {
+    const settings = await this.settingsService.getStoreSettings();
+    if (!settings.enableSupport) {
+      throw new BadRequestException('Support is currently disabled');
+    }
     const email = dto.email?.toLowerCase() ?? user?.email;
     if (!email) {
       throw new BadRequestException('Email is required');

@@ -1,18 +1,21 @@
 'use client';
 
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import type { Cart } from '@/types';
 import { formatPrice } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Link } from '@/i18n/routing';
 import { CartItemRow } from './cart-item-row';
+import { settingsService } from '@/services/settings.service';
 
 interface CartSummaryProps {
   cart: Cart | null;
   accessToken: string | null;
-  onCartUpdated: (cart: Cart) => void;
   onRefresh: () => void;
+  onUpdateItem: (productId: string, quantity: number) => Promise<void>;
+  onRemoveItem: (productId: string) => Promise<void>;
+  onClearCart?: () => Promise<void>;
   showCheckoutCta?: boolean;
   loading?: boolean;
 }
@@ -20,12 +23,32 @@ interface CartSummaryProps {
 export function CartSummary({
   cart,
   accessToken,
-  onCartUpdated,
   onRefresh,
+  onUpdateItem,
+  onRemoveItem,
+  onClearCart,
   loading = false,
   showCheckoutCta = false,
 }: CartSummaryProps) {
   const t = useTranslations('cart');
+  const [shippingCents, setShippingCents] = useState<number | null>(null);
+
+  useEffect(() => {
+    let active = true;
+    settingsService
+      .getPublic()
+      .then((settings) => {
+        if (!active) return;
+        setShippingCents(settings.store.shippingStandardCents);
+      })
+      .catch(() => {
+        if (active) setShippingCents(null);
+      });
+
+    return () => {
+      active = false;
+    };
+  }, []);
 
   const totals = useMemo(() => {
     if (!cart) {
@@ -37,17 +60,9 @@ export function CartSummary({
     }, 0);
     return {
       subtotal,
-      total: subtotal,
+      total: subtotal + (shippingCents ?? 0),
     };
-  }, [cart]);
-
-  if (!accessToken) {
-    return (
-      <div className="rounded-3xl border border-slate-100 bg-white p-10 text-center shadow-sm">
-        <p className="text-lg font-semibold text-slate-900">{t('loginPrompt')}</p>
-      </div>
-    );
-  }
+  }, [cart, shippingCents]);
 
   if (loading) {
     return (
@@ -75,8 +90,8 @@ export function CartSummary({
           <CartItemRow
             key={item.id}
             item={item}
-            accessToken={accessToken}
-            onCartUpdated={onCartUpdated}
+            onUpdateQuantity={(quantity) => onUpdateItem(item.productId, quantity)}
+            onRemove={() => onRemoveItem(item.productId)}
           />
         ))}
       </div>
@@ -89,7 +104,13 @@ export function CartSummary({
           </div>
           <div className="flex justify-between">
             <span>{t('shipping')}</span>
-            <span>{t('shippingNote')}</span>
+            <span>
+              {shippingCents === null
+                ? t('shippingNote')
+                : shippingCents === 0
+                  ? t('freeShipping')
+                  : formatPrice(shippingCents, cart.items[0].product.currency)}
+            </span>
           </div>
           <div className="flex justify-between font-semibold text-slate-900">
             <span>{t('total')}</span>
@@ -106,7 +127,28 @@ export function CartSummary({
               {t('refresh')}
             </Button>
           )}
+          {onClearCart ? (
+            <Button
+              variant="ghost"
+              className="w-full"
+              onClick={() => {
+                if (
+                  !window.confirm(
+                    t('confirmClear', { default: 'Clear all items from your cart?' }),
+                  )
+                ) {
+                  return;
+                }
+                void onClearCart();
+              }}
+            >
+              {t('clearCart', { default: 'Clear cart' })}
+            </Button>
+          ) : null}
           <p className="text-xs text-slate-400">{t('note')}</p>
+          {!accessToken ? (
+            <p className="text-xs text-slate-400">{t('guestNote')}</p>
+          ) : null}
         </div>
       </div>
     </div>

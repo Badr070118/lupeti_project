@@ -15,6 +15,7 @@ Production-ready NestJS API for Lupeti's e-commerce backend. It provides secure 
 - JWT access tokens (15 minutes) + refresh tokens (7 days) stored as HttpOnly secure cookies and hashed at rest
 - Refresh token rotation and revocation on login/logout
 - RBAC with `USER` and `ADMIN` roles (`GET /admin/ping` protected by ADMIN)
+- Store/global settings and homepage content management (shipping fees, feature toggles, and local hero assets)
 - Per-route throttling for auth endpoints plus global 100 rpm/IP
 - Global validation pipe, structured exception filter, and correlation-id logging middleware
 
@@ -81,6 +82,13 @@ Run the API and PostgreSQL without installing local Postgres:
 
 The API container automatically runs `prisma migrate deploy` before starting so schema changes are applied at boot.
 
+## Settings Schema Notes
+
+Two singleton tables back the admin settings UI and homepage content:
+
+- `StoreSettings`: store name, support contacts, shipping fees, currency, checkout/support toggles, and PayTR enablement.
+- `HomepageSettings`: local asset URLs for hero/story/category visuals plus toggles for premium homepage sections.
+
 ## Sample cURL Requests
 
 Use these commands (assuming `http://localhost:3000`) to verify the main flows:
@@ -99,11 +107,20 @@ curl http://localhost:3000/categories
 curl "http://localhost:3000/products?category=dog&search=lamb&sort=price_desc"
 curl http://localhost:3000/products/anatolian-lamb-herbs-kibble
 
+# Public settings snapshot
+curl http://localhost:3000/settings/public
+
 # Admin category creation
 curl -X POST http://localhost:3000/categories \
   -H "Authorization: Bearer $ACCESS_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{ "slug": "treats", "name": "Seasonal Treats" }'
+
+# Admin settings update (shipping + feature toggles)
+curl -X PATCH http://localhost:3000/admin/settings/store \
+  -H "Authorization: Bearer $ACCESS_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{ "shippingExpressCents": 3000, "enableCheckout": true, "paytrEnabled": true }'
 
 # Cart operations scoped to the logged-in user
 curl -b cookies.txt -c cookies.txt http://localhost:3000/cart

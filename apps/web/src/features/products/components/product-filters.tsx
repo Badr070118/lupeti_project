@@ -11,16 +11,22 @@ import { useSearchParams } from 'next/navigation';
 
 interface ProductFiltersProps {
   categories: Category[];
+  forcedCategory?: string;
+  hideCategory?: boolean;
 }
 
-export function ProductFilters({ categories }: ProductFiltersProps) {
+export function ProductFilters({
+  categories,
+  forcedCategory,
+  hideCategory = false,
+}: ProductFiltersProps) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const t = useTranslations('shop');
 
   const [filters, setFilters] = useState<Filters>(() => ({
-    category: searchParams.get('category') ?? 'all',
+    category: forcedCategory ?? searchParams.get('category') ?? 'all',
     search: searchParams.get('search') ?? '',
     minPrice: searchParams.get('minPrice')
       ? Number(searchParams.get('minPrice')) / 100
@@ -28,14 +34,20 @@ export function ProductFilters({ categories }: ProductFiltersProps) {
     maxPrice: searchParams.get('maxPrice')
       ? Number(searchParams.get('maxPrice')) / 100
       : undefined,
+    sort: (searchParams.get('sort') as Filters['sort']) ?? 'newest',
+    inStock: searchParams.get('inStock') === 'true',
+    onSale: searchParams.get('onSale') === 'true',
   }));
 
   const hasFilters = useMemo(() => {
     return Boolean(
       filters.search ||
-        filters.minPrice ||
-        filters.maxPrice ||
-        (filters.category && filters.category !== 'all'),
+        typeof filters.minPrice === 'number' ||
+        typeof filters.maxPrice === 'number' ||
+        (filters.category && filters.category !== 'all') ||
+        filters.inStock ||
+        filters.onSale ||
+        (filters.sort && filters.sort !== 'newest'),
     );
   }, [filters]);
 
@@ -45,8 +57,9 @@ export function ProductFilters({ categories }: ProductFiltersProps) {
 
   const applyFilters = () => {
     const params = new URLSearchParams(searchParams.toString());
-    if (filters.category && filters.category !== 'all') {
-      params.set('category', filters.category);
+    const categoryValue = forcedCategory ?? filters.category;
+    if (categoryValue && categoryValue !== 'all') {
+      params.set('category', categoryValue);
     } else {
       params.delete('category');
     }
@@ -62,6 +75,21 @@ export function ProductFilters({ categories }: ProductFiltersProps) {
     } else {
       params.delete('maxPrice');
     }
+    if (filters.sort && filters.sort !== 'newest') {
+      params.set('sort', filters.sort);
+    } else {
+      params.delete('sort');
+    }
+    if (typeof filters.inStock === 'boolean') {
+      params.set('inStock', String(filters.inStock));
+    } else {
+      params.delete('inStock');
+    }
+    if (typeof filters.onSale === 'boolean') {
+      params.set('onSale', String(filters.onSale));
+    } else {
+      params.delete('onSale');
+    }
     params.delete('page');
     const query = Object.fromEntries(params.entries());
     type RouterTarget = Parameters<typeof router.push>[0];
@@ -69,7 +97,13 @@ export function ProductFilters({ categories }: ProductFiltersProps) {
   };
 
   const clearFilters = () => {
-    setFilters({ category: 'all', search: '' });
+    setFilters({
+      category: forcedCategory ?? 'all',
+      search: '',
+      sort: 'newest',
+      inStock: false,
+      onSale: false,
+    });
     router.push(pathname as Parameters<typeof router.push>[0]);
   };
 
@@ -86,26 +120,28 @@ export function ProductFilters({ categories }: ProductFiltersProps) {
             onChange={(event) => updateFilters({ search: event.target.value })}
           />
         </div>
-        <div>
-          <label htmlFor="category">{t('category')}</label>
-          <Select
-            id="category"
-            className="soft-input"
-            value={filters.category ?? 'all'}
-            onChange={(event) =>
-              updateFilters({
-                category: event.target.value,
-              })
-            }
-          >
-            <option value="all">{t('allCategories')}</option>
-            {categories.map((cat) => (
-              <option key={cat.id} value={cat.slug}>
-                {cat.name}
-              </option>
-            ))}
-          </Select>
-        </div>
+        {hideCategory || forcedCategory ? null : (
+          <div>
+            <label htmlFor="category">{t('category')}</label>
+            <Select
+              id="category"
+              className="soft-input"
+              value={filters.category ?? 'all'}
+              onChange={(event) =>
+                updateFilters({
+                  category: event.target.value,
+                })
+              }
+            >
+              <option value="all">{t('allCategories')}</option>
+              {categories.map((cat) => (
+                <option key={cat.id} value={cat.slug}>
+                  {cat.name}
+                </option>
+              ))}
+            </Select>
+          </div>
+        )}
         <div>
           <label htmlFor="min-price">{t('minPrice')}</label>
           <Input
@@ -133,6 +169,40 @@ export function ProductFilters({ categories }: ProductFiltersProps) {
               })
             }
           />
+        </div>
+        <div>
+          <label htmlFor="sort">{t('sortLabel')}</label>
+          <Select
+            id="sort"
+            className="soft-input"
+            value={filters.sort ?? 'newest'}
+            onChange={(event) =>
+              updateFilters({ sort: event.target.value as Filters['sort'] })
+            }
+          >
+            <option value="newest">{t('sortNewest')}</option>
+            <option value="price_asc">{t('sortPriceAsc')}</option>
+            <option value="price_desc">{t('sortPriceDesc')}</option>
+            <option value="best_sellers">{t('sortBest')}</option>
+          </Select>
+        </div>
+        <div className="flex items-center gap-4 pt-6 md:pt-0">
+          <label className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-[color:var(--muted)]">
+            <input
+              type="checkbox"
+              checked={filters.inStock ?? false}
+              onChange={(event) => updateFilters({ inStock: event.target.checked })}
+            />
+            {t('inStock')}
+          </label>
+          <label className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-[color:var(--muted)]">
+            <input
+              type="checkbox"
+              checked={filters.onSale ?? false}
+              onChange={(event) => updateFilters({ onSale: event.target.checked })}
+            />
+            {t('onSale')}
+          </label>
         </div>
       </div>
 

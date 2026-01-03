@@ -16,6 +16,7 @@ import { Role } from '../common/enums/role.enum';
 import { RolesGuard } from '../common/guards/roles.guard';
 import { CreateProductDto } from './dto/create-product.dto';
 import { CreateProductImageDto } from './dto/create-product-image.dto';
+import { ProductLookupDto } from './dto/product-lookup.dto';
 import { ProductQueryDto } from './dto/product-query.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { ProductsService } from './products.service';
@@ -27,6 +28,11 @@ export class ProductsController {
   @Get()
   list(@Query() query: ProductQueryDto) {
     return this.productsService.listPublic(query);
+  }
+
+  @Post('lookup')
+  lookup(@Body() dto: ProductLookupDto) {
+    return this.productsService.lookup(dto.ids);
   }
 
   @Get(':slug')

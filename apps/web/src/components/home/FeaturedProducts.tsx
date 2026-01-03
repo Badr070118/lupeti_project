@@ -6,10 +6,7 @@ import { FeaturedProductsShowcase } from './FeaturedProductsShowcase';
 
 async function FeaturedProductsContent() {
   const t = await getTranslations('home.featured');
-  const featured = await productService.list(
-    { limit: 8, featured: true },
-    { revalidate: 180 },
-  );
+  const featured = await productService.list({ limit: 8, featured: true });
 
   return (
     <section id="featured" className="space-y-8 rounded-3xl bg-white/70 p-6 shadow-lg lg:p-10">

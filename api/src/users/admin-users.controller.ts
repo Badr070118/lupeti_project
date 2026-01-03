@@ -31,6 +31,11 @@ export class AdminUsersController {
     return this.usersService.list(query);
   }
 
+  @Get(':id')
+  getById(@Param('id', new ParseUUIDPipe()) id: string) {
+    return this.usersService.getAdminUser(id);
+  }
+
   @Post()
   create(@Body() dto: CreateUserDto) {
     return this.usersService.create(dto);

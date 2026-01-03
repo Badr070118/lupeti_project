@@ -327,11 +327,74 @@ async function seedSupportTickets() {
   });
 }
 
+async function seedSettings() {
+  await prisma.storeSettings.upsert({
+    where: { id: '00000000-0000-0000-0000-000000000010' },
+    update: {
+      storeName: 'Lupeti Pet Shop',
+      supportEmail: supportEmail,
+      supportPhone: '+90 212 000 0000',
+      supportAddress: 'Istanbul, TR',
+      shippingStandardCents: 0,
+      shippingExpressCents: 2500,
+      currency: 'TRY',
+      enableCheckout: true,
+      enableSupport: true,
+      paytrEnabled: true,
+    },
+    create: {
+      id: '00000000-0000-0000-0000-000000000010',
+      storeName: 'Lupeti Pet Shop',
+      supportEmail: supportEmail,
+      supportPhone: '+90 212 000 0000',
+      supportAddress: 'Istanbul, TR',
+      shippingStandardCents: 0,
+      shippingExpressCents: 2500,
+      currency: 'TRY',
+      enableCheckout: true,
+      enableSupport: true,
+      paytrEnabled: true,
+    },
+  });
+
+  await prisma.homepageSettings.upsert({
+    where: { id: '00000000-0000-0000-0000-000000000011' },
+    update: {
+      heroImageUrl: '/hero-static.jpg',
+      storyImageUrl: '/images/hero/golden.jpg',
+      categoryDogImageUrl: '/images/hero/dog.jpg',
+      categoryCatImageUrl: '/images/hero/cat.jpg',
+      showHeroShowcase: true,
+      showHero3d: true,
+      showBrandMarquee: true,
+      showFeatured: true,
+      showCategoryCards: true,
+      showStorySection: true,
+      showTrustBadges: true,
+    },
+    create: {
+      id: '00000000-0000-0000-0000-000000000011',
+      heroImageUrl: '/hero-static.jpg',
+      storyImageUrl: '/images/hero/golden.jpg',
+      categoryDogImageUrl: '/images/hero/dog.jpg',
+      categoryCatImageUrl: '/images/hero/cat.jpg',
+      showHeroShowcase: true,
+      showHero3d: true,
+      showBrandMarquee: true,
+      showFeatured: true,
+      showCategoryCards: true,
+      showStorySection: true,
+      showTrustBadges: true,
+    },
+  });
+}
+
 async function main() {
   await seedAdminUser();
   await seedCustomerUser();
   await seedCatalog();
   await seedSupportTickets();
+  await seedSettings();
   console.log(
     `Seed data applied: admin (${adminEmail}), customer users, categories, products, support ticket`,
   );

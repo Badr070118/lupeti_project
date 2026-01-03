@@ -149,6 +149,62 @@ export class AuthService {
     await this.revokeAllRefreshTokens(userId);
   }
 
+  async getSession(refreshToken: string) {
+    if (!refreshToken) {
+      throw new UnauthorizedException('Refresh token missing');
+    }
+
+    let payload: JwtPayload;
+    try {
+      payload = await this.jwtService.verifyAsync<JwtPayload>(refreshToken, {
+        secret: this.configService.getOrThrow<string>('JWT_REFRESH_SECRET'),
+      });
+    } catch (error) {
+      this.logger.warn(
+        `Failed to verify refresh token: ${
+          error instanceof Error ? error.message : 'unknown error'
+        }`,
+      );
+      throw new UnauthorizedException('Invalid refresh token');
+    }
+
+    const tokenRecord = await this.prisma.refreshToken.findFirst({
+      where: {
+        userId: payload.sub,
+        revokedAt: null,
+      },
+      orderBy: { createdAt: 'desc' },
+    });
+
+    if (!tokenRecord) {
+      throw new UnauthorizedException('Refresh token revoked');
+    }
+
+    if (tokenRecord.expiresAt.getTime() <= Date.now()) {
+      throw new UnauthorizedException('Refresh token expired');
+    }
+
+    const isValid = await this.verifyHash(tokenRecord.tokenHash, refreshToken);
+
+    if (!isValid) {
+      throw new UnauthorizedException('Refresh token revoked');
+    }
+
+    const user = await this.prisma.user.findUnique({
+      where: { id: payload.sub },
+    });
+
+    if (!user || user.deletedAt) {
+      throw new UnauthorizedException('User not found');
+    }
+
+    if (user.status !== UserStatus.ACTIVE) {
+      throw new UnauthorizedException('Account is inactive');
+    }
+
+    return this.mapUser(user);
+  }
+
   async getProfile(userId: string) {
     const user = await this.prisma.user.findUnique({
       where: { id: userId },

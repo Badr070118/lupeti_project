@@ -12,9 +12,9 @@ const categoryIcons = {
 };
 
 const cards = [
-  { key: "dog", query: { category: "dog" } },
-  { key: "cat", query: { category: "cat" } },
-  { key: "accessories", query: { category: "accessories" } },
+  { key: "dog", href: "/category/dog" },
+  { key: "cat", href: "/category/cat" },
+  { key: "accessories", href: "/category/accessories" },
 ] as const;
 
 export function CategoryHighlights() {
@@ -45,7 +45,7 @@ export function CategoryHighlights() {
               className="group relative overflow-hidden rounded-3xl bg-gradient-to-br from-white via-slate-50 to-slate-100 p-8 shadow-sm ring-1 ring-slate-100"
             >
               <Link
-                href={{ pathname: "/shop", query: card.query }}
+                href={card.href}
                 className="flex h-full flex-col justify-between gap-6"
               >
                 <div>

@@ -13,4 +13,11 @@ export class CheckoutDto {
     message: 'shippingMethod must be STANDARD or EXPRESS',
   })
   shippingMethod?: 'STANDARD' | 'EXPRESS';
+
+  @IsOptional()
+  @IsString()
+  @IsIn(['PAYTR', 'COD', 'STRIPE'], {
+    message: 'paymentProvider must be PAYTR, COD, or STRIPE',
+  })
+  paymentProvider?: 'PAYTR' | 'COD' | 'STRIPE';
 }

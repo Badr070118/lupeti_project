@@ -2,6 +2,8 @@ export type UserRole = 'USER' | 'ADMIN';
 export type UserStatus = 'ACTIVE' | 'INACTIVE';
 export type DiscountType = 'PERCENT' | 'AMOUNT';
 export type TicketStatus = 'OPEN' | 'IN_PROGRESS' | 'CLOSED';
+export type PaymentProvider = 'PAYTR' | 'STRIPE' | 'COD';
+export type AddressType = 'SHIPPING' | 'BILLING' | 'BOTH';
 export type TicketCategory =
   | 'ORDER'
   | 'DELIVERY'
@@ -88,8 +90,10 @@ export interface ProductFilters {
   maxPrice?: number;
   page?: number;
   limit?: number;
-  sort?: 'newest' | 'price_asc' | 'price_desc';
+  sort?: 'newest' | 'price_asc' | 'price_desc' | 'best_sellers';
   featured?: boolean;
+  inStock?: boolean;
+  onSale?: boolean;
 }
 
 export interface CartProductSummary {
@@ -154,8 +158,46 @@ export interface Order {
 }
 
 export interface CheckoutPayload {
-  shippingAddress: Record<string, string>;
+  shippingAddress: ShippingAddress;
   shippingMethod?: string;
+  paymentProvider?: PaymentProvider;
+}
+
+export interface ShippingAddress {
+  fullName: string;
+  phone?: string;
+  line1: string;
+  line2?: string;
+  city: string;
+  state?: string;
+  postalCode: string;
+  country: string;
+}
+
+export interface Address {
+  id: string;
+  userId: string;
+  label?: string | null;
+  fullName?: string | null;
+  phone?: string | null;
+  line1: string;
+  line2?: string | null;
+  city: string;
+  state?: string | null;
+  postalCode: string;
+  country: string;
+  type: AddressType;
+  isDefault: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface WishlistItem {
+  id: string;
+  productId: string;
+  userId: string;
+  createdAt: string;
+  product: Product;
 }
 
 export interface PaytrInitiateResponse {
@@ -215,6 +257,84 @@ export interface AdminOverview {
     total: number;
     open: number;
   };
+  performance: {
+    ordersLast7Days: number;
+    ordersLast30Days: number;
+    revenueLast30Cents: number;
+    averageOrderValueCents: number;
+    newCustomersLast30Days: number;
+  };
+  bestSellers: BestSeller[];
+}
+
+export interface BestSeller {
+  productId: string;
+  title: string;
+  slug: string;
+  unitsSold: number;
+  revenueCents: number;
+}
+
+export interface AdminUserSummary extends User {
+  ordersCount: number;
+  totalSpentCents: number;
+  lastOrderAt: string | null;
+}
+
+export interface AdminUserDetail extends AdminUserSummary {
+  orders: Array<{
+    id: string;
+    status: OrderStatus;
+    totalCents: number;
+    currency: string;
+    createdAt: string;
+  }>;
+}
+
+export interface AdminOrder extends Order {
+  user: {
+    id: string;
+    email: string;
+    role: UserRole;
+  };
+}
+
+export interface StoreSettings {
+  id: string;
+  storeName: string;
+  supportEmail?: string | null;
+  supportPhone?: string | null;
+  supportAddress?: string | null;
+  shippingStandardCents: number;
+  shippingExpressCents: number;
+  currency: string;
+  enableCheckout: boolean;
+  enableSupport: boolean;
+  paytrEnabled: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface HomepageSettings {
+  id: string;
+  heroImageUrl?: string | null;
+  storyImageUrl?: string | null;
+  categoryDogImageUrl?: string | null;
+  categoryCatImageUrl?: string | null;
+  showHeroShowcase: boolean;
+  showHero3d: boolean;
+  showBrandMarquee: boolean;
+  showFeatured: boolean;
+  showCategoryCards: boolean;
+  showStorySection: boolean;
+  showTrustBadges: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface PublicSettings {
+  store: StoreSettings;
+  homepage: HomepageSettings;
 }
 
 export interface AdminProductInput {

@@ -5,17 +5,18 @@ const FOOTER_COLUMNS = [
   {
     key: 'shop',
     links: [
-      { key: 'croquettes', type: 'route', query: { category: 'dog' } },
-      { key: 'accessories', type: 'route', query: { category: 'accessories' } },
-      { key: 'snacks', type: 'route', query: { category: 'cat' } },
+      { key: 'croquettes', type: 'external', href: '/category/dog' },
+      { key: 'accessories', type: 'external', href: '/category/accessories' },
+      { key: 'snacks', type: 'external', href: '/category/cat' },
     ],
   },
   {
     key: 'support',
     links: [
       { key: 'contact', type: 'external', href: '/contact' },
-      { key: 'shipping', type: 'external', href: '/policies/shipping' },
-      { key: 'privacy', type: 'external', href: '/policies/privacy' },
+      { key: 'shipping', type: 'external', href: '/shipping-returns' },
+      { key: 'privacy', type: 'external', href: '/privacy' },
+      { key: 'terms', type: 'external', href: '/terms' },
     ],
   },
 ] as const;

@@ -18,7 +18,12 @@ const CATEGORIES: Array<{ value: SupportTicketPayload['category']; key: string }
   { value: 'OTHER', key: 'other' },
 ];
 
-export function SupportForm() {
+interface SupportFormProps {
+  defaultCategory?: SupportTicketPayload['category'];
+  hideCategory?: boolean;
+}
+
+export function SupportForm({ defaultCategory = 'OTHER', hideCategory = false }: SupportFormProps) {
   const { user, accessToken } = useAuth();
   const { showToast } = useToast();
   const t = useTranslations('support');
@@ -26,7 +31,7 @@ export function SupportForm() {
     email: user?.email ?? '',
     subject: '',
     message: '',
-    category: 'OTHER',
+    category: defaultCategory,
   });
   const [loading, setLoading] = useState(false);
 
@@ -39,7 +44,7 @@ export function SupportForm() {
         email: user?.email ?? '',
         subject: '',
         message: '',
-        category: 'OTHER',
+        category: defaultCategory,
       });
       showToast({ title: t('success'), variant: 'success' });
     } catch (error) {
@@ -85,28 +90,30 @@ export function SupportForm() {
             }
           />
         </div>
-        <div className="space-y-2">
-          <label htmlFor="support-category" className="text-xs font-semibold uppercase tracking-[0.2em] text-[color:var(--muted)]">
-            {t('form.categoryLabel', { default: 'Category' })}
-          </label>
-          <Select
-            id="support-category"
-            className="soft-input"
-            value={form.category}
-            onChange={(event) =>
-              setForm((prev) => ({
-                ...prev,
-                category: event.target.value as SupportTicketPayload['category'],
-              }))
-            }
-          >
-            {CATEGORIES.map((category) => (
-              <option key={category.value} value={category.value}>
-                {t(`categories.${category.key}`)}
-              </option>
-            ))}
-          </Select>
-        </div>
+        {hideCategory ? null : (
+          <div className="space-y-2">
+            <label htmlFor="support-category" className="text-xs font-semibold uppercase tracking-[0.2em] text-[color:var(--muted)]">
+              {t('form.categoryLabel', { default: 'Category' })}
+            </label>
+            <Select
+              id="support-category"
+              className="soft-input"
+              value={form.category}
+              onChange={(event) =>
+                setForm((prev) => ({
+                  ...prev,
+                  category: event.target.value as SupportTicketPayload['category'],
+                }))
+              }
+            >
+              {CATEGORIES.map((category) => (
+                <option key={category.value} value={category.value}>
+                  {t(`categories.${category.key}`)}
+                </option>
+              ))}
+            </Select>
+          </div>
+        )}
       </div>
       <div className="space-y-2">
         <label htmlFor="support-message" className="text-xs font-semibold uppercase tracking-[0.2em] text-[color:var(--muted)]">

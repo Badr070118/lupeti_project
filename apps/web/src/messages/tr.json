@@ -15,7 +15,8 @@
       "en": "İngilizce",
       "fr": "Fransızca",
       "tr": "Türkçe"
-    }
+    },
+    "wishlist": "Wishlist"
   },
   "hero": {
     "badge": "Seçici patiler için",
@@ -90,6 +91,11 @@
       "title": "Evcil dostunuz için bilinçli bir kiler tasarlayın",
       "subtitle": "Tek akışkan ödeme deneyiminde mamaları, atıştırmalıkları ve aksesuarları birleştirin.",
       "cta": "Mağazayı ziyaret et"
+    },
+    "search": {
+      "eyebrow": "Find products",
+      "title": "Search Lupeti essentials",
+      "subtitle": "Look up croquettes, accessories, or wellness staples."
     }
   },
   "shop": {
@@ -113,7 +119,16 @@
     "categoryLabel": {
       "dog": "Köpek",
       "cat": "Kedi"
-    }
+    },
+    "searchTitle": "Search",
+    "searchHeadline": "Find products that match your rituals",
+    "sortLabel": "Sort by",
+    "sortNewest": "Newest",
+    "sortPriceAsc": "Price: low to high",
+    "sortPriceDesc": "Price: high to low",
+    "sortBest": "Best sellers",
+    "inStock": "In stock only",
+    "onSale": "Promotions only"
   },
   "product": {
     "details": "Detaylar",
@@ -124,6 +139,19 @@
       "currency": "Para birimi",
       "stock": "Stok",
       "slug": "Referans"
+    },
+    "quantity": "Qty",
+    "share": "Share",
+    "shareSuccess": "Link copied to clipboard",
+    "shareError": "Unable to copy link",
+    "stockStatus": {
+      "in": "In stock",
+      "low": "Low stock",
+      "out": "Out of stock"
+    },
+    "related": {
+      "eyebrow": "Keep browsing",
+      "title": "Related products"
     }
   },
   "cart": {
@@ -145,7 +173,12 @@
     "genericError": "Lütfen tekrar deneyin.",
     "removeItem": "Kaldır",
     "stockLabel": "Stokta {count} adet",
-    "quantity": "Adet"
+    "quantity": "Adet",
+    "freeShipping": "Free",
+    "viewCart": "View cart",
+    "close": "Close",
+    "guestNote": "Guest cart is stored locally. Sign in to checkout.",
+    "clearCart": "Clear cart"
   },
   "checkout": {
     "title": "Ödeme",
@@ -161,9 +194,40 @@
       "line1": "Adres",
       "city": "Şehir",
       "postalCode": "Posta kodu",
-      "country": "Ülke"
+      "country": "Ülke",
+      "saved": "Saved addresses",
+      "new": "Use a new address",
+      "fullName": "Full name",
+      "phone": "Phone",
+      "line2": "Address line 2",
+      "state": "State"
     },
-    "submit": "PayTR ile öde"
+    "submit": "PayTR ile öde",
+    "steps": {
+      "address": "Address",
+      "delivery": "Delivery",
+      "payment": "Payment"
+    },
+    "delivery": {
+      "standard": "Standard delivery",
+      "express": "Express delivery"
+    },
+    "payment": {
+      "cod": "Cash on delivery",
+      "paytr": "PayTR (card)",
+      "disabled": "Unavailable"
+    },
+    "subtotal": "Subtotal",
+    "shipping": "Shipping",
+    "total": "Total",
+    "back": "Back",
+    "next": "Next",
+    "stockError": "One or more items are out of stock.",
+    "paytrDisabled": "PayTR payments are currently disabled.",
+    "successTitle": "Order confirmed",
+    "successBody": "Your order has been placed. We'll email you the updates.",
+    "successOrder": "Order number: {orderId}",
+    "addressMissing": "Please complete the address."
   },
   "auth": {
     "email": "E-posta",
@@ -192,7 +256,44 @@
     "placedOn": "Tarih",
     "total": "Toplam",
     "itemsCount": "{count} ürün",
-    "empty": "Henüz sipariş vermediniz."
+    "empty": "Henüz sipariş vermediniz.",
+    "profileTitle": "Profile",
+    "profileName": "Full name",
+    "profileSave": "Save profile",
+    "profileSaved": "Profile updated",
+    "profileError": "Unable to update profile",
+    "addressesTitle": "Saved addresses",
+    "loadingAddresses": "Loading addresses...",
+    "noAddresses": "No addresses saved yet.",
+    "default": "Default",
+    "edit": "Edit",
+    "remove": "Remove",
+    "addressFormTitle": "Add or edit address",
+    "addressLabel": "Label (e.g. Home)",
+    "addressLabelFallback": "Saved address",
+    "addressFullName": "Full name",
+    "addressPhone": "Phone",
+    "addressLine1": "Address line 1",
+    "addressLine2": "Address line 2",
+    "addressCity": "City",
+    "addressState": "State",
+    "addressPostal": "Postal code",
+    "addressCountry": "Country",
+    "addressDefault": "Set as default",
+    "addressAdd": "Save address",
+    "addressUpdate": "Update address",
+    "addressSaved": "Address saved",
+    "addressRemoved": "Address removed",
+    "addressError": "Unable to save address",
+    "confirmRemoveAddress": "Remove this address?",
+    "cancel": "Cancel",
+    "addressType": {
+      "shipping": "Shipping",
+      "billing": "Billing",
+      "both": "Shipping & billing"
+    },
+    "viewDetails": "View details",
+    "addressMissing": "Please complete the address fields."
   },
   "notifications": {
     "addedToCart": "Sepete eklendi",
@@ -205,7 +306,9 @@
     "loginSuccess": "Tekrar hoş geldiniz!",
     "logoutSuccess": "Çıkış yapıldı",
     "registerSuccess": "Lupeti ailesine hoş geldiniz!",
-    "authError": "Kimlik doğrulama başarısız"
+    "authError": "Kimlik doğrulama başarısız",
+    "outOfStock": "Stokta yok",
+    "cartMergePartial": "Some items could not be added to your cart."
   },
   "footer": {
     "tagline": "Bilinci besleyen tarifler ve objeler.",
@@ -223,7 +326,8 @@
         "links": {
           "contact": "İletişim",
           "shipping": "Kargo & iade",
-          "privacy": "Gizlilik"
+          "privacy": "Gizlilik",
+          "terms": "Terms"
         }
       }
     },
@@ -245,7 +349,11 @@
       "dashboard": "Gösterge",
       "products": "Ürünler",
       "users": "Kullanıcılar",
-      "support": "Destek"
+      "support": "Destek",
+      "orders": "Siparisler",
+      "categories": "Kategoriler",
+      "content": "Icerik",
+      "settings": "Ayarlar"
     },
     "dashboard": {
       "title": "Operasyon özeti",
@@ -259,7 +367,22 @@
       "active": "Aktif: {value}",
       "orders": "Siparişler",
       "tickets": "Talepler",
-      "open": "Açık: {value}"
+      "open": "Açık: {value}",
+      "performance": {
+        "title": "Performans",
+        "subtitle": "Son 30 gun ozeti",
+        "orders7": "Siparis (7g)",
+        "orders30": "Siparis (30g)",
+        "revenue30": "Ciro (30g)",
+        "average": "Ortalama sepet",
+        "newCustomers": "Yeni musteri (30g)"
+      },
+      "bestSellers": {
+        "title": "En cok satanlar",
+        "subtitle": "Birim bazli en iyi urunler",
+        "units": "{count} adet satildi",
+        "empty": "Satis verisi yok."
+      }
     },
     "products": {
       "title": "Ürün yönetimi",
@@ -273,7 +396,8 @@
         "product": "Ürün",
         "stock": "Stok",
         "price": "Fiyat",
-        "status": "Durum"
+        "status": "Durum",
+        "flags": "Durum"
       },
       "form": {
         "title": "Yeni ürün",
@@ -285,12 +409,42 @@
         "discount": "İndirim %",
         "submit": "Ürünü yayınla",
         "media": "Medya",
-        "image": "?r?n g?rseli"
+        "image": "?r?n g?rseli",
+        "editTitle": "Urunu duzenle",
+        "reset": "Sifirla",
+        "originalPrice": "Orijinal fiyat",
+        "currency": "Para birimi",
+        "inventory": "Stok",
+        "sku": "SKU",
+        "flags": "Gorunurluk",
+        "visible": "Gorunur",
+        "featured": "One cikan",
+        "promotion": "Promosyon",
+        "enablePromo": "Promosyonu etkinlestir",
+        "discountType": "Indirim tipi",
+        "discountNone": "Indirim yok",
+        "discountPercent": "Yuzde",
+        "discountAmount": "Tutar",
+        "discountValue": "Indirim degeri",
+        "promoStart": "Promo baslangic",
+        "promoEnd": "Promo bitis",
+        "noImages": "Henuz goruntu yok.",
+        "save": "Kaydet"
       },
       "active": "Aktif",
       "inactive": "Pasif",
       "activate": "Aktifleştir",
-      "disable": "Pasifleştir"
+      "disable": "Pasifleştir",
+      "updated": "Urun guncellendi",
+      "deleted": "Urun silindi",
+      "deleteError": "Urun silinemedi",
+      "edit": "Duzenle",
+      "feature": "One cikar",
+      "unfeature": "One cikarmayi kaldir",
+      "featured": "One cikan",
+      "standard": "Standart",
+      "delete": "Sil",
+      "remove": "Kaldir"
     },
     "users": {
       "title": "Kullanıcı yönetimi",
@@ -303,7 +457,8 @@
       "table": {
         "user": "Kullanıcı",
         "role": "Rol",
-        "status": "Durum"
+        "status": "Durum",
+        "orders": "Siparis"
       },
       "form": {
         "title": "Yeni kullanıcı",
@@ -319,7 +474,22 @@
       "active": "Aktif",
       "inactive": "Pasif",
       "activate": "Aktifleştir",
-      "disable": "Pasifleştir"
+      "disable": "Pasifleştir",
+      "ordersCount": "{count} siparis",
+      "noOrders": "Siparis yok",
+      "noName": "Isim yok",
+      "details": {
+        "title": "Kullanici detaylari",
+        "summary": "Ozet",
+        "role": "Rol: {value}",
+        "status": "Durum: {value}",
+        "orders": "Siparis: {count}",
+        "totalSpent": "Toplam harcama: {value}",
+        "lastOrder": "Son siparis: {value}",
+        "ordersList": "Son siparisler",
+        "noOrders": "Siparis yok.",
+        "empty": "Detay icin kullanici secin."
+      }
     },
     "support": {
       "title": "Destek talepleri",
@@ -345,6 +515,124 @@
         "placeholder": "Yanıt yazın",
         "submit": "Gönder"
       }
+    },
+    "categories": {
+      "title": "Kategorileri yonet",
+      "subtitle": "Urun gruplarini olustur ve duzenle.",
+      "created": "Kategori olusturuldu",
+      "updated": "Kategori guncellendi",
+      "deleted": "Kategori silindi",
+      "error": "Kategori kaydedilemedi",
+      "deleteError": "Kategori silinemedi",
+      "genericError": "Lutfen tekrar deneyin.",
+      "edit": "Duzenle",
+      "delete": "Sil",
+      "table": {
+        "name": "Ad",
+        "slug": "Slug"
+      },
+      "form": {
+        "title": "Yeni kategori",
+        "editTitle": "Kategori duzenle",
+        "reset": "Sifirla",
+        "name": "Ad",
+        "slug": "Slug",
+        "submit": "Kategori olustur",
+        "save": "Kaydet"
+      }
+    },
+    "orders": {
+      "title": "Siparis yonetimi",
+      "subtitle": "Siparisleri gor ve durum guncelle.",
+      "loadError": "Siparisler yuklenemedi",
+      "statusUpdated": "Siparis durumu guncellendi",
+      "statusError": "Durum guncellenemedi",
+      "genericError": "Lutfen tekrar deneyin.",
+      "table": {
+        "order": "Siparis",
+        "customer": "Musteri",
+        "total": "Toplam",
+        "status": "Durum"
+      },
+      "details": {
+        "title": "Siparis detaylari",
+        "status": "Durum",
+        "customer": "Musteri",
+        "shipping": "Teslimat adresi",
+        "noAddress": "Adres yok.",
+        "items": "Urunler",
+        "totals": "Toplamlar",
+        "subtotal": "Ara toplam: {value}",
+        "shippingFee": "Kargo: {value}",
+        "total": "Toplam: {value}",
+        "clear": "Secimi temizle",
+        "empty": "Detay icin siparis secin."
+      },
+      "status": {
+        "PENDING_PAYMENT": "Beklemede",
+        "PAID": "Isleniyor",
+        "SHIPPED": "Isleniyor",
+        "DELIVERED": "Teslim edildi",
+        "CANCELLED": "Iptal edildi",
+        "FAILED": "Basarisiz"
+      }
+    },
+    "content": {
+      "title": "Ana sayfa icerigi",
+      "subtitle": "Gorselleri ve premium bolumleri yonet.",
+      "loadError": "Icerik yuklenemedi",
+      "updateError": "Icerik guncellenemedi",
+      "updated": "Icerik guncellendi",
+      "genericError": "Lutfen tekrar deneyin.",
+      "loading": "Icerik yukleniyor...",
+      "sections": "Bolumler",
+      "toggles": {
+        "heroShowcase": "Hero vitrin",
+        "hero3d": "Hero 3D",
+        "brandMarquee": "Marka bant",
+        "featured": "One cikan urunler",
+        "categoryCards": "Kategori kartlari",
+        "story": "Hikaye bolumu",
+        "trustBadges": "Guven rozetleri"
+      },
+      "images": {
+        "hero": "Hero gorseli",
+        "story": "Hikaye gorseli",
+        "categoryDog": "Kopek kategori gorseli",
+        "categoryCat": "Kedi kategori gorseli",
+        "upload": "Gorsel yukle",
+        "empty": "Henuz gorsel yok."
+      },
+      "save": "Icerigi kaydet"
+    },
+    "settings": {
+      "title": "Genel ayarlar",
+      "subtitle": "Magaza bilgisi, kargo ucretleri ve secenekler.",
+      "loadError": "Ayarlar yuklenemedi",
+      "updateError": "Ayarlar guncellenemedi",
+      "updated": "Ayarlar guncellendi",
+      "genericError": "Lutfen tekrar deneyin.",
+      "loading": "Ayarlar yukleniyor...",
+      "store": {
+        "title": "Magaza bilgisi",
+        "name": "Magaza adi",
+        "email": "Destek e-postasi",
+        "phone": "Destek telefonu",
+        "address": "Destek adresi"
+      },
+      "shipping": {
+        "title": "Kargo ucretleri",
+        "standard": "Standart kargo",
+        "express": "Hizli kargo",
+        "currency": "Para birimi"
+      },
+      "features": {
+        "title": "Ozellikler",
+        "checkout": "Odeme etkin",
+        "support": "Destek etkin",
+        "paytr": "PayTR odemeleri etkin"
+      },
+      "save": "Ayarlar kaydet"
     }
   },
   "status": {
@@ -372,6 +660,91 @@
       "payment": "Ödeme",
       "product": "Ürün",
       "other": "Diğer"
+    }
+  },
+  "orders": {
+    "title": "My orders",
+    "headline": "Track your deliveries",
+    "subtitle": "Review your orders and delivery status.",
+    "refresh": "Refresh orders",
+    "loading": "Loading your account...",
+    "loadingOrders": "Loading orders...",
+    "loginPrompt": "Sign in to view your orders.",
+    "login": "Login",
+    "register": "Register",
+    "orderId": "Order ID",
+    "placedOn": "Placed on",
+    "items": "Items",
+    "subtotal": "Subtotal",
+    "shipping": "Shipping",
+    "total": "Total",
+    "shippingAddress": "Shipping address",
+    "notFound": "Order not found.",
+    "status": {
+      "pending": "Pending",
+      "processing": "Processing",
+      "delivered": "Delivered",
+      "cancelled": "Cancelled"
+    }
+  },
+  "wishlist": {
+    "title": "Wishlist",
+    "headline": "Saved favorites",
+    "loading": "Loading wishlist...",
+    "empty": "Your wishlist is empty.",
+    "add": "Save",
+    "added": "Saved to wishlist",
+    "remove": "Remove",
+    "confirmRemove": "Remove this item from your wishlist?",
+    "error": "Unable to update wishlist",
+    "genericError": "Please try again."
+  },
+  "contact": {
+    "eyebrow": "Contact",
+    "title": "Talk to Lupeti",
+    "subtitle": "We reply within one business day."
+  },
+  "policies": {
+    "shipping": {
+      "eyebrow": "Shipping",
+      "title": "Shipping & returns",
+      "intro": "We ship Lupeti essentials with care and track every parcel.",
+      "points": {
+        "standard": "Standard delivery arrives in 2-4 business days.",
+        "express": "Express delivery arrives next business day in major cities.",
+        "returns": "Returns are accepted within 14 days on unopened items."
+      },
+      "footer": "Need help? Reach out through our contact form."
+    },
+    "privacy": {
+      "eyebrow": "Privacy",
+      "title": "Privacy policy",
+      "intro": "We only collect the data needed to fulfill your orders and improve Lupeti.",
+      "points": {
+        "data": "We store order, account, and support details securely.",
+        "security": "Payment data is handled by certified providers.",
+        "rights": "You can request access or deletion of your data."
+      },
+      "footer": "Contact support for any privacy-related questions."
+    },
+    "terms": {
+      "eyebrow": "Terms",
+      "title": "Terms of service",
+      "intro": "By shopping with Lupeti, you agree to these terms.",
+      "points": {
+        "orders": "Orders are confirmed once payment is authorized or COD is selected.",
+        "shipping": "Delivery timelines depend on the shipping option selected.",
+        "usage": "Use the site responsibly and keep your account secure."
+      },
+      "footer": "Contact us if you need clarification on these terms."
+    }
+  },
+  "category": {
+    "eyebrow": "Category",
+    "subtitle": "Browse curated essentials for your pets.",
+    "breadcrumbs": {
+      "home": "Home",
+      "shop": "Shop"
     }
   }
 }

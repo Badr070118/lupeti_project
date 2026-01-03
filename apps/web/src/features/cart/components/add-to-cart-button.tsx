@@ -6,37 +6,42 @@ import { cartService } from '@/services/cart.service';
 import { useToast } from '@/hooks/use-toast';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/hooks/use-auth';
-import { useRouter } from '@/i18n/routing';
+import { addGuestItem } from '@/lib/guest-cart';
 
 interface AddToCartButtonProps {
   productId: string;
   quantity?: number;
   className?: string;
+  disabled?: boolean;
+  disabledLabel?: string;
 }
 
 export function AddToCartButton({
   productId,
   quantity = 1,
   className,
+  disabled = false,
+  disabledLabel,
 }: AddToCartButtonProps) {
   const [loading, setLoading] = useState(false);
   const { showToast } = useToast();
   const { accessToken } = useAuth();
-  const router = useRouter();
   const t = useTranslations('notifications');
 
   return (
     <Button
       className={className}
       loading={loading}
+      disabled={disabled || loading}
       onClick={async () => {
+        if (disabled) return;
         if (!accessToken) {
+          addGuestItem(productId, quantity);
           showToast({
-            title: t('authRequired'),
-            description: t('authHint'),
-            variant: 'info',
+            title: t('addedToCart'),
+            variant: 'success',
           });
-          router.push('/login');
+          window.dispatchEvent(new Event('cart:updated'));
           return;
         }
         setLoading(true);
@@ -59,7 +64,9 @@ export function AddToCartButton({
         }
       }}
     >
-      {t('addToCartButton', { default: 'Add to cart' })}
+      {disabled
+        ? disabledLabel ?? t('outOfStock', { default: 'Out of stock' })
+        : t('addToCartButton', { default: 'Add to cart' })}
     </Button>
   );
 }

@@ -2,10 +2,16 @@ import { fetchApi } from '@/lib/api';
 import type {
   AdminOverview,
   AdminProductInput,
+  AdminOrder,
+  AdminUserDetail,
+  AdminUserSummary,
   AdminUserInput,
+  HomepageSettings,
   PaginatedResult,
   Product,
+  ProductImage,
   SupportTicket,
+  StoreSettings,
   User,
 } from '@/types';
 
@@ -14,6 +20,12 @@ type ProductQuery = {
   limit?: number;
   search?: string;
   includeInactive?: boolean;
+};
+
+type OrderQuery = {
+  page?: number;
+  limit?: number;
+  status?: string;
 };
 
 export const adminService = {
@@ -68,8 +80,33 @@ export const adminService = {
     });
   },
 
+  addProductImage(
+    accessToken: string,
+    productId: string,
+    payload: { url: string; altText?: string | null; sortOrder?: number },
+  ) {
+    return fetchApi<ProductImage>(`/products/${productId}/images`, {
+      method: 'POST',
+      accessToken,
+      body: payload,
+    });
+  },
+
+  removeProductImage(accessToken: string, imageId: string) {
+    return fetchApi(`/products/images/${imageId}`, {
+      method: 'DELETE',
+      accessToken,
+    });
+  },
+
   listUsers(accessToken: string) {
-    return fetchApi<PaginatedResult<User>>('/admin/users', {
+    return fetchApi<PaginatedResult<AdminUserSummary>>('/admin/users', {
+      accessToken,
+    });
+  },
+
+  getUser(accessToken: string, id: string) {
+    return fetchApi<AdminUserDetail>(`/admin/users/${id}`, {
       accessToken,
     });
   },
@@ -130,6 +167,67 @@ export const adminService = {
       method: 'POST',
       accessToken,
       body: { message },
+    });
+  },
+
+  listOrders(accessToken: string, query: OrderQuery = {}) {
+    const params = new URLSearchParams();
+    if (query.page) params.set('page', String(query.page));
+    if (query.limit) params.set('limit', String(query.limit));
+    if (query.status) params.set('status', query.status);
+    const suffix = params.toString() ? `?${params.toString()}` : '';
+    return fetchApi<PaginatedResult<AdminOrder>>(`/orders${suffix}`, {
+      accessToken,
+    });
+  },
+
+  getOrder(accessToken: string, id: string) {
+    return fetchApi<AdminOrder>(`/orders/${id}`, {
+      accessToken,
+    });
+  },
+
+  updateOrderStatus(accessToken: string, id: string, status: string) {
+    return fetchApi<AdminOrder>(`/orders/${id}/status`, {
+      method: 'PATCH',
+      accessToken,
+      body: { status },
+    });
+  },
+
+  getSettings(accessToken: string) {
+    return fetchApi<{ store: StoreSettings; homepage: HomepageSettings }>(
+      '/admin/settings',
+      { accessToken },
+    );
+  },
+
+  updateStoreSettings(accessToken: string, payload: Partial<StoreSettings>) {
+    return fetchApi<StoreSettings>('/admin/settings/store', {
+      method: 'PATCH',
+      accessToken,
+      body: payload,
+    });
+  },
+
+  updateHomepageSettings(
+    accessToken: string,
+    payload: Partial<HomepageSettings>,
+  ) {
+    return fetchApi<HomepageSettings>('/admin/settings/homepage', {
+      method: 'PATCH',
+      accessToken,
+      body: payload,
+    });
+  },
+
+  uploadContentImage(accessToken: string, file: File) {
+    const formData = new FormData();
+    formData.append('file', file);
+    return fetchApi<{ url: string }>('/admin/settings/upload', {
+      method: 'POST',
+      accessToken,
+      body: formData,
     });
   },
 };

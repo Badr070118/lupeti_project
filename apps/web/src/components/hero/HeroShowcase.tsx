@@ -291,7 +291,7 @@ const HeroContent = ({ reduceMotion }: { reduceMotion: boolean }) => {
           whileHover={reduceMotion ? undefined : { scale: 1.05 }}
           whileTap={reduceMotion ? undefined : { scale: 0.97 }}
           type="button"
-          onClick={() => router.push('/shop?category=dogs')}
+          onClick={() => router.push('/category/dog')}
           className="rounded-full border-2 border-white/30 bg-white/10 px-8 py-4 text-lg font-semibold text-white backdrop-blur-md transition hover:bg-white/20"
         >
           Boutique Chiens
@@ -300,7 +300,7 @@ const HeroContent = ({ reduceMotion }: { reduceMotion: boolean }) => {
           whileHover={reduceMotion ? undefined : { scale: 1.05 }}
           whileTap={reduceMotion ? undefined : { scale: 0.97 }}
           type="button"
-          onClick={() => router.push('/shop?category=cats')}
+          onClick={() => router.push('/category/cat')}
           className="rounded-full border-2 border-purple-400/60 bg-white/10 px-8 py-4 text-lg font-semibold text-white backdrop-blur-md transition hover:bg-purple-500/20"
         >
           Boutique Chats

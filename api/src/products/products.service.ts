@@ -97,6 +97,22 @@ export class ProductsService {
     };
   }
 
+  async lookup(ids: string[]) {
+    if (!ids.length) return [];
+    const products = await this.prisma.product.findMany({
+      where: {
+        id: { in: ids },
+        isActive: true,
+        deletedAt: null,
+      },
+      include: productInclude,
+    });
+
+    const mapped = products.map((item) => this.mapProduct(item));
+    const lookup = new Map(mapped.map((item) => [item.id, item]));
+    return ids.map((id) => lookup.get(id)).filter(Boolean);
+  }
+
   async getPublic(slug: string) {
     const product = await this.prisma.product.findFirst({
       where: {
@@ -349,6 +365,7 @@ export class ProductsService {
       where.OR = [
         { title: { contains: searchTerm, mode: 'insensitive' } },
         { description: { contains: searchTerm, mode: 'insensitive' } },
+        { category: { name: { contains: searchTerm, mode: 'insensitive' } } },
       ];
     }
 
@@ -367,6 +384,34 @@ export class ProductsService {
       where.isFeatured = query.featured;
     }
 
+    if (query.inStock) {
+      where.stock = { gt: 0 };
+    }
+
+    if (query.onSale) {
+      const now = new Date();
+      const promoWindow = [
+        { OR: [{ promoStartAt: null }, { promoStartAt: { lte: now } }] },
+        { OR: [{ promoEndAt: null }, { promoEndAt: { gte: now } }] },
+      ];
+
+      where.AND = [
+        ...(Array.isArray(where.AND) ? where.AND : where.AND ? [where.AND] : []),
+        {
+          OR: [
+            {
+              discountType: { not: null },
+              discountValue: { not: null },
+              AND: promoWindow,
+            },
+            {
+              originalPriceCents: { not: null },
+            },
+          ],
+        },
+      ];
+    }
+
     return where;
   }
 
@@ -382,7 +427,12 @@ export class ProductsService {
         ? [{ priceCents: 'asc' as const }]
         : query.sort === 'price_desc'
           ? [{ priceCents: 'desc' as const }]
-          : [{ createdAt: 'desc' as const }];
+          : query.sort === 'best_sellers'
+            ? [
+                { orderItems: { _count: 'desc' as const } },
+                { createdAt: 'desc' as const },
+              ]
+            : [{ createdAt: 'desc' as const }];
     return [...isFeaturedFirst, ...sort];
   }
 

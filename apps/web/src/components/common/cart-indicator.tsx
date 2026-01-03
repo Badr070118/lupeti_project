@@ -6,6 +6,7 @@ import { useTranslations } from 'next-intl';
 import { cartService } from '@/services/cart.service';
 import { useAuth } from '@/hooks/use-auth';
 import { Link } from '@/i18n/routing';
+import { guestCartCount } from '@/lib/guest-cart';
 
 export function CartIndicator() {
   const [qty, setQty] = useState(0);
@@ -16,7 +17,7 @@ export function CartIndicator() {
     let active = true;
     const fetchCart = () => {
       if (!accessToken) {
-        setQty(0);
+        setQty(guestCartCount());
         return;
       }
       cartService

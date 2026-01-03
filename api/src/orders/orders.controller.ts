@@ -53,6 +53,13 @@ export class OrdersController {
     return this.ordersService.getMyOrder(this.getUserId(req), id);
   }
 
+  @Get(':id')
+  @UseGuards(RolesGuard)
+  @Roles(Role.ADMIN)
+  getById(@Param('id', new ParseUUIDPipe()) id: string) {
+    return this.ordersService.getOrder(id);
+  }
+
   @Get()
   @UseGuards(RolesGuard)
   @Roles(Role.ADMIN)

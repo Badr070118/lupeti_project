@@ -37,6 +37,7 @@ export function ProductCard({ product }: ProductCardProps) {
         ? `-${pricing.discountValue}%`
         : `-${formatPrice(pricing.savingsCents, product.currency)}`
       : null;
+  const isOutOfStock = product.stock <= 0;
 
   return (
     <div className="product-card">
@@ -94,7 +95,11 @@ export function ProductCard({ product }: ProductCardProps) {
               )}
             </div>
           </div>
-          <AddToCartButton productId={product.id} />
+          <AddToCartButton
+            productId={product.id}
+            disabled={isOutOfStock}
+            disabledLabel={t('soldOut')}
+          />
         </div>
       </div>
     </div>

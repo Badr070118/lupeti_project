@@ -1,10 +1,15 @@
-import Image from 'next/image';
+'use client';
+
 import { useTranslations } from 'next-intl';
+import { useMemo, useState } from 'react';
 import type { Product } from '@/types';
 import { formatPrice } from '@/lib/utils';
 import { AddToCartButton } from '@/features/cart/components/add-to-cart-button';
 import { Badge } from '@/components/ui/badge';
-import { resolveProductImage } from '@/lib/product-images';
+import { ProductGallery } from './product-gallery';
+import { Button } from '@/components/ui/button';
+import { useToast } from '@/hooks/use-toast';
+import { WishlistButton } from '@/features/wishlist/wishlist-button';
 
 interface ProductDetailsProps {
   product: Product;
@@ -12,8 +17,7 @@ interface ProductDetailsProps {
 
 export function ProductDetails({ product }: ProductDetailsProps) {
   const t = useTranslations('product');
-  const cover = product.images?.[0];
-  const coverSrc = resolveProductImage(product.slug, cover?.url);
+  const { showToast } = useToast();
   const pricing =
     product.pricing ?? {
       originalPriceCents: product.priceCents,
@@ -23,49 +27,34 @@ export function ProductDetails({ product }: ProductDetailsProps) {
       savingsCents: 0,
       isPromoActive: false,
     };
+  const isOutOfStock = product.stock <= 0;
+  const maxQty = Math.min(Math.max(product.stock, 0), 20);
+  const [quantity, setQuantity] = useState(1);
+
+  const stockLabel = useMemo(() => {
+    if (product.stock <= 0) return t('stockStatus.out');
+    if (product.stock <= 5) return t('stockStatus.low');
+    return t('stockStatus.in');
+  }, [product.stock, t]);
 
   return (
     <div className="grid gap-8 lg:grid-cols-2">
-      <div className="space-y-4">
-        <div className="relative h-96 overflow-hidden rounded-3xl border border-slate-100">
-          {cover ? (
-            <Image
-              src={coverSrc}
-              alt={cover.altText ?? product.title}
-              fill
-              sizes="(max-width: 768px) 100vw, 50vw"
-              className="object-cover"
-            />
-          ) : (
-            <div className="flex h-full items-center justify-center bg-slate-100 text-sm text-slate-500">
-              {product.title}
-            </div>
-          )}
-        </div>
-        {product.images?.length > 1 ? (
-          <div className="grid grid-cols-4 gap-3">
-            {product.images.slice(1).map((image) => {
-              const src = resolveProductImage(product.slug, image.url);
-              return (
-                <div
-                  key={image.id}
-                  className="relative h-20 overflow-hidden rounded-2xl border border-slate-100"
-                >
-                  <Image
-                    src={src}
-                    alt={image.altText ?? product.title}
-                    fill
-                    sizes="80px"
-                    className="object-cover"
-                  />
-                </div>
-              );
-            })}
-          </div>
-        ) : null}
-      </div>
+      <ProductGallery product={product} />
       <div className="space-y-6">
-        <Badge className="bg-slate-900 text-white">{product.category.name}</Badge>
+        <div className="flex flex-wrap items-center gap-2">
+          <Badge className="bg-slate-900 text-white">{product.category.name}</Badge>
+          <span
+            className={`rounded-full px-3 py-1 text-xs font-semibold ${
+              isOutOfStock
+                ? 'bg-rose-100 text-rose-600'
+                : product.stock <= 5
+                  ? 'bg-amber-100 text-amber-700'
+                  : 'bg-emerald-100 text-emerald-700'
+            }`}
+          >
+            {stockLabel}
+          </span>
+        </div>
         <div>
           <p className="text-sm uppercase tracking-wide text-slate-400">{t('details')}</p>
           <h1 className="mt-2 text-4xl font-black text-slate-900">{product.title}</h1>
@@ -101,7 +90,57 @@ export function ProductDetails({ product }: ProductDetailsProps) {
               </p>
             )}
           </div>
-          <AddToCartButton productId={product.id} className="px-6 py-3" />
+        </div>
+        <div className="flex flex-wrap items-center gap-4">
+          <label className="text-sm text-slate-500">
+            {t('quantity')}
+            <select
+              className="ml-2 rounded-xl border border-slate-200 px-2 py-1 text-sm"
+              value={quantity}
+              onChange={(event) => setQuantity(Number(event.target.value))}
+              disabled={isOutOfStock}
+            >
+              {Array.from({ length: Math.max(1, maxQty) }).map((_, index) => (
+                <option key={index + 1} value={index + 1}>
+                  {index + 1}
+                </option>
+              ))}
+            </select>
+          </label>
+          <AddToCartButton
+            productId={product.id}
+            quantity={quantity}
+            className="px-6 py-3"
+            disabled={isOutOfStock}
+            disabledLabel={t('outOfStock')}
+          />
+          <WishlistButton productId={product.id} />
+          <Button
+            variant="ghost"
+            onClick={() => {
+              const url = window.location.href;
+              if (navigator.share) {
+                navigator.share({ title: product.title, url }).catch(() => {});
+                return;
+              }
+              navigator.clipboard
+                .writeText(url)
+                .then(() =>
+                  showToast({
+                    title: t('shareSuccess', { default: 'Link copied to clipboard' }),
+                    variant: 'success',
+                  }),
+                )
+                .catch(() =>
+                  showToast({
+                    title: t('shareError', { default: 'Unable to copy link' }),
+                    variant: 'error',
+                  }),
+                );
+            }}
+          >
+            {t('share', { default: 'Share' })}
+          </Button>
         </div>
       </div>
     </div>

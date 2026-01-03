@@ -1,6 +1,8 @@
 import { useTranslations } from 'next-intl';
 import { formatPrice } from '@/lib/utils';
 import type { Order } from '@/types';
+import { Link } from '@/i18n/routing';
+import { OrderStatusBadge } from './order-status-badge';
 
 interface OrderListProps {
   orders: Order[];
@@ -31,9 +33,7 @@ export function OrderList({ orders }: OrderListProps) {
             </div>
             <div>
               <p className="text-sm text-slate-500">{t('status')}</p>
-              <p className="font-semibold capitalize text-rose-500">
-                {order.status.replace('_', ' ').toLowerCase()}
-              </p>
+              <OrderStatusBadge status={order.status} />
             </div>
             <div>
               <p className="text-sm text-slate-500">{t('placedOn')}</p>
@@ -52,6 +52,14 @@ export function OrderList({ orders }: OrderListProps) {
           </div>
           <div className="mt-4 border-t border-slate-100 pt-4 text-sm text-slate-500">
             {t('itemsCount', { count: order.items.length })}
+          </div>
+          <div className="mt-3">
+            <Link
+              href={{ pathname: '/orders/[id]', params: { id: order.id } }}
+              className="text-sm font-semibold text-rose-500 hover:text-rose-600"
+            >
+              {t('viewDetails', { default: 'View details' })}
+            </Link>
           </div>
         </div>
       ))}

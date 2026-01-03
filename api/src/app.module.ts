@@ -13,6 +13,9 @@ import { OrdersModule } from './orders/orders.module';
 import { PaymentsModule } from './payments/payments.module';
 import { UsersModule } from './users/users.module';
 import { SupportModule } from './support/support.module';
+import { SettingsModule } from './settings/settings.module';
+import { AccountModule } from './account/account.module';
+import { WishlistModule } from './wishlist/wishlist.module';
 
 @Module({
   imports: [
@@ -36,6 +39,9 @@ import { SupportModule } from './support/support.module';
     PaymentsModule,
     UsersModule,
     SupportModule,
+    SettingsModule,
+    AccountModule,
+    WishlistModule,
   ],
   providers: [
     {

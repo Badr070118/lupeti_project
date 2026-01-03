@@ -37,8 +37,8 @@ export class ProductQueryDto {
 
   @IsOptional()
   @IsString()
-  @IsIn(['newest', 'price_asc', 'price_desc'])
-  sort?: 'newest' | 'price_asc' | 'price_desc' = 'newest';
+  @IsIn(['newest', 'price_asc', 'price_desc', 'best_sellers'])
+  sort?: 'newest' | 'price_asc' | 'price_desc' | 'best_sellers' = 'newest';
 
   @IsOptional()
   @Transform(({ value }) => {
@@ -59,4 +59,24 @@ export class ProductQueryDto {
     return undefined;
   })
   includeInactive?: boolean;
+
+  @IsOptional()
+  @Transform(({ value }) => {
+    if (typeof value === 'boolean') return value;
+    if (typeof value === 'string') {
+      return value.toLowerCase() === 'true';
+    }
+    return undefined;
+  })
+  inStock?: boolean;
+
+  @IsOptional()
+  @Transform(({ value }) => {
+    if (typeof value === 'boolean') return value;
+    if (typeof value === 'string') {
+      return value.toLowerCase() === 'true';
+    }
+    return undefined;
+  })
+  onSale?: boolean;
 }

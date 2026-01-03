@@ -4,6 +4,10 @@ export class ShippingAddressDto {
   @IsString()
   fullName!: string;
 
+  @IsOptional()
+  @IsString()
+  phone?: string;
+
   @IsString()
   line1!: string;
 
@@ -13,6 +17,10 @@ export class ShippingAddressDto {
 
   @IsString()
   city!: string;
+
+  @IsOptional()
+  @IsString()
+  state?: string;
 
   @IsString()
   country!: string;

@@ -4,20 +4,19 @@ import Image from 'next/image';
 import { Trash2 } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
-import type { Cart, CartItem } from '@/types';
+import type { CartItem } from '@/types';
 import { formatPrice } from '@/lib/utils';
-import { cartService } from '@/services/cart.service';
 import { useToast } from '@/hooks/use-toast';
 import { Link } from '@/i18n/routing';
 import { resolveProductImage } from '@/lib/product-images';
 
 interface CartItemRowProps {
   item: CartItem;
-  accessToken: string;
-  onCartUpdated: (cart: Cart) => void;
+  onUpdateQuantity: (quantity: number) => Promise<void>;
+  onRemove: () => Promise<void>;
 }
 
-export function CartItemRow({ item, accessToken, onCartUpdated }: CartItemRowProps) {
+export function CartItemRow({ item, onUpdateQuantity, onRemove }: CartItemRowProps) {
   const [saving, setSaving] = useState(false);
   const { showToast } = useToast();
   const t = useTranslations('cart');
@@ -25,8 +24,7 @@ export function CartItemRow({ item, accessToken, onCartUpdated }: CartItemRowPro
   const updateQty = async (quantity: number) => {
     setSaving(true);
     try {
-      const cart = await cartService.updateItem(accessToken, item.id, quantity);
-      onCartUpdated(cart);
+      await onUpdateQuantity(quantity);
     } catch (error) {
       showToast({
         title: t('updateErrorTitle'),
@@ -40,10 +38,12 @@ export function CartItemRow({ item, accessToken, onCartUpdated }: CartItemRowPro
   };
 
   const removeItem = async () => {
+    if (!window.confirm(t('confirmRemove', { default: 'Remove this item from your cart?' }))) {
+      return;
+    }
     setSaving(true);
     try {
-      const cart = await cartService.removeItem(accessToken, item.id);
-      onCartUpdated(cart);
+      await onRemove();
     } catch (error) {
       showToast({
         title: t('removeErrorTitle'),
@@ -98,7 +98,7 @@ export function CartItemRow({ item, accessToken, onCartUpdated }: CartItemRowPro
               disabled={saving}
               onChange={(event) => updateQty(Number(event.target.value))}
             >
-              {Array.from({ length: 20 }).map((_, index) => (
+              {Array.from({ length: Math.min(Math.max(item.product.stock, 1), 20) }).map((_, index) => (
                 <option key={index + 1} value={index + 1}>
                   {index + 1}
                 </option>

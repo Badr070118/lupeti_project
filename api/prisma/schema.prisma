@@ -42,6 +42,12 @@ enum TicketCategory {
   OTHER
 }
 
+enum AddressType {
+  SHIPPING
+  BILLING
+  BOTH
+}
+
 model User {
   id              String         @id @default(uuid()) @db.Uuid
   email           String         @unique
@@ -55,6 +61,8 @@ model User {
   tokens          RefreshToken[]
   cart            Cart?
   orders          Order[]
+  addresses       Address[]
+  wishlistItems   WishlistItem[]
   supportTickets  SupportTicket[] @relation("TicketOwner")
   assignedTickets SupportTicket[] @relation("TicketAssignment")
   supportReplies  SupportReply[]
@@ -106,6 +114,7 @@ model Product {
   images      ProductImage[]
   cartItems   CartItem[]
   orderItems  OrderItem[]
+  wishlistItems WishlistItem[]
 
   @@index([categoryId])
   @@index([isFeatured])
@@ -135,6 +144,7 @@ enum OrderStatus {
 enum PaymentProvider {
   PAYTR
   STRIPE
+  COD
 }
 
 enum PaymentStatus {
@@ -263,4 +273,73 @@ model SupportReply {
 
   @@index([ticketId])
   @@index([authorId])
+}
+
+model Address {
+  id         String      @id @default(uuid()) @db.Uuid
+  userId     String      @db.Uuid
+  label      String?
+  fullName   String?
+  phone      String?
+  line1      String
+  line2      String?
+  city       String
+  state      String?
+  postalCode String
+  country    String
+  type       AddressType @default(SHIPPING)
+  isDefault  Boolean     @default(false)
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model WishlistItem {
+  id        String   @id @default(uuid()) @db.Uuid
+  userId    String   @db.Uuid
+  productId String   @db.Uuid
+  createdAt DateTime @default(now())
+
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, productId])
+  @@index([userId])
+  @@index([productId])
+}
+
+model StoreSettings {
+  id                   String   @id @default(uuid()) @db.Uuid
+  storeName            String   @default("Lupeti")
+  supportEmail         String?
+  supportPhone         String?
+  supportAddress       String?
+  shippingStandardCents Int     @default(0)
+  shippingExpressCents Int      @default(2500)
+  currency             String   @default("TRY")
+  enableCheckout       Boolean  @default(true)
+  enableSupport        Boolean  @default(true)
+  paytrEnabled         Boolean  @default(true)
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+}
+
+model HomepageSettings {
+  id                  String   @id @default(uuid()) @db.Uuid
+  heroImageUrl        String?
+  storyImageUrl       String?
+  categoryDogImageUrl String?
+  categoryCatImageUrl String?
+  showHeroShowcase    Boolean  @default(true)
+  showHero3d          Boolean  @default(true)
+  showBrandMarquee    Boolean  @default(true)
+  showFeatured        Boolean  @default(true)
+  showCategoryCards   Boolean  @default(true)
+  showStorySection    Boolean  @default(true)
+  showTrustBadges     Boolean  @default(true)
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
 }

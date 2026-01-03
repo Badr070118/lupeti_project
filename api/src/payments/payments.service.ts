@@ -14,6 +14,7 @@ import {
 } from '@prisma/client';
 import { createHmac } from 'crypto';
 import { PrismaService } from '../prisma/prisma.service';
+import { SettingsService } from '../settings/settings.service';
 import { PaytrInitiateDto } from './dto/paytr-initiate.dto';
 import { PaytrCallbackDto } from './dto/paytr-callback.dto';
 import { PaymentsQueryDto } from './dto/payments-query.dto';
@@ -27,9 +28,14 @@ export class PaymentsService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly config: ConfigService,
+    private readonly settingsService: SettingsService,
   ) {}
 
   async initiatePaytr(userId: string, dto: PaytrInitiateDto, clientIp: string) {
+    const paytrEnabled = await this.settingsService.isPaytrEnabled();
+    if (!paytrEnabled) {
+      throw new ConflictException('PayTR payments are currently disabled');
+    }
     const order = await this.prisma.order.findFirst({
       where: { id: dto.orderId, userId },
       include: {
@@ -53,6 +59,10 @@ export class PaymentsService {
     let payment = await this.prisma.payment.findUnique({
       where: { orderId: order.id },
     });
+
+    if (payment && payment.provider !== PaymentProvider.PAYTR) {
+      throw new ConflictException('Order payment method is not PayTR');
+    }
 
     if (!payment) {
       payment = await this.prisma.payment.create({

@@ -10,8 +10,12 @@ import { cn } from '@/lib/utils';
 const NAV_ITEMS = [
   { href: '/admin', key: 'dashboard' },
   { href: '/admin/products', key: 'products' },
+  { href: '/admin/orders', key: 'orders' },
+  { href: '/admin/categories', key: 'categories' },
   { href: '/admin/users', key: 'users' },
   { href: '/admin/support', key: 'support' },
+  { href: '/admin/content', key: 'content' },
+  { href: '/admin/settings', key: 'settings' },
 ] as const;
 
 interface AdminShellProps {
@@ -35,10 +39,19 @@ export function AdminShell({ title, description, children }: AdminShellProps) {
   const t = useTranslations('admin');
 
   useEffect(() => {
-    if (!loading && !user) {
+    if (loading) return;
+    if (!user) {
+      router.replace('/login');
+      return;
+    }
+    if (user.role !== 'ADMIN') {
+      router.replace('/');
+      return;
+    }
+    if (!accessToken) {
       router.replace('/login');
     }
-  }, [user, loading, router]);
+  }, [user, loading, accessToken, router]);
 
   if (!user || loading) {
     return (

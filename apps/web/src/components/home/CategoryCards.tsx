@@ -4,27 +4,31 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 
-const categories = [
-  {
-    type: 'dog',
-    title: 'Pour Chiens',
-    image: '/images/hero/dog.jpg',
-    color: 'from-[var(--dog-color)]/80',
-    icon: '🐕',
-    href: '/shop?category=dogs',
-  },
-  {
-    type: 'cat',
-    title: 'Pour Chats',
-    image: '/images/hero/cat.jpg',
-    color: 'from-[var(--cat-color)]/80',
-    icon: '🐈',
-    href: '/shop?category=cats',
-  },
-];
+type CategoryCardsProps = {
+  dogImageUrl?: string | null;
+  catImageUrl?: string | null;
+};
 
-export function CategoryCards() {
+export function CategoryCards({ dogImageUrl, catImageUrl }: CategoryCardsProps) {
   const router = useRouter();
+  const categories = [
+    {
+      type: 'dog',
+      title: 'Pour Chiens',
+      image: dogImageUrl ?? '/images/hero/dog.jpg',
+      color: 'from-[var(--dog-color)]/80',
+      icon: 'DOG',
+      href: '/category/dog',
+    },
+    {
+      type: 'cat',
+      title: 'Pour Chats',
+      image: catImageUrl ?? '/images/hero/cat.jpg',
+      color: 'from-[var(--cat-color)]/80',
+      icon: 'CAT',
+      href: '/category/cat',
+    },
+  ];
 
   return (
     <section className="grid gap-6 md:grid-cols-2">
@@ -59,7 +63,7 @@ export function CategoryCards() {
               className="h-1 bg-white"
             />
             <p className="text-sm uppercase tracking-wide text-white/80">
-              Voir la sélection
+              Voir la selection
             </p>
           </div>
         </motion.button>
