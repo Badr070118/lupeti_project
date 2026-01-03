@@ -585,7 +585,7 @@ export function AdminProductManager() {
                 <label className="flex items-center gap-2">
                   <input
                     type="checkbox"
-                    checked={form.isActive}
+                    checked={Boolean(form.isActive)}
                     onChange={(event) =>
                       setForm((prev) => ({ ...prev, isActive: event.target.checked }))
                     }
@@ -595,7 +595,7 @@ export function AdminProductManager() {
                 <label className="flex items-center gap-2">
                   <input
                     type="checkbox"
-                    checked={form.isFeatured}
+                    checked={Boolean(form.isFeatured)}
                     onChange={(event) =>
                       setForm((prev) => ({ ...prev, isFeatured: event.target.checked }))
                     }
@@ -614,7 +614,7 @@ export function AdminProductManager() {
             <label className="flex items-center gap-2 text-sm text-slate-600">
               <input
                 type="checkbox"
-                checked={form.promoEnabled}
+                checked={Boolean(form.promoEnabled)}
                 onChange={(event) =>
                   setForm((prev) => ({
                     ...prev,

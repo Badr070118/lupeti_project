@@ -62,7 +62,7 @@ export default async function CategoryPage({
   };
 
   const [products, t] = await Promise.all([
-    productService.list(filters, { revalidate: 120 }),
+    productService.list(filters),
     getTranslations('category'),
   ]);
 

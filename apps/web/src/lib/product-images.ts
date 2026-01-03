@@ -29,11 +29,16 @@ export function resolveProductImage(
   fallback?: string | null,
 ): StaticImageData | string {
   if (fallback && !fallback.startsWith('http')) {
-    return fallback;
+    if (fallback.startsWith('/uploads/')) {
+      return fallback;
+    }
   }
   const local = PRODUCT_IMAGE_MAP[slug];
   if (local) {
     return local;
+  }
+  if (fallback && !fallback.startsWith('http')) {
+    return fallback;
   }
   return fallbackHero;
 }

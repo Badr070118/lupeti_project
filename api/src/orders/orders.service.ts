@@ -2,12 +2,14 @@ import {
   BadRequestException,
   ConflictException,
   Injectable,
+  Logger,
   NotFoundException,
 } from '@nestjs/common';
 import { OrderStatus, PaymentProvider, PaymentStatus, Prisma } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 import { computeProductPricing } from '../products/product-pricing.util';
 import { SettingsService } from '../settings/settings.service';
+import { SupportNotifierService } from '../support/support-notifier.service';
 import { CheckoutDto } from './dto/checkout.dto';
 import { OrdersQueryDto } from './dto/orders-query.dto';
 import { UpdateOrderStatusDto } from './dto/update-order-status.dto';
@@ -20,15 +22,25 @@ const orderInclude = {
 
 @Injectable()
 export class OrdersService {
+  private readonly logger = new Logger(OrdersService.name);
+
   constructor(
     private readonly prisma: PrismaService,
     private readonly settingsService: SettingsService,
+    private readonly notifier: SupportNotifierService,
   ) {}
 
   async checkout(userId: string, dto: CheckoutDto) {
     const storeSettings = await this.settingsService.getStoreSettings();
     if (!storeSettings.enableCheckout) {
       throw new ConflictException('Checkout is currently disabled');
+    }
+    const user = await this.prisma.user.findUnique({
+      where: { id: userId },
+      select: { email: true },
+    });
+    if (!user) {
+      throw new NotFoundException('User not found');
     }
     const shippingMethod = (
       dto.shippingMethod ?? 'STANDARD'
@@ -40,7 +52,7 @@ export class OrdersService {
       shippingMethod === 'EXPRESS'
         ? storeSettings.shippingExpressCents
         : storeSettings.shippingStandardCents;
-    return await this.prisma.$transaction(async (tx) => {
+    const order = await this.prisma.$transaction(async (tx) => {
       const cart = await tx.cart.findUnique({
         where: { userId },
         include: {
@@ -135,6 +147,12 @@ export class OrdersService {
 
       return order;
     });
+
+    this.notifyOrderPlaced(user.email, order).catch((error) => {
+      this.logger.warn(`Order confirmation failed for ${order.id}: ${error}`);
+    });
+
+    return order;
   }
 
   listMyOrders(userId: string) {
@@ -218,11 +236,15 @@ export class OrdersService {
 
   async updateStatus(id: string, dto: UpdateOrderStatusDto) {
     try {
-      return await this.prisma.order.update({
+      const updated = await this.prisma.order.update({
         where: { id },
         data: { status: dto.status },
         include: orderInclude,
       });
+      this.notifyOrderStatusChange(updated).catch((error) => {
+        this.logger.warn(`Order status email failed for ${updated.id}: ${error}`);
+      });
+      return updated;
     } catch (error) {
       if (
         error instanceof Prisma.PrismaClientKnownRequestError &&
@@ -234,4 +256,81 @@ export class OrdersService {
     }
   }
 
+  private async notifyOrderPlaced(
+    email: string,
+    order: {
+      id: string;
+      status: OrderStatus;
+      totalCents: number;
+      currency: string;
+      items: Array<{
+        titleSnapshot: string;
+        quantity: number;
+        lineTotalCents: number;
+      }>;
+    },
+  ) {
+    if (!email) return;
+    const subject = `Lupeti order confirmation #${order.id}`;
+    const body = [
+      `Hello,`,
+      ``,
+      `Thank you for your order with Lupeti.`,
+      `Order ID: ${order.id}`,
+      `Status: ${this.formatStatus(order.status)}`,
+      ``,
+      `Items:`,
+      ...order.items.map(
+        (item) =>
+          `- ${item.titleSnapshot} x${item.quantity} (${this.formatMoney(
+            item.lineTotalCents,
+            order.currency,
+          )})`,
+      ),
+      ``,
+      `Total: ${this.formatMoney(order.totalCents, order.currency)}`,
+      ``,
+      `We will keep you updated as your order progresses.`,
+      ``,
+      `Lupeti Support`,
+    ].join('\n');
+    await this.notifier.notifyCustomer(email, subject, body);
+  }
+
+  private async notifyOrderStatusChange(order: { id: string; userId: string; status: OrderStatus }) {
+    const user = await this.prisma.user.findUnique({
+      where: { id: order.userId },
+      select: { email: true },
+    });
+    if (!user?.email) return;
+    const subject = `Your Lupeti order #${order.id} is now ${this.formatStatus(order.status)}`;
+    const body = [
+      `Hello,`,
+      ``,
+      `Your order status has been updated.`,
+      `Order ID: ${order.id}`,
+      `Current status: ${this.formatStatus(order.status)}`,
+      ``,
+      `Thank you for shopping with Lupeti.`,
+      ``,
+      `Lupeti Support`,
+    ].join('\n');
+    await this.notifier.notifyCustomer(user.email, subject, body);
+  }
+
+  private formatStatus(status: OrderStatus) {
+    const map: Record<OrderStatus, string> = {
+      PENDING_PAYMENT: 'Pending payment',
+      PAID: 'Paid',
+      FAILED: 'Payment failed',
+      CANCELLED: 'Cancelled',
+      SHIPPED: 'Shipped',
+      DELIVERED: 'Delivered',
+    };
+    return map[status] ?? status;
+  }
+
+  private formatMoney(cents: number, currency: string) {
+    return `${(cents / 100).toFixed(2)} ${currency}`;
+  }
 }

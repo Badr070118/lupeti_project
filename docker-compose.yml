@@ -27,8 +27,12 @@ services:
     environment:
       DATABASE_URL: postgresql://lupeti:lupeti@db:5432/lupeti?schema=public
       NODE_ENV: production
+      UPLOADS_ROOT: /app/uploads
+      UPLOADS_PUBLIC_BASE: /uploads
     ports:
       - '3000:3000'
+    volumes:
+      - ./apps/web/public/uploads:/app/uploads
     depends_on:
       db:
         condition: service_healthy

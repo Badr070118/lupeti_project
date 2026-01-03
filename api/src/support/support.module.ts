@@ -12,6 +12,6 @@ import { SupportService } from './support.service';
   imports: [AuthModule, ConfigModule, SettingsModule],
   controllers: [SupportController, SupportAdminController],
   providers: [SupportService, SupportNotifierService, RolesGuard],
-  exports: [SupportService],
+  exports: [SupportService, SupportNotifierService],
 })
 export class SupportModule {}

@@ -8,6 +8,7 @@ import type { Product } from '@/types';
 import { formatPrice } from '@/lib/utils';
 import { useQuickView } from '@/hooks/use-quick-view';
 import { cardVariants } from '@/animations/variants';
+import { resolveProductImage } from '@/lib/product-images';
 
 type ProductCardProps = {
   product: Product;
@@ -22,6 +23,7 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
   };
 
   const hasPromo = product.pricing.isPromoActive;
+  const cover = resolveProductImage(product.slug, product.images?.[0]?.url);
 
   return (
     <motion.div
@@ -39,10 +41,10 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
         </div>
       )}
       <div className="relative aspect-square overflow-hidden">
-        {product.images[0] ? (
+        {cover ? (
           <Image
-            src={product.images[0].url}
-            alt={product.images[0].altText ?? product.title}
+            src={cover}
+            alt={product.images?.[0]?.altText ?? product.title}
             fill
             sizes="(max-width:768px) 100vw, (max-width:1024px) 50vw, 25vw"
             className="object-cover transition-transform duration-500 group-hover:scale-110"

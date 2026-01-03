@@ -64,7 +64,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
   };
 
   const [products, categories, t] = await Promise.all([
-    productService.list(filters, { revalidate: 120 }),
+    productService.list(filters),
     categoryService.list(),
     getTranslations('shop'),
   ]);

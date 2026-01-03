@@ -24,7 +24,7 @@ export function ProductGallery({ product }: ProductGalleryProps) {
             alt={active?.altText ?? product.title}
             fill
             sizes="(max-width: 768px) 100vw, 50vw"
-            className="object-cover"
+            className="object-contain p-6"
           />
         ) : (
           <div className="flex h-full items-center justify-center text-sm text-slate-500">

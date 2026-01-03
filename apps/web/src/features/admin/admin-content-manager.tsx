@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import type { HomepageSettings } from '@/types';
 import { adminService } from '@/services/admin.service';
@@ -22,6 +22,9 @@ export function AdminContentManager() {
   const t = useTranslations('admin.content');
   const [homepage, setHomepage] = useState<HomepageSettings | null>(null);
   const [pendingImages, setPendingImages] = useState<PendingImages>({});
+  const [previewUrls, setPreviewUrls] = useState<Partial<Record<keyof PendingImages, string>>>(
+    {},
+  );
   const [loading, setLoading] = useState(false);
 
   const fetchSettings = useCallback(() => {
@@ -41,6 +44,22 @@ export function AdminContentManager() {
   useEffect(() => {
     fetchSettings();
   }, [fetchSettings]);
+
+  useEffect(() => {
+    const urls: Partial<Record<keyof PendingImages, string>> = {};
+    const revoke: string[] = [];
+    (Object.keys(pendingImages) as Array<keyof PendingImages>).forEach((key) => {
+      const file = pendingImages[key];
+      if (!file) return;
+      const url = URL.createObjectURL(file);
+      urls[key] = url;
+      revoke.push(url);
+    });
+    setPreviewUrls((prev) => ({ ...prev, ...urls }));
+    return () => {
+      revoke.forEach((url) => URL.revokeObjectURL(url));
+    };
+  }, [pendingImages]);
 
   const updateHomepage = async () => {
     if (!accessToken || !homepage) return;
@@ -163,9 +182,9 @@ export function AdminContentManager() {
         ].map((item) => (
           <div key={item.id} className="admin-form__section space-y-3">
             <p className="admin-form__heading">{item.label}</p>
-            {item.current ? (
+            {previewUrls[item.field] || item.current ? (
               <img
-                src={item.current}
+                src={previewUrls[item.field] ?? item.current ?? ''}
                 alt={item.label}
                 className="h-24 w-full rounded-2xl object-cover"
               />

@@ -58,7 +58,8 @@ export function AdminOrderManager() {
     setLoading(true);
     try {
       const updated = await adminService.updateOrderStatus(accessToken, selected.id, status);
-      setSelected(updated);
+      const refreshed = await adminService.getOrder(accessToken, updated.id);
+      setSelected(refreshed);
       fetchOrders();
       showToast({ title: t('statusUpdated'), variant: 'success' });
     } catch (error) {
@@ -110,7 +111,9 @@ export function AdminOrderManager() {
                     )}
                   </p>
                 </td>
-                <td className="p-3 text-sm text-slate-600">{order.user.email}</td>
+                <td className="p-3 text-sm text-slate-600">
+                  {order.user?.email ?? t('details.noCustomer', { default: 'Unknown' })}
+                </td>
                 <td className="p-3 font-semibold text-slate-900">
                   {formatPrice(order.totalCents, order.currency)}
                 </td>
@@ -152,7 +155,9 @@ export function AdminOrderManager() {
               <p className="text-xs uppercase tracking-wide text-slate-400">
                 {t('details.customer')}
               </p>
-              <p className="text-sm text-slate-600">{selected.user.email}</p>
+              <p className="text-sm text-slate-600">
+                {selected.user?.email ?? t('details.noCustomer', { default: 'Unknown' })}
+              </p>
             </div>
 
             <div className="admin-form__section space-y-2">

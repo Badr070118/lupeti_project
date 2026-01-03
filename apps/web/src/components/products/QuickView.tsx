@@ -5,6 +5,7 @@ import { X } from 'lucide-react';
 import Image from 'next/image';
 import { useQuickView } from '@/hooks/use-quick-view';
 import { formatPrice } from '@/lib/utils';
+import { resolveProductImage } from '@/lib/product-images';
 
 export function QuickView() {
   const product = useQuickView((state) => state.product);
@@ -35,12 +36,12 @@ export function QuickView() {
               <X className="h-5 w-5" />
             </button>
             <div className="relative aspect-square overflow-hidden rounded-2xl bg-slate-50">
-              {product.images[0] ? (
+              {resolveProductImage(product.slug, product.images?.[0]?.url) ? (
                 <Image
-                  src={product.images[0].url}
-                  alt={product.images[0].altText ?? product.title}
+                  src={resolveProductImage(product.slug, product.images?.[0]?.url)}
+                  alt={product.images?.[0]?.altText ?? product.title}
                   fill
-                  className="object-cover"
+                  className="object-contain p-6"
                 />
               ) : (
                 <div className="flex h-full items-center justify-center text-slate-400">

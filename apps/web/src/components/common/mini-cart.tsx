@@ -1,13 +1,13 @@
 'use client';
 
 import Image from 'next/image';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ShoppingBag } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useAuth } from '@/hooks/use-auth';
 import { useCart } from '@/hooks/use-cart';
 import { formatPrice } from '@/lib/utils';
-import { Link } from '@/i18n/routing';
+import { Link, usePathname } from '@/i18n/routing';
 import { resolveProductImage } from '@/lib/product-images';
 
 export function MiniCart() {
@@ -16,8 +16,15 @@ export function MiniCart() {
   const { cart, loading } = useCart(accessToken);
   const t = useTranslations('cart');
   const nav = useTranslations('nav');
+  const pathname = usePathname();
 
   const quantity = cart?.items.reduce((sum, item) => sum + item.quantity, 0) ?? 0;
+
+  useEffect(() => {
+    if (open) {
+      setOpen(false);
+    }
+  }, [pathname, open]);
 
   return (
     <div className="relative">
@@ -93,12 +100,14 @@ export function MiniCart() {
                 <Link
                   href="/cart"
                   className="flex-1 rounded-full border border-slate-200 px-4 py-2 text-center text-xs font-semibold text-slate-600"
+                  onClick={() => setOpen(false)}
                 >
                   {t('viewCart', { default: 'View cart' })}
                 </Link>
                 <Link
                   href="/checkout"
                   className="flex-1 rounded-full bg-slate-900 px-4 py-2 text-center text-xs font-semibold text-white"
+                  onClick={() => setOpen(false)}
                 >
                   {t('checkout')}
                 </Link>

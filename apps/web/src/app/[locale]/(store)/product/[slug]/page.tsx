@@ -21,7 +21,7 @@ export async function generateMetadata({
   params,
 }: ProductPageProps): Promise<Metadata> {
   const { slug, locale } = await resolveParams(params);
-  const product = await productService.get(slug, { revalidate: 300 });
+  const product = await productService.get(slug);
   if (!product) {
     return buildMetadata({
       title: `Product unavailable | ${env.appName}`,
@@ -40,17 +40,14 @@ export async function generateMetadata({
 
 export default async function ProductPage({ params }: ProductPageProps) {
   const { slug } = await resolveParams(params);
-  const product = await productService.get(slug, { revalidate: 300 });
+  const product = await productService.get(slug);
 
   if (!product) {
     notFound();
   }
 
   const [related, t] = await Promise.all([
-    productService.list(
-      { category: product.category.slug, limit: 4, sort: 'newest' },
-      { revalidate: 300 },
-    ),
+    productService.list({ category: product.category.slug, limit: 4, sort: 'newest' }),
     getTranslations('product'),
   ]);
 
