@@ -5,10 +5,10 @@ import { Link } from '@/i18n/routing';
 import { OrderStatusBadge } from './order-status-badge';
 
 interface OrderListProps {
-  orders: Order[];
+  orders?: Order[];
 }
 
-export function OrderList({ orders }: OrderListProps) {
+export function OrderList({ orders = [] }: OrderListProps) {
   const t = useTranslations('account');
 
   if (!orders.length) {

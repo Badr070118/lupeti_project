@@ -686,9 +686,11 @@
     "notFound": "Order not found.",
     "status": {
       "pending": "Pending",
+      "paid": "Payee",
       "processing": "Processing",
       "delivered": "Delivered",
-      "cancelled": "Cancelled"
+      "cancelled": "Cancelled",
+      "failed": "Echouee"
     }
   },
   "wishlist": {

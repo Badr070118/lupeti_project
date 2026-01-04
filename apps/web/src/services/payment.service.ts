@@ -1,7 +1,7 @@
 import type { PaytrInitiateResponse } from '@/types';
 
 async function initiatePaytr(accessToken: string, orderId: string) {
-  const response = await fetch('/api/payment/paytr', {
+  const response = await fetch('/api/payment/paytr/initiate', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

@@ -43,7 +43,10 @@ async function hydrateGuestCart(): Promise<Cart | null> {
   const products = await productService.lookup(
     raw.items.map((item) => item.productId),
   );
-  const productMap = new Map(products.map((product) => [product.id, product]));
+  const safeProducts = Array.isArray(products) ? products : [];
+  const productMap = new Map(
+    safeProducts.map((product) => [product.id, product]),
+  );
 
   const items: CartItem[] = [];
   const validIds = new Set<string>();

@@ -53,11 +53,16 @@ async function listProducts(
 
 async function lookupProducts(ids: string[]): Promise<Product[]> {
   if (!ids.length) return [];
-  return fetchApi<Product[]>('/products/lookup', {
-    method: 'POST',
-    body: { ids },
-    cache: 'no-store',
-  });
+  try {
+    const data = await fetchApi<Product[]>('/products/lookup', {
+      method: 'POST',
+      body: { ids },
+      cache: 'no-store',
+    });
+    return Array.isArray(data) ? data : [];
+  } catch {
+    return [];
+  }
 }
 
 async function getProduct(

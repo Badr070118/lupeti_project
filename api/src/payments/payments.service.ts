@@ -40,6 +40,7 @@ export class PaymentsService {
       where: { id: dto.orderId, userId },
       include: {
         payment: true,
+        items: true,
         user: {
           select: {
             email: true,
@@ -81,10 +82,13 @@ export class PaymentsService {
       });
     }
 
-    if (!payment.providerReference) {
+    const normalizedMerchantOid = this.normalizePaytrMerchantOid(
+      payment.providerReference ?? payment.id,
+    );
+    if (payment.providerReference !== normalizedMerchantOid) {
       payment = await this.prisma.payment.update({
         where: { id: payment.id },
-        data: { providerReference: payment.id },
+        data: { providerReference: normalizedMerchantOid },
       });
     }
 
@@ -92,6 +96,11 @@ export class PaymentsService {
       order.user.email,
       clientIp,
       payment,
+      order,
+    );
+
+    this.logger.log(
+      `PayTR initiate ${order.id} (${payment.amountCents} ${payment.currency}) test=${this.isTestMode()}`,
     );
 
     await this.prisma.paymentEvent.create({
@@ -141,6 +150,9 @@ export class PaymentsService {
   }
 
   async handlePaytrCallback(payload: PaytrCallbackDto) {
+    this.logger.log(
+      `PayTR callback merchant_oid=${payload.merchant_oid} status=${payload.status}`,
+    );
     const payment = await this.prisma.payment.findFirst({
       where: { providerReference: payload.merchant_oid },
       include: {
@@ -269,6 +281,14 @@ export class PaymentsService {
       amountCents: number;
       currency: string;
     },
+    order: {
+      items: Array<{
+        titleSnapshot: string;
+        priceCentsSnapshot: number;
+        quantity: number;
+      }>;
+      shippingAddress: Prisma.JsonValue;
+    },
   ) {
     const merchantId = this.requireConfig('PAYTR_MERCHANT_ID');
     const merchantKey = this.requireConfig('PAYTR_MERCHANT_KEY');
@@ -281,6 +301,13 @@ export class PaymentsService {
     const merchantOid = payment.providerReference ?? payment.id;
     const paymentAmount = payment.amountCents;
     const currency = (payment.currency ?? 'TRY').toUpperCase();
+    const testMode = this.isTestMode() ? '1' : '0';
+    const noInstallment = '1';
+    const maxInstallment = '0';
+
+    const { userName, userAddress, userPhone } =
+      this.buildPaytrCustomer(order.shippingAddress);
+    const userBasket = this.buildPaytrBasket(order.items);
 
     const hashStr = [
       merchantId,
@@ -288,12 +315,15 @@ export class PaymentsService {
       merchantOid,
       email,
       paymentAmount,
+      userBasket,
+      noInstallment,
+      maxInstallment,
       currency,
-      merchantSalt,
+      testMode,
     ].join('');
 
     const paytrToken = createHmac('sha256', merchantKey)
-      .update(hashStr)
+      .update(hashStr + merchantSalt)
       .digest('base64');
 
     const params = new URLSearchParams({
@@ -301,16 +331,21 @@ export class PaymentsService {
       user_ip: userIp,
       merchant_oid: merchantOid,
       email,
+      user_name: userName,
+      user_address: userAddress,
+      user_phone: userPhone,
+      user_basket: userBasket,
       payment_amount: paymentAmount.toString(),
       currency,
       merchant_ok_url: okUrl,
       merchant_fail_url: failUrl,
       merchant_callback_url: callbackUrl,
       paytr_token: paytrToken,
-      test_mode: this.isTestMode() ? '1' : '0',
+      test_mode: testMode,
       timeout_limit: '30',
-      no_installment: '1',
-      max_installment: '0',
+      no_installment: noInstallment,
+      max_installment: maxInstallment,
+      debug_on: this.isTestMode() ? '1' : '0',
     });
 
     const sanitizedPayload = {
@@ -319,10 +354,16 @@ export class PaymentsService {
       merchant_oid: merchantOid,
       payment_amount: paymentAmount,
       currency,
-      test_mode: this.isTestMode() ? 1 : 0,
+      test_mode: Number(testMode),
+      basket_items: order.items.length,
     };
 
     return { payload: params, sanitizedPayload };
+  }
+
+  private normalizePaytrMerchantOid(value: string) {
+    const normalized = value.replace(/[^a-zA-Z0-9]/g, '');
+    return normalized.length ? normalized : value;
   }
 
   private async requestPaytrToken(params: URLSearchParams) {
@@ -334,17 +375,25 @@ export class PaymentsService {
       body: params.toString(),
     });
 
+    const text = await response.text();
+
     if (!response.ok) {
-      const text = await response.text();
       this.logger.error(`PayTR token API failed: ${text}`);
       throw new ConflictException('Failed to communicate with PayTR');
     }
 
-    return (await response.json()) as {
-      status: string;
-      token?: string;
-      reason?: string;
-    };
+    try {
+      return JSON.parse(text) as {
+        status: string;
+        token?: string;
+        reason?: string;
+      };
+    } catch (error) {
+      this.logger.error(
+        `PayTR token API returned non-JSON payload: ${text}`,
+      );
+      throw new ConflictException('Invalid PayTR response payload');
+    }
   }
 
   private computePaytrHash(
@@ -370,6 +419,44 @@ export class PaymentsService {
   }
 
   private isTestMode() {
+    const explicit = this.config.get<string>('PAYTR_TEST_MODE');
+    if (explicit !== undefined) {
+      return explicit === '1' || explicit.toLowerCase() === 'true';
+    }
     return this.config.get('NODE_ENV') !== 'production';
+  }
+
+  private buildPaytrBasket(
+    items: Array<{
+      titleSnapshot: string;
+      priceCentsSnapshot: number;
+      quantity: number;
+    }>,
+  ) {
+    const basket = items.map((item) => [
+      item.titleSnapshot,
+      (item.priceCentsSnapshot / 100).toFixed(2),
+      item.quantity,
+    ]);
+    return Buffer.from(JSON.stringify(basket)).toString('base64');
+  }
+
+  private buildPaytrCustomer(addressJson: Prisma.JsonValue) {
+    const address =
+      typeof addressJson === 'object' && addressJson !== null
+        ? (addressJson as Record<string, string | null | undefined>)
+        : {};
+    const userName = address.fullName ?? 'Customer';
+    const userPhone = address.phone ?? '0000000000';
+    const parts = [
+      address.line1,
+      address.line2,
+      address.city,
+      address.state,
+      address.postalCode,
+      address.country,
+    ].filter(Boolean);
+    const userAddress = parts.length ? parts.join(', ') : 'N/A';
+    return { userName, userPhone, userAddress };
   }
 }

@@ -10,10 +10,13 @@ async function checkout(accessToken: string, payload: CheckoutPayload) {
 }
 
 async function listMine(accessToken: string) {
-  return fetchApi<Order[]>('/orders/my', {
+  const data = await fetchApi<Order[] | { data: Order[] }>('/orders/my', {
     accessToken,
     cache: 'no-store',
   });
+  if (Array.isArray(data)) return data;
+  if (data && Array.isArray(data.data)) return data.data;
+  return [];
 }
 
 async function getMine(accessToken: string, id: string) {

@@ -5,7 +5,7 @@ import { TrustBadges } from '@/components/home/TrustBadges';
 import { buildMetadata } from '@/lib/metadata';
 import heroStaticOg from '@/../public/hero-static.jpg';
 import storyImage from '@/../public/images/hero/golden.jpg';
-import { BrandMarquee } from '@/components/home/BrandMarquee';
+import BrandCarousel from '@/components/BrandCarousel';
 import { CategoryCards } from '@/components/home/CategoryCards';
 import { FeaturedProducts } from '@/components/home/FeaturedProducts';
 import { HeroShowcaseClient } from '@/components/hero/HeroShowcase.client';
@@ -77,7 +77,7 @@ export default async function HomePage({ params }: PageProps) {
           <SearchBar />
         </div>
       </section>
-      {homepage.showBrandMarquee ? <BrandMarquee /> : null}
+      {homepage.showBrandMarquee ? <BrandCarousel /> : null}
       {homepage.showTrustBadges ? <TrustBadges /> : null}
       {homepage.showHero3d ? <Hero3D locale={locale} /> : null}
       {homepage.showCategoryCards ? (

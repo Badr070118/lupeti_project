@@ -50,6 +50,7 @@ export function CheckoutFlow({ cart, accessToken, onOrderCreated }: CheckoutFlow
   const [shippingExpressCents, setShippingExpressCents] = useState(0);
   const [paytrEnabled, setPaytrEnabled] = useState(true);
   const [paytrIframeUrl, setPaytrIframeUrl] = useState<string | null>(null);
+  const [cartSnapshot, setCartSnapshot] = useState<Cart | null>(null);
   const [loading, setLoading] = useState(false);
   const canProceedFromAddress = Boolean(
     address.fullName &&
@@ -122,21 +123,23 @@ export function CheckoutFlow({ cart, accessToken, onOrderCreated }: CheckoutFlow
     }
   }, [paymentProvider, paytrIframeUrl]);
 
+  const activeCart = paytrIframeUrl && cartSnapshot ? cartSnapshot : cart;
+
   const unavailableItems = useMemo(() => {
-    if (!cart) return [];
-    return cart.items.filter(
+    if (!activeCart) return [];
+    return activeCart.items.filter(
       (item) =>
         !item.product.isActive || item.product.stock < item.quantity,
     );
-  }, [cart]);
+  }, [activeCart]);
 
   const subtotal = useMemo(() => {
-    if (!cart) return 0;
-    return cart.items.reduce((sum, item) => {
+    if (!activeCart) return 0;
+    return activeCart.items.reduce((sum, item) => {
       const unit = item.product.pricing?.finalPriceCents ?? item.product.priceCents;
       return sum + unit * item.quantity;
     }, 0);
-  }, [cart]);
+  }, [activeCart]);
 
   const shippingCents =
     shippingMethod === 'EXPRESS' ? shippingExpressCents : shippingStandardCents;
@@ -150,7 +153,7 @@ export function CheckoutFlow({ cart, accessToken, onOrderCreated }: CheckoutFlow
     );
   }
 
-  if (!cart || cart.items.length === 0) {
+  if (!activeCart || activeCart.items.length === 0) {
     return (
       <div className="rounded-3xl border border-slate-100 bg-white p-6 text-center shadow-sm">
         <p className="font-semibold text-slate-900">{t('empty')}</p>
@@ -181,17 +184,20 @@ export function CheckoutFlow({ cart, accessToken, onOrderCreated }: CheckoutFlow
     }
     setLoading(true);
     try {
+      if (paymentProvider === 'PAYTR' && cart && cart.items.length > 0) {
+        setCartSnapshot(cart);
+      }
       const order = await orderService.checkout(accessToken, {
         shippingAddress: address,
         shippingMethod,
         paymentProvider,
       });
-      onOrderCreated?.();
       if (paymentProvider === 'PAYTR') {
         const payment = await paymentService.initiatePaytr(accessToken, order.id);
         setPaytrIframeUrl(payment.iframeUrl);
         return;
       }
+      onOrderCreated?.();
       router.push({
         pathname: '/checkout/success',
         query: { orderId: order.id },
@@ -342,7 +348,10 @@ export function CheckoutFlow({ cart, accessToken, onOrderCreated }: CheckoutFlow
                 {t('delivery.standard')}
               </span>
               <span className="font-semibold text-slate-900">
-                {formatPrice(shippingStandardCents, cart.items[0].product.currency)}
+                {formatPrice(
+                  shippingStandardCents,
+                  activeCart.items[0]?.product.currency ?? 'TRY',
+                )}
               </span>
             </label>
             <label className="flex items-center justify-between rounded-2xl border border-slate-100 p-4 text-sm">
@@ -357,7 +366,10 @@ export function CheckoutFlow({ cart, accessToken, onOrderCreated }: CheckoutFlow
                 {t('delivery.express')}
               </span>
               <span className="font-semibold text-slate-900">
-                {formatPrice(shippingExpressCents, cart.items[0].product.currency)}
+                {formatPrice(
+                  shippingExpressCents,
+                  activeCart.items[0]?.product.currency ?? 'TRY',
+                )}
               </span>
             </label>
           </div>
@@ -470,7 +482,7 @@ export function CheckoutFlow({ cart, accessToken, onOrderCreated }: CheckoutFlow
       <div className="rounded-3xl border border-slate-100 bg-white p-6 shadow-sm">
         <p className="text-lg font-semibold text-slate-900">{t('summary')}</p>
         <div className="mt-4 space-y-3 text-sm text-slate-600">
-          {cart.items.map((item) => (
+          {activeCart.items.map((item) => (
             <div key={item.id} className="flex justify-between">
               <span>
                 {item.product.title} x {item.quantity}
@@ -488,15 +500,24 @@ export function CheckoutFlow({ cart, accessToken, onOrderCreated }: CheckoutFlow
         <div className="mt-6 border-t border-slate-100 pt-4 text-sm text-slate-600">
           <div className="flex justify-between">
             <span>{t('subtotal')}</span>
-            <span>{formatPrice(subtotal, cart.items[0].product.currency)}</span>
+            <span>
+              {formatPrice(subtotal, activeCart.items[0]?.product.currency ?? 'TRY')}
+            </span>
           </div>
           <div className="flex justify-between">
             <span>{t('shipping')}</span>
-            <span>{formatPrice(shippingCents, cart.items[0].product.currency)}</span>
+            <span>
+              {formatPrice(
+                shippingCents,
+                activeCart.items[0]?.product.currency ?? 'TRY',
+              )}
+            </span>
           </div>
           <div className="flex justify-between font-semibold text-slate-900">
             <span>{t('total')}</span>
-            <span>{formatPrice(total, cart.items[0].product.currency)}</span>
+            <span>
+              {formatPrice(total, activeCart.items[0]?.product.currency ?? 'TRY')}
+            </span>
           </div>
         </div>
         {paytrIframeUrl ? (
