@@ -273,8 +273,8 @@ export class PaymentsService {
     const merchantId = this.requireConfig('PAYTR_MERCHANT_ID');
     const merchantKey = this.requireConfig('PAYTR_MERCHANT_KEY');
     const merchantSalt = this.requireConfig('PAYTR_MERCHANT_SALT');
-    const okUrl = this.requireConfig('PAYTR_OK_URL');
-    const failUrl = this.requireConfig('PAYTR_FAIL_URL');
+    const okUrl = this.requireConfig('PAYTR_OK_URL', 'PAYTR_MERCHANT_OK_URL');
+    const failUrl = this.requireConfig('PAYTR_FAIL_URL', 'PAYTR_MERCHANT_FAIL_URL');
     const callbackUrl = this.requireConfig('PAYTR_CALLBACK_URL');
 
     const userIp = rawIp || '127.0.0.1';
@@ -358,10 +358,13 @@ export class PaymentsService {
     return createHmac('sha256', merchantKey).update(hashStr).digest('base64');
   }
 
-  private requireConfig(key: string): string {
-    const value = this.config.get<string>(key);
+  private requireConfig(key: string, fallbackKey?: string): string {
+    const value =
+      this.config.get<string>(key) ??
+      (fallbackKey ? this.config.get<string>(fallbackKey) : undefined);
     if (!value) {
-      throw new Error(`Missing configuration for ${key}`);
+      const missing = fallbackKey ? `${key} or ${fallbackKey}` : key;
+      throw new Error(`Missing configuration for ${missing}`);
     }
     return value;
   }

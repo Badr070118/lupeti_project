@@ -12,6 +12,7 @@ const BASE_PATHS = [
   '/cart',
   '/checkout',
   '/checkout/success',
+  '/checkout/fail',
   '/login',
   '/register',
   '/account',

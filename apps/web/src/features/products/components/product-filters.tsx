@@ -186,22 +186,24 @@ export function ProductFilters({
             <option value="best_sellers">{t('sortBest')}</option>
           </Select>
         </div>
-        <div className="flex items-center gap-4 pt-6 md:pt-0">
-          <label className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-[color:var(--muted)]">
+        <div className="filters-toggle-group pt-6 md:pt-0 md:col-span-2">
+          <label className="filters-toggle">
             <input
               type="checkbox"
               checked={filters.inStock ?? false}
               onChange={(event) => updateFilters({ inStock: event.target.checked })}
+              className="filters-toggle__input"
             />
-            {t('inStock')}
+            <span className="filters-toggle__text">{t('inStock')}</span>
           </label>
-          <label className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-[color:var(--muted)]">
+          <label className="filters-toggle">
             <input
               type="checkbox"
               checked={filters.onSale ?? false}
               onChange={(event) => updateFilters({ onSale: event.target.checked })}
+              className="filters-toggle__input"
             />
-            {t('onSale')}
+            <span className="filters-toggle__text">{t('onSale')}</span>
           </label>
         </div>
       </div>

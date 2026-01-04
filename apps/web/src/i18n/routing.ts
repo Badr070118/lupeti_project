@@ -14,6 +14,7 @@ export const routing = defineRouting({
     '/cart': '/cart',
     '/checkout': '/checkout',
     '/checkout/success': '/checkout/success',
+    '/checkout/fail': '/checkout/fail',
     '/login': '/login',
     '/register': '/register',
     '/account': '/account',

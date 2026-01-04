@@ -213,8 +213,11 @@
     },
     "payment": {
       "cod": "Cash on delivery",
-      "paytr": "PayTR (card)",
-      "disabled": "Unavailable"
+      "paytr": "Credit card (Visa / MasterCard)",
+      "disabled": "Unavailable",
+      "secureBadge": "Secure 3D payment via PayTR",
+      "iframeTitle": "Complete your card payment",
+      "iframeHint": "The secure PayTR form will load below."
     },
     "subtotal": "Subtotal",
     "shipping": "Shipping",
@@ -227,7 +230,8 @@
     "successTitle": "Order confirmed",
     "successBody": "Your order has been placed. We'll email you the updates.",
     "successOrder": "Order number: {orderId}",
-    "submit": "Place order"
+    "submit": "Place order",
+    "submitPaytr": "Pay with card"
   },
   "auth": {
     "email": "Email",
@@ -678,8 +682,8 @@
       },
       "status": {
         "PENDING_PAYMENT": "Pending",
-        "PAID": "Processing",
-        "SHIPPED": "Processing",
+        "PAID": "Paid",
+        "SHIPPED": "Shipped",
         "DELIVERED": "Delivered",
         "CANCELLED": "Cancelled",
         "FAILED": "Failed"

@@ -202,7 +202,7 @@
       "line2": "Address line 2",
       "state": "State"
     },
-    "submit": "PayTR ile öde",
+    "submit": "Siparis onayla",
     "steps": {
       "address": "Address",
       "delivery": "Delivery",
@@ -214,8 +214,11 @@
     },
     "payment": {
       "cod": "Cash on delivery",
-      "paytr": "PayTR (card)",
-      "disabled": "Unavailable"
+      "paytr": "Kredi karti (Visa / MasterCard)",
+      "disabled": "Unavailable",
+      "secureBadge": "PayTR ile guvenli 3D odeme",
+      "iframeTitle": "Kart odemesini tamamla",
+      "iframeHint": "Guvenli PayTR formu asagida acilacak."
     },
     "subtotal": "Subtotal",
     "shipping": "Shipping",
@@ -227,7 +230,8 @@
     "successTitle": "Order confirmed",
     "successBody": "Your order has been placed. We'll email you the updates.",
     "successOrder": "Order number: {orderId}",
-    "addressMissing": "Please complete the address."
+    "addressMissing": "Please complete the address.",
+    "submitPaytr": "Kartla ode"
   },
   "auth": {
     "email": "E-posta",
@@ -570,8 +574,8 @@
       },
       "status": {
         "PENDING_PAYMENT": "Beklemede",
-        "PAID": "Isleniyor",
-        "SHIPPED": "Isleniyor",
+        "PAID": "Odendi",
+        "SHIPPED": "Kargoda",
         "DELIVERED": "Teslim edildi",
         "CANCELLED": "Iptal edildi",
         "FAILED": "Basarisiz"

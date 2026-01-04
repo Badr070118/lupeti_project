@@ -32,8 +32,8 @@ export function ProductCard({ product }: ProductCardProps) {
     categoryLabel = product.category.name;
   }
   const discountBadge =
-    pricing.isPromoActive && pricing.discountValue
-      ? pricing.discountType === 'PERCENT'
+    pricing.isPromoActive && pricing.savingsCents > 0
+      ? pricing.discountType === 'PERCENT' && pricing.discountValue
         ? `-${pricing.discountValue}%`
         : `-${formatPrice(pricing.savingsCents, product.currency)}`
       : null;
@@ -67,7 +67,7 @@ export function ProductCard({ product }: ProductCardProps) {
       </Link>
       <div className="product-card__body">
         <div className="product-card__meta">
-          <span className="rounded-full bg-rose-50 px-2 py-0.5 text-xs font-semibold text-rose-500 dark:bg-rose-500/15 dark:text-rose-100">
+          <span className="category-pill">
             {categoryLabel}
           </span>
           <span className="text-[0.75rem] uppercase tracking-[0.2em] text-[color:var(--muted)]">

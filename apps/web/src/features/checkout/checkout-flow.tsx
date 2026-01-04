@@ -1,7 +1,9 @@
 'use client';
 
-import { FormEvent, useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import Image from 'next/image';
 import { useTranslations } from 'next-intl';
+import { ShieldCheck } from 'lucide-react';
 import { useRouter } from '@/i18n/routing';
 import type { Address, Cart, PaymentProvider, ShippingAddress } from '@/types';
 import { Input } from '@/components/ui/input';
@@ -47,6 +49,7 @@ export function CheckoutFlow({ cart, accessToken, onOrderCreated }: CheckoutFlow
   const [shippingStandardCents, setShippingStandardCents] = useState(0);
   const [shippingExpressCents, setShippingExpressCents] = useState(0);
   const [paytrEnabled, setPaytrEnabled] = useState(true);
+  const [paytrIframeUrl, setPaytrIframeUrl] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const canProceedFromAddress = Boolean(
     address.fullName &&
@@ -113,6 +116,12 @@ export function CheckoutFlow({ cart, accessToken, onOrderCreated }: CheckoutFlow
     });
   }, [addresses, selectedAddressId]);
 
+  useEffect(() => {
+    if (paymentProvider !== 'PAYTR' && paytrIframeUrl) {
+      setPaytrIframeUrl(null);
+    }
+  }, [paymentProvider, paytrIframeUrl]);
+
   const unavailableItems = useMemo(() => {
     if (!cart) return [];
     return cart.items.filter(
@@ -149,8 +158,13 @@ export function CheckoutFlow({ cart, accessToken, onOrderCreated }: CheckoutFlow
     );
   }
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const handleSubmit = async () => {
+    if (step !== 3) {
+      return;
+    }
+    if (paytrIframeUrl) {
+      return;
+    }
     if (unavailableItems.length > 0) {
       showToast({
         title: t('stockError'),
@@ -175,7 +189,7 @@ export function CheckoutFlow({ cart, accessToken, onOrderCreated }: CheckoutFlow
       onOrderCreated?.();
       if (paymentProvider === 'PAYTR') {
         const payment = await paymentService.initiatePaytr(accessToken, order.id);
-        window.location.href = payment.iframeUrl;
+        setPaytrIframeUrl(payment.iframeUrl);
         return;
       }
       router.push({
@@ -196,7 +210,7 @@ export function CheckoutFlow({ cart, accessToken, onOrderCreated }: CheckoutFlow
   return (
     <div className="grid gap-8 lg:grid-cols-2">
       <form
-        onSubmit={handleSubmit}
+        onSubmit={(event) => event.preventDefault()}
         className="space-y-6 rounded-3xl border border-slate-100 bg-white p-6 shadow-sm"
       >
         <CheckoutSteps
@@ -363,20 +377,45 @@ export function CheckoutFlow({ cart, accessToken, onOrderCreated }: CheckoutFlow
                 {t('payment.cod')}
               </span>
             </label>
-            <label className="flex items-center justify-between rounded-2xl border border-slate-100 p-4 text-sm">
-              <span>
-                <input
-                  type="radio"
-                  name="payment"
-                  className="mr-3"
-                  checked={paymentProvider === 'PAYTR'}
-                  onChange={() => setPaymentProvider('PAYTR')}
-                  disabled={!paytrEnabled}
-                />
-                {t('payment.paytr')}
-              </span>
-              {!paytrEnabled ? (
-                <span className="text-xs text-slate-400">{t('payment.disabled')}</span>
+            <label className="flex flex-col gap-3 rounded-2xl border border-slate-100 p-4 text-sm">
+              <div className="flex items-center justify-between">
+                <span>
+                  <input
+                    type="radio"
+                    name="payment"
+                    className="mr-3"
+                    checked={paymentProvider === 'PAYTR'}
+                    onChange={() => setPaymentProvider('PAYTR')}
+                    disabled={!paytrEnabled}
+                  />
+                  {t('payment.paytr')}
+                </span>
+                {!paytrEnabled ? (
+                  <span className="text-xs text-slate-400">
+                    {t('payment.disabled')}
+                  </span>
+                ) : (
+                  <span className="flex items-center gap-2">
+                    <Image
+                      src="/payments/visa.svg"
+                      alt="Visa"
+                      width={44}
+                      height={28}
+                    />
+                    <Image
+                      src="/payments/mastercard.svg"
+                      alt="MasterCard"
+                      width={44}
+                      height={28}
+                    />
+                  </span>
+                )}
+              </div>
+              {paytrEnabled ? (
+                <div className="flex items-center gap-2 text-xs text-slate-500">
+                  <ShieldCheck className="h-4 w-4 text-emerald-500" />
+                  <span>{t('payment.secureBadge')}</span>
+                </div>
               ) : null}
             </label>
           </div>
@@ -388,6 +427,7 @@ export function CheckoutFlow({ cart, accessToken, onOrderCreated }: CheckoutFlow
               type="button"
               variant="ghost"
               onClick={() => setStep((prev) => prev - 1)}
+              disabled={Boolean(paytrIframeUrl)}
             >
               {t('back')}
             </Button>
@@ -403,19 +443,21 @@ export function CheckoutFlow({ cart, accessToken, onOrderCreated }: CheckoutFlow
                   });
                   return;
                 }
-                setStep((prev) => prev + 1);
+                setStep((prev) => Math.min(3, prev + 1));
               }}
+              disabled={Boolean(paytrIframeUrl)}
             >
               {t('next')}
             </Button>
           ) : (
             <Button
-              type="submit"
+              type="button"
               className="flex-1"
               loading={loading}
-              disabled={loading || unavailableItems.length > 0}
+              disabled={loading || unavailableItems.length > 0 || Boolean(paytrIframeUrl)}
+              onClick={handleSubmit}
             >
-              {t('submit')}
+              {paymentProvider === 'PAYTR' ? t('submitPaytr') : t('submit')}
             </Button>
           )}
         </div>
@@ -457,6 +499,24 @@ export function CheckoutFlow({ cart, accessToken, onOrderCreated }: CheckoutFlow
             <span>{formatPrice(total, cart.items[0].product.currency)}</span>
           </div>
         </div>
+        {paytrIframeUrl ? (
+          <div className="mt-6 space-y-3 rounded-2xl border border-slate-100 bg-slate-50 p-4">
+            <div>
+              <p className="text-sm font-semibold text-slate-900">
+                {t('payment.iframeTitle')}
+              </p>
+              <p className="text-xs text-slate-500">
+                {t('payment.iframeHint')}
+              </p>
+            </div>
+            <iframe
+              title="PayTR secure payment"
+              src={paytrIframeUrl}
+              className="h-[680px] w-full rounded-xl border border-slate-200 bg-white"
+              allow="payment"
+            />
+          </div>
+        ) : null}
       </div>
     </div>
   );

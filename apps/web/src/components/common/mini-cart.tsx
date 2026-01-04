@@ -21,10 +21,9 @@ export function MiniCart() {
   const quantity = cart?.items.reduce((sum, item) => sum + item.quantity, 0) ?? 0;
 
   useEffect(() => {
-    if (open) {
-      setOpen(false);
-    }
-  }, [pathname, open]);
+    if (!open) return;
+    setOpen(false);
+  }, [pathname]);
 
   return (
     <div className="relative">

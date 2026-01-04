@@ -151,6 +151,44 @@ body {
   margin-bottom: 0.35rem;
 }
 
+.filters-toggle-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.filters-panel .filters-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.45rem 0.75rem;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 0;
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+.filters-toggle__input {
+  margin: 0;
+  width: 0.9rem;
+  height: 0.9rem;
+  accent-color: var(--primary);
+}
+
+.filters-toggle__text {
+  line-height: 1.1;
+  white-space: nowrap;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+}
+
 .filters-actions {
   display: flex;
   flex-wrap: wrap;
@@ -204,6 +242,22 @@ body {
   justify-content: space-between;
   font-size: 0.85rem;
   color: var(--muted);
+}
+
+.category-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  background: #e11d48;
+  color: #ffffff;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: 1px solid rgba(190, 18, 60, 0.75);
+  box-shadow: 0 6px 14px rgba(225, 29, 72, 0.35);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
 }
 
 .product-card__title {

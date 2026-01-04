@@ -45,6 +45,7 @@ export function CategoryCards({ dogImageUrl, catImageUrl }: CategoryCardsProps) 
             alt={category.title}
             fill
             className="object-cover transition-transform duration-700 group-hover:scale-110"
+            unoptimized
           />
           <div className={`absolute inset-0 bg-gradient-to-t ${category.color} to-transparent`} />
           <div className="absolute bottom-8 left-8 space-y-3 text-white">

@@ -202,7 +202,7 @@
       "line2": "Address line 2",
       "state": "State"
     },
-    "submit": "Payer avec PayTR",
+    "submit": "Passer la commande",
     "steps": {
       "address": "Address",
       "delivery": "Delivery",
@@ -214,8 +214,11 @@
     },
     "payment": {
       "cod": "Cash on delivery",
-      "paytr": "PayTR (card)",
-      "disabled": "Unavailable"
+      "paytr": "Carte bancaire (Visa / MasterCard)",
+      "disabled": "Unavailable",
+      "secureBadge": "Paiement 3D Secure via PayTR",
+      "iframeTitle": "Finaliser le paiement",
+      "iframeHint": "Le formulaire PayTR securise s'affiche ci-dessous."
     },
     "subtotal": "Subtotal",
     "shipping": "Shipping",
@@ -227,7 +230,8 @@
     "successTitle": "Order confirmed",
     "successBody": "Your order has been placed. We'll email you the updates.",
     "successOrder": "Order number: {orderId}",
-    "addressMissing": "Please complete the address."
+    "addressMissing": "Please complete the address.",
+    "submitPaytr": "Payer par carte"
   },
   "auth": {
     "email": "E-mail",
@@ -570,8 +574,8 @@
       },
       "status": {
         "PENDING_PAYMENT": "En attente",
-        "PAID": "En traitement",
-        "SHIPPED": "En traitement",
+        "PAID": "Payee",
+        "SHIPPED": "Expediee",
         "DELIVERED": "Livree",
         "CANCELLED": "Annulee",
         "FAILED": "Echouee"

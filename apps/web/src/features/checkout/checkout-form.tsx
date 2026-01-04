@@ -28,6 +28,7 @@ export function CheckoutForm({
   onOrderCreated,
 }: CheckoutFormProps) {
   const [submitting, setSubmitting] = useState(false);
+  const [iframeUrl, setIframeUrl] = useState<string | null>(null);
   const [address, setAddress] = useState<Record<string, string>>(DEFAULT_ADDRESS);
   const { showToast } = useToast();
   const t = useTranslations('checkout');
@@ -50,11 +51,15 @@ export function CheckoutForm({
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (iframeUrl) {
+      return;
+    }
     setSubmitting(true);
     try {
       const payload: CheckoutPayload = {
         shippingAddress: address,
         shippingMethod: 'STANDARD',
+        paymentProvider: 'PAYTR',
       };
       const order = await orderService.checkout(accessToken, payload);
       onOrderCreated?.();
@@ -63,17 +68,17 @@ export function CheckoutForm({
         variant: 'success',
       });
       const payment = await paymentService.initiatePaytr(accessToken, order.id);
-      window.location.href = payment.iframeUrl;
+      setIframeUrl(payment.iframeUrl);
     } catch (error) {
       showToast({
         title: t('failed'),
         description: error instanceof Error ? error.message : t('genericError'),
         variant: 'error',
       });
-    } finally {
-      setSubmitting(false);
-    }
-  };
+      } finally {
+        setSubmitting(false);
+      }
+    };
 
   return (
     <form
@@ -123,9 +128,24 @@ export function CheckoutForm({
           }
         />
       </div>
-      <Button type="submit" className="w-full" loading={submitting}>
-        {t('submit')}
+      <Button
+        type="submit"
+        className="w-full"
+        loading={submitting}
+        disabled={submitting || Boolean(iframeUrl)}
+      >
+        {t('submitPaytr')}
       </Button>
+      {iframeUrl ? (
+        <div className="rounded-2xl border border-slate-100 bg-slate-50 p-4">
+          <iframe
+            title="PayTR secure payment"
+            src={iframeUrl}
+            className="h-[680px] w-full rounded-xl border border-slate-200 bg-white"
+            allow="payment"
+          />
+        </div>
+      ) : null}
     </form>
   );
 }
