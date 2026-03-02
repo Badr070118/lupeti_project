@@ -20,6 +20,7 @@ const role_enum_1 = require("../common/enums/role.enum");
 const roles_guard_1 = require("../common/guards/roles.guard");
 const create_product_dto_1 = require("./dto/create-product.dto");
 const create_product_image_dto_1 = require("./dto/create-product-image.dto");
+const product_lookup_dto_1 = require("./dto/product-lookup.dto");
 const product_query_dto_1 = require("./dto/product-query.dto");
 const update_product_dto_1 = require("./dto/update-product.dto");
 const products_service_1 = require("./products.service");
@@ -30,6 +31,9 @@ let ProductsController = class ProductsController {
     }
     list(query) {
         return this.productsService.listPublic(query);
+    }
+    lookup(dto) {
+        return this.productsService.lookup(dto.ids);
     }
     getBySlug(slug) {
         return this.productsService.getPublic(slug);
@@ -58,6 +62,13 @@ __decorate([
     __metadata("design:paramtypes", [product_query_dto_1.ProductQueryDto]),
     __metadata("design:returntype", void 0)
 ], ProductsController.prototype, "list", null);
+__decorate([
+    (0, common_1.Post)('lookup'),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [product_lookup_dto_1.ProductLookupDto]),
+    __metadata("design:returntype", void 0)
+], ProductsController.prototype, "lookup", null);
 __decorate([
     (0, common_1.Get)(':slug'),
     __param(0, (0, common_1.Param)('slug')),

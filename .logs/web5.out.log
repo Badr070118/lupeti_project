@@ -1,0 +1,16 @@
+
+> web@0.1.0 dev
+> next dev --webpack -p 3001
+
+▲ Next.js 16.1.1 (webpack)
+- Local:         http://localhost:3001
+- Network:       http://192.168.56.1:3001
+- Environments: .env.local
+
+✓ Starting...
+✓ Ready in 2.5s
+○ Compiling /[locale] ...
+ GET /en 200 in 12.9s (compile: 12.1s, proxy.ts: 165ms, generate-params: 1123ms, render: 618ms)
+ GET /en 200 in 262ms (compile: 15ms, proxy.ts: 95ms, generate-params: 6ms, render: 152ms)
+ GET /en 200 in 177ms (compile: 61ms, proxy.ts: 12ms, generate-params: 10ms, render: 103ms)
+ POST /api/proxy/auth/refresh 401 in 1576ms (compile: 1536ms, render: 40ms)

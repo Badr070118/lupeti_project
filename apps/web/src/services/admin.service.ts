@@ -92,6 +92,13 @@ export const adminService = {
     });
   },
 
+  setPrimaryProductImage(accessToken: string, productId: string, imageId: string) {
+    return fetchApi<{ success: true }>(`/products/${productId}/images/${imageId}/set-primary`, {
+      method: 'POST',
+      accessToken,
+    });
+  },
+
   removeProductImage(accessToken: string, imageId: string) {
     return fetchApi(`/products/images/${imageId}`, {
       method: 'DELETE',

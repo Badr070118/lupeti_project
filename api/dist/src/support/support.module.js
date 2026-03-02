@@ -11,6 +11,7 @@ const common_1 = require("@nestjs/common");
 const config_1 = require("@nestjs/config");
 const auth_module_1 = require("../auth/auth.module");
 const roles_guard_1 = require("../common/guards/roles.guard");
+const settings_module_1 = require("../settings/settings.module");
 const support_admin_controller_1 = require("./support-admin.controller");
 const support_controller_1 = require("./support.controller");
 const support_notifier_service_1 = require("./support-notifier.service");
@@ -20,10 +21,10 @@ let SupportModule = class SupportModule {
 exports.SupportModule = SupportModule;
 exports.SupportModule = SupportModule = __decorate([
     (0, common_1.Module)({
-        imports: [auth_module_1.AuthModule, config_1.ConfigModule],
+        imports: [auth_module_1.AuthModule, config_1.ConfigModule, settings_module_1.SettingsModule],
         controllers: [support_controller_1.SupportController, support_admin_controller_1.SupportAdminController],
         providers: [support_service_1.SupportService, support_notifier_service_1.SupportNotifierService, roles_guard_1.RolesGuard],
-        exports: [support_service_1.SupportService],
+        exports: [support_service_1.SupportService, support_notifier_service_1.SupportNotifierService],
     })
 ], SupportModule);
 //# sourceMappingURL=support.module.js.map

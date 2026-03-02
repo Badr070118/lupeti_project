@@ -13,6 +13,7 @@ exports.SupportService = void 0;
 const common_1 = require("@nestjs/common");
 const client_1 = require("@prisma/client");
 const prisma_service_1 = require("../prisma/prisma.service");
+const settings_service_1 = require("../settings/settings.service");
 const support_notifier_service_1 = require("./support-notifier.service");
 const ticketInclude = {
     user: {
@@ -38,11 +39,17 @@ const ticketInclude = {
 let SupportService = class SupportService {
     prisma;
     notifier;
-    constructor(prisma, notifier) {
+    settingsService;
+    constructor(prisma, notifier, settingsService) {
         this.prisma = prisma;
         this.notifier = notifier;
+        this.settingsService = settingsService;
     }
     async createTicket(dto, user) {
+        const settings = await this.settingsService.getStoreSettings();
+        if (!settings.enableSupport) {
+            throw new common_1.BadRequestException('Support is currently disabled');
+        }
         const email = dto.email?.toLowerCase() ?? user?.email;
         if (!email) {
             throw new common_1.BadRequestException('Email is required');
@@ -163,6 +170,7 @@ exports.SupportService = SupportService;
 exports.SupportService = SupportService = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [prisma_service_1.PrismaService,
-        support_notifier_service_1.SupportNotifierService])
+        support_notifier_service_1.SupportNotifierService,
+        settings_service_1.SettingsService])
 ], SupportService);
 //# sourceMappingURL=support.service.js.map

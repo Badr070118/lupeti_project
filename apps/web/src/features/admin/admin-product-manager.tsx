@@ -195,15 +195,26 @@ export function AdminProductManager() {
         const uploads = await Promise.all(
           form.imageFiles.map((file) => adminService.uploadProductImage(accessToken, file)),
         );
-        await Promise.all(
+        const currentMaxSortOrder =
+          selected?.images?.length
+            ? Math.max(...selected.images.map((image) => image.sortOrder))
+            : -1;
+        const createdImages = await Promise.all(
           uploads.map((upload, index) =>
             adminService.addProductImage(accessToken, form.id as string, {
               url: upload.url,
               altText: form.title,
-              sortOrder: index,
+              sortOrder: currentMaxSortOrder + 1 + index,
             }),
           ),
         );
+        if (createdImages[0]) {
+          await adminService.setPrimaryProductImage(
+            accessToken,
+            form.id,
+            createdImages[0].id,
+          );
+        }
       }
 
       resetForm();
@@ -330,6 +341,27 @@ export function AdminProductManager() {
           setSelected(updated);
         }
       }
+    } catch (error) {
+      showToast({
+        title: t('updateError'),
+        description: error instanceof Error ? error.message : t('genericError'),
+        variant: 'error',
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const setAsCover = async (image: ProductImage) => {
+    if (!accessToken || !selected) return;
+    setLoading(true);
+    try {
+      await adminService.setPrimaryProductImage(accessToken, selected.id, image.id);
+      fetchProducts();
+      showToast({
+        title: t('updated'),
+        variant: 'success',
+      });
     } catch (error) {
       showToast({
         title: t('updateError'),
@@ -704,14 +736,24 @@ export function AdminProductManager() {
                   className="flex items-center justify-between rounded-2xl border border-slate-100 bg-slate-50 px-3 py-2 text-xs text-slate-500"
                 >
                   <span>{image.url}</span>
-                  <Button
-                    size="sm"
-                    variant="ghost"
-                    onClick={() => removeImage(image.id)}
-                    disabled={loading}
-                  >
-                    {t('remove')}
-                  </Button>
+                  <div className="flex items-center gap-2">
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      onClick={() => setAsCover(image)}
+                      disabled={loading}
+                    >
+                      Set as primary
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      onClick={() => removeImage(image.id)}
+                      disabled={loading}
+                    >
+                      {t('remove')}
+                    </Button>
+                  </div>
                 </div>
               ))}
             </div>

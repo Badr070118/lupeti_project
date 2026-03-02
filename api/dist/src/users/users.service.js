@@ -75,14 +75,78 @@ let UsersService = class UsersService {
             }),
             this.prisma.user.count({ where }),
         ]);
+        const orderStats = await this.prisma.order.groupBy({
+            by: ['userId'],
+            _count: { _all: true },
+            _sum: { totalCents: true },
+            _max: { createdAt: true },
+            where: {
+                userId: { in: items.map((item) => item.id) },
+            },
+        });
+        const orderMap = new Map(orderStats.map((stat) => [
+            stat.userId,
+            {
+                ordersCount: stat._count._all ?? 0,
+                totalSpentCents: stat._sum.totalCents ?? 0,
+                lastOrderAt: stat._max.createdAt ?? null,
+            },
+        ]));
         return {
-            data: items,
+            data: items.map((item) => ({
+                ...item,
+                ...(orderMap.get(item.id) ?? {
+                    ordersCount: 0,
+                    totalSpentCents: 0,
+                    lastOrderAt: null,
+                }),
+            })),
             meta: {
                 page,
                 limit,
                 total,
                 totalPages: Math.max(1, Math.ceil(total / limit)),
             },
+        };
+    }
+    async getAdminUser(id) {
+        const user = await this.prisma.user.findFirst({
+            where: { id, deletedAt: null },
+            select: {
+                id: true,
+                email: true,
+                name: true,
+                role: true,
+                status: true,
+                createdAt: true,
+                updatedAt: true,
+                orders: {
+                    orderBy: { createdAt: 'desc' },
+                    take: 10,
+                    select: {
+                        id: true,
+                        status: true,
+                        totalCents: true,
+                        currency: true,
+                        createdAt: true,
+                    },
+                },
+            },
+        });
+        if (!user) {
+            throw new common_1.NotFoundException('User not found');
+        }
+        const aggregate = await this.prisma.order.aggregate({
+            _count: { _all: true },
+            _sum: { totalCents: true },
+            _max: { createdAt: true },
+            where: { userId: id },
+        });
+        return {
+            ...user,
+            ordersCount: aggregate._count._all ?? 0,
+            totalSpentCents: aggregate._sum.totalCents ?? 0,
+            lastOrderAt: aggregate._max.createdAt ?? null,
         };
     }
     async create(dto) {

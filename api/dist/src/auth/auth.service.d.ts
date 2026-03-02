@@ -24,6 +24,7 @@ export declare class AuthService {
         refreshToken: string;
     }>;
     logout(userId: string): Promise<void>;
+    getSession(refreshToken: string): Promise<AuthenticatedUser>;
     getProfile(userId: string): Promise<AuthenticatedUser>;
     setRefreshCookie(res: Response, token: string): void;
     clearRefreshCookie(res: Response): void;

@@ -1,5 +1,6 @@
 import { PrismaService } from '../prisma/prisma.service';
 import { JwtPayload } from '../auth/interfaces/jwt-payload.interface';
+import { SettingsService } from '../settings/settings.service';
 import { CreateSupportTicketDto } from './dto/create-support-ticket.dto';
 import { ReplyTicketDto } from './dto/reply-ticket.dto';
 import { SupportQueryDto } from './dto/support-query.dto';
@@ -8,7 +9,8 @@ import { SupportNotifierService } from './support-notifier.service';
 export declare class SupportService {
     private readonly prisma;
     private readonly notifier;
-    constructor(prisma: PrismaService, notifier: SupportNotifierService);
+    private readonly settingsService;
+    constructor(prisma: PrismaService, notifier: SupportNotifierService, settingsService: SettingsService);
     createTicket(dto: CreateSupportTicketDto, user?: JwtPayload | null): Promise<{
         user: {
             id: string;

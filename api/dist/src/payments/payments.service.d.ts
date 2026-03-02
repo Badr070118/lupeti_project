@@ -1,13 +1,15 @@
 import { ConfigService } from '@nestjs/config';
 import { PrismaService } from '../prisma/prisma.service';
+import { SettingsService } from '../settings/settings.service';
 import { PaytrInitiateDto } from './dto/paytr-initiate.dto';
 import { PaytrCallbackDto } from './dto/paytr-callback.dto';
 import { PaymentsQueryDto } from './dto/payments-query.dto';
 export declare class PaymentsService {
     private readonly prisma;
     private readonly config;
+    private readonly settingsService;
     private readonly logger;
-    constructor(prisma: PrismaService, config: ConfigService);
+    constructor(prisma: PrismaService, config: ConfigService, settingsService: SettingsService);
     initiatePaytr(userId: string, dto: PaytrInitiateDto, clientIp: string): Promise<{
         token: string | undefined;
         iframeUrl: string;
@@ -44,8 +46,11 @@ export declare class PaymentsService {
     }>;
     private recordEvent;
     private buildPaytrTokenRequest;
+    private normalizePaytrMerchantOid;
     private requestPaytrToken;
     private computePaytrHash;
     private requireConfig;
     private isTestMode;
+    private buildPaytrBasket;
+    private buildPaytrCustomer;
 }

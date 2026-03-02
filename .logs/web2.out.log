@@ -1,0 +1,14 @@
+
+> web@0.1.0 dev
+> next dev -p 3001
+
+▲ Next.js 16.1.1 (Turbopack)
+- Local:         http://localhost:3001
+- Network:       http://192.168.56.1:3001
+- Environments: .env.local
+
+✓ Starting...
+Creating turbopack project { dir: 'C:\\Users\\palba\\lupeti_project\\apps\\web', testMode: true }
+✓ Ready in 1171ms
+○ Compiling /[locale] ...
+[?25h

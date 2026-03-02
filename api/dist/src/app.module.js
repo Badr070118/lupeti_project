@@ -22,6 +22,9 @@ const orders_module_1 = require("./orders/orders.module");
 const payments_module_1 = require("./payments/payments.module");
 const users_module_1 = require("./users/users.module");
 const support_module_1 = require("./support/support.module");
+const settings_module_1 = require("./settings/settings.module");
+const account_module_1 = require("./account/account.module");
+const wishlist_module_1 = require("./wishlist/wishlist.module");
 let AppModule = class AppModule {
     configure(consumer) {
         consumer.apply(request_context_middleware_1.RequestContextMiddleware).forRoutes('*');
@@ -51,6 +54,9 @@ exports.AppModule = AppModule = __decorate([
             payments_module_1.PaymentsModule,
             users_module_1.UsersModule,
             support_module_1.SupportModule,
+            settings_module_1.SettingsModule,
+            account_module_1.AccountModule,
+            wishlist_module_1.WishlistModule,
         ],
         providers: [
             {

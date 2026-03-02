@@ -74,6 +74,16 @@ export class ProductsController {
     return this.productsService.addImage(id, dto);
   }
 
+  @Post(':id/images/:imageId/set-primary')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.ADMIN)
+  setPrimaryImage(
+    @Param('id', new ParseUUIDPipe()) id: string,
+    @Param('imageId', new ParseUUIDPipe()) imageId: string,
+  ) {
+    return this.productsService.setPrimaryImage(id, imageId);
+  }
+
   @Delete('images/:imageId')
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(Role.ADMIN)

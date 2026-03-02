@@ -10,6 +10,8 @@ exports.OrdersModule = void 0;
 const common_1 = require("@nestjs/common");
 const auth_module_1 = require("../auth/auth.module");
 const roles_guard_1 = require("../common/guards/roles.guard");
+const settings_module_1 = require("../settings/settings.module");
+const support_module_1 = require("../support/support.module");
 const orders_controller_1 = require("./orders.controller");
 const orders_service_1 = require("./orders.service");
 let OrdersModule = class OrdersModule {
@@ -17,7 +19,7 @@ let OrdersModule = class OrdersModule {
 exports.OrdersModule = OrdersModule;
 exports.OrdersModule = OrdersModule = __decorate([
     (0, common_1.Module)({
-        imports: [auth_module_1.AuthModule],
+        imports: [auth_module_1.AuthModule, settings_module_1.SettingsModule, support_module_1.SupportModule],
         controllers: [orders_controller_1.OrdersController],
         providers: [orders_service_1.OrdersService, roles_guard_1.RolesGuard],
     })

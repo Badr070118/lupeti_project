@@ -16,6 +16,7 @@ const shipping_address_dto_1 = require("./shipping-address.dto");
 class CheckoutDto {
     shippingAddress;
     shippingMethod;
+    paymentProvider;
 }
 exports.CheckoutDto = CheckoutDto;
 __decorate([
@@ -31,4 +32,12 @@ __decorate([
     }),
     __metadata("design:type", String)
 ], CheckoutDto.prototype, "shippingMethod", void 0);
+__decorate([
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsIn)(['PAYTR', 'COD', 'STRIPE'], {
+        message: 'paymentProvider must be PAYTR, COD, or STRIPE',
+    }),
+    __metadata("design:type", String)
+], CheckoutDto.prototype, "paymentProvider", void 0);
 //# sourceMappingURL=checkout.dto.js.map

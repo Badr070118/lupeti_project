@@ -40,6 +40,10 @@ let AuthController = class AuthController {
         this.authService.setRefreshCookie(res, nextRefreshToken);
         return tokens;
     }
+    async session(req) {
+        const refreshToken = req.cookies?.refresh_token;
+        return { user: await this.authService.getSession(refreshToken ?? '') };
+    }
     async logout(req, res) {
         const user = req.user;
         if (user) {
@@ -80,6 +84,13 @@ __decorate([
     __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", Promise)
 ], AuthController.prototype, "refresh", null);
+__decorate([
+    (0, common_1.Get)('session'),
+    __param(0, (0, common_1.Req)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], AuthController.prototype, "session", null);
 __decorate([
     (0, common_1.Post)('logout'),
     (0, common_1.HttpCode)(common_1.HttpStatus.OK),

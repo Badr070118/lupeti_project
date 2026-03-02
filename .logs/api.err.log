@@ -1,0 +1,132 @@
+[31m[Nest] 1640  - [39m02/03/2026 12:20:48 [31m  ERROR[39m [38;5;3m[GlobalExceptionFilter] [39mObject(3) {
+  requestId: [32m'2daf4a64-d3e0-4b1d-a5e2-50c8e4faeefc'[39m,
+  path: [32m'/settings/public'[39m,
+  exception: PrismaClientInitializationError: 
+  Invalid `this.prisma.storeSettings.findFirst()` invocation in
+  C:\Users\palba\lupeti_project\api\src\settings\settings.service.ts:11:54
+  
+     8 constructor(private readonly prisma: PrismaService) {}
+     9 
+    10 async getStoreSettings() {
+  → 11   const existing = await this.prisma.storeSettings.findFirst(
+  Can't reach database server at `localhost:5432`
+  
+  Please make sure your database server is running at `localhost:5432`.
+      at Mn.handleRequestError [90m(C:\Users\palba\lupeti_project\api\[39mnode_modules\[4m@prisma[24m\client\runtime\library.js:121:8053[90m)[39m
+      at Mn.handleAndLogRequestError [90m(C:\Users\palba\lupeti_project\api\[39mnode_modules\[4m@prisma[24m\client\runtime\library.js:121:7061[90m)[39m
+      at Mn.request [90m(C:\Users\palba\lupeti_project\api\[39mnode_modules\[4m@prisma[24m\client\runtime\library.js:121:6745[90m)[39m
+      at async l [90m(C:\Users\palba\lupeti_project\api\[39mnode_modules\[4m@prisma[24m\client\runtime\library.js:130:9633[90m)[39m
+      at SettingsService.getStoreSettings [90m(C:\Users\palba\lupeti_project\api\[39msrc\settings\settings.service.ts:11:22[90m)[39m
+      at async Promise.all (index 0)
+      at SettingsService.getPublicSettings [90m(C:\Users\palba\lupeti_project\api\[39msrc\settings\settings.service.ts:27:31[90m)[39m
+      at async [90mC:\Users\palba\lupeti_project\api\[39mnode_modules\[4m@nestjs[24m\core\router\router-execution-context.js:46:28
+      at async [90mC:\Users\palba\lupeti_project\api\[39mnode_modules\[4m@nestjs[24m\core\router\router-proxy.js:9:17 {
+    clientVersion: [32m'5.21.1'[39m,
+    errorCode: [90mundefined[39m
+  }
+}
+PrismaClientInitializationError: 
+Invalid `this.prisma.storeSettings.findFirst()` invocation in
+C:\Users\palba\lupeti_project\api\src\settings\settings.service.ts:11:54
+
+   8 constructor(private readonly prisma: PrismaService) {}
+   9 
+  10 async getStoreSettings() {
+→ 11   const existing = await this.prisma.storeSettings.findFirst(
+Can't reach database server at `localhost:5432`
+
+Please make sure your database server is running at `localhost:5432`.
+    at Mn.handleRequestError (C:\Users\palba\lupeti_project\api\node_modules\@prisma\client\runtime\library.js:121:8053)
+    at Mn.handleAndLogRequestError (C:\Users\palba\lupeti_project\api\node_modules\@prisma\client\runtime\library.js:121:7061)
+    at Mn.request (C:\Users\palba\lupeti_project\api\node_modules\@prisma\client\runtime\library.js:121:6745)
+    at async l (C:\Users\palba\lupeti_project\api\node_modules\@prisma\client\runtime\library.js:130:9633)
+    at SettingsService.getStoreSettings (C:\Users\palba\lupeti_project\api\src\settings\settings.service.ts:11:22)
+    at async Promise.all (index 0)
+    at SettingsService.getPublicSettings (C:\Users\palba\lupeti_project\api\src\settings\settings.service.ts:27:31)
+    at async C:\Users\palba\lupeti_project\api\node_modules\@nestjs\core\router\router-execution-context.js:46:28
+    at async C:\Users\palba\lupeti_project\api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+[31m[Nest] 1640  - [39m02/03/2026 12:20:50 [31m  ERROR[39m [38;5;3m[GlobalExceptionFilter] [39mObject(3) {
+  requestId: [32m'd64d277f-bef3-4d9c-b8fb-141dd3a50a9d'[39m,
+  path: [32m'/settings/public'[39m,
+  exception: PrismaClientInitializationError: 
+  Invalid `this.prisma.storeSettings.findFirst()` invocation in
+  C:\Users\palba\lupeti_project\api\src\settings\settings.service.ts:11:54
+  
+     8 constructor(private readonly prisma: PrismaService) {}
+     9 
+    10 async getStoreSettings() {
+  → 11   const existing = await this.prisma.storeSettings.findFirst(
+  Can't reach database server at `localhost:5432`
+  
+  Please make sure your database server is running at `localhost:5432`.
+      at Mn.handleRequestError [90m(C:\Users\palba\lupeti_project\api\[39mnode_modules\[4m@prisma[24m\client\runtime\library.js:121:8053[90m)[39m
+      at Mn.handleAndLogRequestError [90m(C:\Users\palba\lupeti_project\api\[39mnode_modules\[4m@prisma[24m\client\runtime\library.js:121:7061[90m)[39m
+      at Mn.request [90m(C:\Users\palba\lupeti_project\api\[39mnode_modules\[4m@prisma[24m\client\runtime\library.js:121:6745[90m)[39m
+      at async l [90m(C:\Users\palba\lupeti_project\api\[39mnode_modules\[4m@prisma[24m\client\runtime\library.js:130:9633[90m)[39m
+      at SettingsService.getStoreSettings [90m(C:\Users\palba\lupeti_project\api\[39msrc\settings\settings.service.ts:11:22[90m)[39m
+      at async Promise.all (index 0)
+      at SettingsService.getPublicSettings [90m(C:\Users\palba\lupeti_project\api\[39msrc\settings\settings.service.ts:27:31[90m)[39m
+      at async [90mC:\Users\palba\lupeti_project\api\[39mnode_modules\[4m@nestjs[24m\core\router\router-execution-context.js:46:28
+      at async [90mC:\Users\palba\lupeti_project\api\[39mnode_modules\[4m@nestjs[24m\core\router\router-proxy.js:9:17 {
+    clientVersion: [32m'5.21.1'[39m,
+    errorCode: [90mundefined[39m
+  }
+}
+PrismaClientInitializationError: 
+Invalid `this.prisma.storeSettings.findFirst()` invocation in
+C:\Users\palba\lupeti_project\api\src\settings\settings.service.ts:11:54
+
+   8 constructor(private readonly prisma: PrismaService) {}
+   9 
+  10 async getStoreSettings() {
+→ 11   const existing = await this.prisma.storeSettings.findFirst(
+Can't reach database server at `localhost:5432`
+
+Please make sure your database server is running at `localhost:5432`.
+    at Mn.handleRequestError (C:\Users\palba\lupeti_project\api\node_modules\@prisma\client\runtime\library.js:121:8053)
+    at Mn.handleAndLogRequestError (C:\Users\palba\lupeti_project\api\node_modules\@prisma\client\runtime\library.js:121:7061)
+    at Mn.request (C:\Users\palba\lupeti_project\api\node_modules\@prisma\client\runtime\library.js:121:6745)
+    at async l (C:\Users\palba\lupeti_project\api\node_modules\@prisma\client\runtime\library.js:130:9633)
+    at SettingsService.getStoreSettings (C:\Users\palba\lupeti_project\api\src\settings\settings.service.ts:11:22)
+    at async Promise.all (index 0)
+    at SettingsService.getPublicSettings (C:\Users\palba\lupeti_project\api\src\settings\settings.service.ts:27:31)
+    at async C:\Users\palba\lupeti_project\api\node_modules\@nestjs\core\router\router-execution-context.js:46:28
+    at async C:\Users\palba\lupeti_project\api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+[31m[Nest] 1640  - [39m02/03/2026 12:20:50 [31m  ERROR[39m [38;5;3m[GlobalExceptionFilter] [39mObject(3) {
+  requestId: [32m'53b8b843-df81-4124-9100-4738441c107f'[39m,
+  path: [32m'/products?limit=8&featured=true'[39m,
+  exception: PrismaClientInitializationError: 
+  Invalid `this.prisma.product.findMany()` invocation in
+  C:\Users\palba\lupeti_project\api\src\products\products.service.ts:49:27
+  
+    46 const orderBy = this.buildSort(query);
+    47 
+    48 const [items, total] = await this.prisma.$transaction([
+  → 49   this.prisma.product.findMany(
+  Can't reach database server at `localhost:5432`
+  
+  Please make sure your database server is running at `localhost:5432`.
+      at Mn.handleRequestError [90m(C:\Users\palba\lupeti_project\api\[39mnode_modules\[4m@prisma[24m\client\runtime\library.js:121:8053[90m)[39m
+      at Mn.handleAndLogRequestError [90m(C:\Users\palba\lupeti_project\api\[39mnode_modules\[4m@prisma[24m\client\runtime\library.js:121:7061[90m)[39m
+      at Mn.request [90m(C:\Users\palba\lupeti_project\api\[39mnode_modules\[4m@prisma[24m\client\runtime\library.js:121:6745[90m)[39m
+      at async l [90m(C:\Users\palba\lupeti_project\api\[39mnode_modules\[4m@prisma[24m\client\runtime\library.js:130:9633[90m)[39m {
+    clientVersion: [32m'5.21.1'[39m,
+    errorCode: [90mundefined[39m
+  }
+}
+PrismaClientInitializationError: 
+Invalid `this.prisma.product.findMany()` invocation in
+C:\Users\palba\lupeti_project\api\src\products\products.service.ts:49:27
+
+  46 const orderBy = this.buildSort(query);
+  47 
+  48 const [items, total] = await this.prisma.$transaction([
+→ 49   this.prisma.product.findMany(
+Can't reach database server at `localhost:5432`
+
+Please make sure your database server is running at `localhost:5432`.
+    at Mn.handleRequestError (C:\Users\palba\lupeti_project\api\node_modules\@prisma\client\runtime\library.js:121:8053)
+    at Mn.handleAndLogRequestError (C:\Users\palba\lupeti_project\api\node_modules\@prisma\client\runtime\library.js:121:7061)
+    at Mn.request (C:\Users\palba\lupeti_project\api\node_modules\@prisma\client\runtime\library.js:121:6745)
+    at async l (C:\Users\palba\lupeti_project\api\node_modules\@prisma\client\runtime\library.js:130:9633)
+^C^C

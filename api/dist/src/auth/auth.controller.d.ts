@@ -10,6 +10,9 @@ export declare class AuthController {
     register(dto: RegisterDto, res: Response): Promise<AuthResponseDto>;
     login(dto: LoginDto, res: Response): Promise<AuthResponseDto>;
     refresh(req: Request, res: Response): Promise<AuthResponseDto>;
+    session(req: Request): Promise<{
+        user: import("./dto/auth-response.dto").AuthenticatedUser;
+    }>;
     logout(req: Request & {
         user?: JwtPayload;
     }, res: Response): Promise<{

@@ -23,5 +23,19 @@ export declare class AdminController {
             total: number;
             open: number;
         };
+        performance: {
+            ordersLast7Days: number;
+            ordersLast30Days: number;
+            revenueLast30Cents: number;
+            averageOrderValueCents: number;
+            newCustomersLast30Days: number;
+        };
+        bestSellers: {
+            productId: string;
+            title: string;
+            slug: string;
+            unitsSold: number;
+            revenueCents: number;
+        }[];
     }>;
 }

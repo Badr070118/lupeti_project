@@ -85,6 +85,21 @@ let ProductsService = class ProductsService {
             },
         };
     }
+    async lookup(ids) {
+        if (!ids.length)
+            return [];
+        const products = await this.prisma.product.findMany({
+            where: {
+                id: { in: ids },
+                isActive: true,
+                deletedAt: null,
+            },
+            include: productInclude,
+        });
+        const mapped = products.map((item) => this.mapProduct(item));
+        const lookup = new Map(mapped.map((item) => [item.id, item]));
+        return ids.map((id) => lookup.get(id)).filter(Boolean);
+    }
     async getPublic(slug) {
         const product = await this.prisma.product.findFirst({
             where: {
@@ -311,6 +326,7 @@ let ProductsService = class ProductsService {
             where.OR = [
                 { title: { contains: searchTerm, mode: 'insensitive' } },
                 { description: { contains: searchTerm, mode: 'insensitive' } },
+                { category: { name: { contains: searchTerm, mode: 'insensitive' } } },
             ];
         }
         if (query.minPrice !== undefined || query.maxPrice !== undefined) {
@@ -326,6 +342,31 @@ let ProductsService = class ProductsService {
         if (query.featured !== undefined) {
             where.isFeatured = query.featured;
         }
+        if (query.inStock) {
+            where.stock = { gt: 0 };
+        }
+        if (query.onSale) {
+            const now = new Date();
+            const promoWindow = [
+                { OR: [{ promoStartAt: null }, { promoStartAt: { lte: now } }] },
+                { OR: [{ promoEndAt: null }, { promoEndAt: { gte: now } }] },
+            ];
+            where.AND = [
+                ...(Array.isArray(where.AND) ? where.AND : where.AND ? [where.AND] : []),
+                {
+                    OR: [
+                        {
+                            discountType: { not: null },
+                            discountValue: { not: null },
+                            AND: promoWindow,
+                        },
+                        {
+                            originalPriceCents: { not: null },
+                        },
+                    ],
+                },
+            ];
+        }
         return where;
     }
     buildSort(query) {
@@ -336,7 +377,12 @@ let ProductsService = class ProductsService {
             ? [{ priceCents: 'asc' }]
             : query.sort === 'price_desc'
                 ? [{ priceCents: 'desc' }]
-                : [{ createdAt: 'desc' }];
+                : query.sort === 'best_sellers'
+                    ? [
+                        { orderItems: { _count: 'desc' } },
+                        { createdAt: 'desc' },
+                    ]
+                    : [{ createdAt: 'desc' }];
         return [...isFeaturedFirst, ...sort];
     }
     mapProduct(product) {

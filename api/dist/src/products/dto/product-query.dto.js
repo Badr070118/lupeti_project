@@ -22,6 +22,8 @@ class ProductQueryDto {
     sort = 'newest';
     featured;
     includeInactive;
+    inStock;
+    onSale;
 }
 exports.ProductQueryDto = ProductQueryDto;
 __decorate([
@@ -66,7 +68,7 @@ __decorate([
 __decorate([
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsIn)(['newest', 'price_asc', 'price_desc']),
+    (0, class_validator_1.IsIn)(['newest', 'price_asc', 'price_desc', 'best_sellers']),
     __metadata("design:type", String)
 ], ProductQueryDto.prototype, "sort", void 0);
 __decorate([
@@ -93,4 +95,28 @@ __decorate([
     }),
     __metadata("design:type", Boolean)
 ], ProductQueryDto.prototype, "includeInactive", void 0);
+__decorate([
+    (0, class_validator_1.IsOptional)(),
+    (0, class_transformer_1.Transform)(({ value }) => {
+        if (typeof value === 'boolean')
+            return value;
+        if (typeof value === 'string') {
+            return value.toLowerCase() === 'true';
+        }
+        return undefined;
+    }),
+    __metadata("design:type", Boolean)
+], ProductQueryDto.prototype, "inStock", void 0);
+__decorate([
+    (0, class_validator_1.IsOptional)(),
+    (0, class_transformer_1.Transform)(({ value }) => {
+        if (typeof value === 'boolean')
+            return value;
+        if (typeof value === 'string') {
+            return value.toLowerCase() === 'true';
+        }
+        return undefined;
+    }),
+    __metadata("design:type", Boolean)
+], ProductQueryDto.prototype, "onSale", void 0);
 //# sourceMappingURL=product-query.dto.js.map

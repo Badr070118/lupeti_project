@@ -13,12 +13,12 @@ export declare class OrdersController {
     }, dto: CheckoutDto): Promise<{
         items: {
             id: string;
+            orderId: string;
             productId: string;
-            quantity: number;
             titleSnapshot: string;
             priceCentsSnapshot: number;
+            quantity: number;
             lineTotalCents: number;
-            orderId: string;
         }[];
     } & {
         id: string;
@@ -30,20 +30,20 @@ export declare class OrdersController {
         totalCents: number;
         subtotalCents: number;
         shippingCents: number;
-        shippingAddress: import("@prisma/client/runtime/library").JsonValue;
         shippingMethod: string | null;
+        shippingAddress: import("@prisma/client/runtime/library").JsonValue;
     }>;
     myOrders(req: Request & {
         user?: JwtPayload;
     }): import(".prisma/client").Prisma.PrismaPromise<({
         items: {
             id: string;
+            orderId: string;
             productId: string;
-            quantity: number;
             titleSnapshot: string;
             priceCentsSnapshot: number;
+            quantity: number;
             lineTotalCents: number;
-            orderId: string;
         }[];
     } & {
         id: string;
@@ -55,20 +55,20 @@ export declare class OrdersController {
         totalCents: number;
         subtotalCents: number;
         shippingCents: number;
-        shippingAddress: import("@prisma/client/runtime/library").JsonValue;
         shippingMethod: string | null;
+        shippingAddress: import("@prisma/client/runtime/library").JsonValue;
     })[]>;
     myOrder(req: Request & {
         user?: JwtPayload;
     }, id: string): Promise<{
         items: {
             id: string;
+            orderId: string;
             productId: string;
-            quantity: number;
             titleSnapshot: string;
             priceCentsSnapshot: number;
+            quantity: number;
             lineTotalCents: number;
-            orderId: string;
         }[];
     } & {
         id: string;
@@ -80,8 +80,36 @@ export declare class OrdersController {
         totalCents: number;
         subtotalCents: number;
         shippingCents: number;
-        shippingAddress: import("@prisma/client/runtime/library").JsonValue;
         shippingMethod: string | null;
+        shippingAddress: import("@prisma/client/runtime/library").JsonValue;
+    }>;
+    getById(id: string): Promise<{
+        user: {
+            id: string;
+            email: string;
+            role: import(".prisma/client").$Enums.Role;
+        };
+        items: {
+            id: string;
+            orderId: string;
+            productId: string;
+            titleSnapshot: string;
+            priceCentsSnapshot: number;
+            quantity: number;
+            lineTotalCents: number;
+        }[];
+    } & {
+        id: string;
+        status: import(".prisma/client").$Enums.OrderStatus;
+        createdAt: Date;
+        updatedAt: Date;
+        currency: string;
+        userId: string;
+        totalCents: number;
+        subtotalCents: number;
+        shippingCents: number;
+        shippingMethod: string | null;
+        shippingAddress: import("@prisma/client/runtime/library").JsonValue;
     }>;
     listAll(query: OrdersQueryDto): Promise<{
         data: ({
@@ -92,12 +120,12 @@ export declare class OrdersController {
             };
             items: {
                 id: string;
+                orderId: string;
                 productId: string;
-                quantity: number;
                 titleSnapshot: string;
                 priceCentsSnapshot: number;
+                quantity: number;
                 lineTotalCents: number;
-                orderId: string;
             }[];
         } & {
             id: string;
@@ -109,8 +137,8 @@ export declare class OrdersController {
             totalCents: number;
             subtotalCents: number;
             shippingCents: number;
-            shippingAddress: import("@prisma/client/runtime/library").JsonValue;
             shippingMethod: string | null;
+            shippingAddress: import("@prisma/client/runtime/library").JsonValue;
         })[];
         meta: {
             page: number;
@@ -122,12 +150,12 @@ export declare class OrdersController {
     updateStatus(id: string, dto: UpdateOrderStatusDto): Promise<{
         items: {
             id: string;
+            orderId: string;
             productId: string;
-            quantity: number;
             titleSnapshot: string;
             priceCentsSnapshot: number;
+            quantity: number;
             lineTotalCents: number;
-            orderId: string;
         }[];
     } & {
         id: string;
@@ -139,7 +167,7 @@ export declare class OrdersController {
         totalCents: number;
         subtotalCents: number;
         shippingCents: number;
-        shippingAddress: import("@prisma/client/runtime/library").JsonValue;
         shippingMethod: string | null;
+        shippingAddress: import("@prisma/client/runtime/library").JsonValue;
     }>;
 }

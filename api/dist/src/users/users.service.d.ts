@@ -8,6 +8,9 @@ export declare class UsersService {
     constructor(prisma: PrismaService);
     list(query: UserQueryDto): Promise<{
         data: {
+            ordersCount: number;
+            totalSpentCents: number;
+            lastOrderAt: Date | null;
             id: string;
             email: string;
             role: import(".prisma/client").$Enums.Role;
@@ -22,6 +25,25 @@ export declare class UsersService {
             total: number;
             totalPages: number;
         };
+    }>;
+    getAdminUser(id: string): Promise<{
+        ordersCount: number;
+        totalSpentCents: number;
+        lastOrderAt: Date | null;
+        id: string;
+        email: string;
+        role: import(".prisma/client").$Enums.Role;
+        name: string | null;
+        status: import(".prisma/client").$Enums.UserStatus;
+        createdAt: Date;
+        updatedAt: Date;
+        orders: {
+            id: string;
+            status: import(".prisma/client").$Enums.OrderStatus;
+            createdAt: Date;
+            currency: string;
+            totalCents: number;
+        }[];
     }>;
     create(dto: CreateUserDto): Promise<{
         id: string;

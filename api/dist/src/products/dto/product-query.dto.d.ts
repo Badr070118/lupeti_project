@@ -5,7 +5,9 @@ export declare class ProductQueryDto {
     maxPrice?: number;
     page?: number;
     limit?: number;
-    sort?: 'newest' | 'price_asc' | 'price_desc';
+    sort?: 'newest' | 'price_asc' | 'price_desc' | 'best_sellers';
     featured?: boolean;
     includeInactive?: boolean;
+    inStock?: boolean;
+    onSale?: boolean;
 }

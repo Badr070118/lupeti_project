@@ -13,9 +13,11 @@ exports.ShippingAddressDto = void 0;
 const class_validator_1 = require("class-validator");
 class ShippingAddressDto {
     fullName;
+    phone;
     line1;
     line2;
     city;
+    state;
     country;
     postalCode;
 }
@@ -24,6 +26,11 @@ __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], ShippingAddressDto.prototype, "fullName", void 0);
+__decorate([
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], ShippingAddressDto.prototype, "phone", void 0);
 __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
@@ -37,6 +44,11 @@ __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], ShippingAddressDto.prototype, "city", void 0);
+__decorate([
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], ShippingAddressDto.prototype, "state", void 0);
 __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)

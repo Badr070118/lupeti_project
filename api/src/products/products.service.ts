@@ -278,6 +278,42 @@ export class ProductsService {
     });
   }
 
+  async setPrimaryImage(productId: string, imageId: string) {
+    const images = await this.prisma.productImage.findMany({
+      where: { productId },
+      orderBy: [{ sortOrder: 'asc' }, { createdAt: 'asc' }],
+    });
+    if (!images.length) {
+      throw new NotFoundException('Product image not found');
+    }
+    const target = images.find((image) => image.id === imageId);
+    if (!target) {
+      throw new NotFoundException('Product image not found');
+    }
+
+    let nextSortOrder = 1;
+    const updates: Prisma.PrismaPromise<unknown>[] = [
+      this.prisma.productImage.update({
+        where: { id: imageId },
+        data: { sortOrder: 0 },
+      }),
+    ];
+
+    for (const image of images) {
+      if (image.id === imageId) continue;
+      updates.push(
+        this.prisma.productImage.update({
+          where: { id: image.id },
+          data: { sortOrder: nextSortOrder },
+        }),
+      );
+      nextSortOrder += 1;
+    }
+
+    await this.prisma.$transaction(updates);
+    return { success: true };
+  }
+
   async removeImage(imageId: string) {
     try {
       await this.prisma.productImage.delete({
