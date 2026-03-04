@@ -1,0 +1,131 @@
+⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+⨯ ./src/components/layout/footer.tsx
+Error: 
+
+Caused by:
+    0: Failed to read source code from C:\Users\palba\lupeti_project\apps\web\src\components\layout\footer.tsx
+    1: El sistema no puede encontrar el archivo especificado. (os error 2)
+
+Import trace for requested module:
+./src/components/layout/footer.tsx
+./src/app/[locale]/layout.tsx
+⨯ ./src/components/layout/footer.tsx
+Error: 
+
+Caused by:
+    0: Failed to read source code from C:\Users\palba\lupeti_project\apps\web\src\components\layout\footer.tsx
+    1: El sistema no puede encontrar el archivo especificado. (os error 2)
+
+Import trace for requested module:
+./src/components/layout/footer.tsx
+./src/app/[locale]/layout.tsx
+⚠ Fast Refresh had to perform a full reload due to a runtime error.
+⚠ Fast Refresh had to perform a full reload due to a runtime error.
+⚠ Fast Refresh had to perform a full reload due to a runtime error.
+⚠ Found a change in next.config.ts. Restarting the server to apply the changes...
+⨯ ./src/components/home-modern/Footer.tsx
+Error: 
+
+Caused by:
+    0: Failed to read source code from C:\Users\palba\lupeti_project\apps\web\src\components\home-modern\Footer.tsx
+    1: stream did not contain valid UTF-8
+
+Import trace for requested module:
+./src/components/home-modern/Footer.tsx
+./src/components/home-modern/Home.tsx
+⨯ ./src/components/home-modern/Footer.tsx
+Error: 
+
+Caused by:
+    0: Failed to read source code from C:\Users\palba\lupeti_project\apps\web\src\components\home-modern\Footer.tsx
+    1: stream did not contain valid UTF-8
+
+Import trace for requested module:
+./src/components/home-modern/Footer.tsx
+./src/components/home-modern/Home.tsx
+⨯ ./src/components/home-modern/Footer.tsx
+Error: 
+
+Caused by:
+    0: Failed to read source code from C:\Users\palba\lupeti_project\apps\web\src\components\home-modern\Footer.tsx
+    1: stream did not contain valid UTF-8
+
+Import trace for requested module:
+./src/components/home-modern/Footer.tsx
+./src/components/home-modern/Home.tsx
+⨯ ./src/components/home-modern/Footer.tsx
+Error: 
+
+Caused by:
+    0: Failed to read source code from C:\Users\palba\lupeti_project\apps\web\src\components\home-modern\Footer.tsx
+    1: stream did not contain valid UTF-8
+
+Import trace for requested module:
+./src/components/home-modern/Footer.tsx
+./src/components/home-modern/Home.tsx
+⨯ ./src/components/home-modern/Footer.tsx
+Error: 
+
+Caused by:
+    0: Failed to read source code from C:\Users\palba\lupeti_project\apps\web\src\components\home-modern\Footer.tsx
+    1: stream did not contain valid UTF-8
+
+Import trace for requested module:
+./src/components/home-modern/Footer.tsx
+./src/components/home-modern/Home.tsx
+⨯ ./src/components/home-modern/Footer.tsx
+Error: 
+
+Caused by:
+    0: Failed to read source code from C:\Users\palba\lupeti_project\apps\web\src\components\home-modern\Footer.tsx
+    1: stream did not contain valid UTF-8
+
+Import trace for requested module:
+./src/components/home-modern/Footer.tsx
+./src/components/home-modern/Home.tsx
+⨯ ./src/components/home-modern/Footer.tsx
+Error: 
+
+Caused by:
+    0: Failed to read source code from C:\Users\palba\lupeti_project\apps\web\src\components\home-modern\Footer.tsx
+    1: stream did not contain valid UTF-8
+
+Import trace for requested module:
+./src/components/home-modern/Footer.tsx
+./src/components/home-modern/Home.tsx
+⨯ ./src/components/home-modern/Footer.tsx
+Error: 
+
+Caused by:
+    0: Failed to read source code from C:\Users\palba\lupeti_project\apps\web\src\components\home-modern\Footer.tsx
+    1: stream did not contain valid UTF-8
+
+Import trace for requested module:
+./src/components/home-modern/Footer.tsx
+./src/components/home-modern/Home.tsx
+⨯ ./src/components/home-modern/Footer.tsx
+Error: 
+
+Caused by:
+    0: Failed to read source code from C:\Users\palba\lupeti_project\apps\web\src\components\home-modern\Footer.tsx
+    1: stream did not contain valid UTF-8
+
+Import trace for requested module:
+./src/components/home-modern/Footer.tsx
+./src/components/home-modern/Home.tsx
+⨯ ./src/components/home-modern/Footer.tsx
+Error: 
+
+Caused by:
+    0: Failed to read source code from C:\Users\palba\lupeti_project\apps\web\src\components\home-modern\Footer.tsx
+    1: stream did not contain valid UTF-8
+
+Import trace for requested module:
+./src/components/home-modern/Footer.tsx
+./src/components/home-modern/Home.tsx
+⚠ Fast Refresh had to perform a full reload due to a runtime error.
+⚠ Fast Refresh had to perform a full reload due to a runtime error.
+⚠ Fast Refresh had to perform a full reload due to a runtime error.
+⚠ Found a change in next.config.ts. Restarting the server to apply the changes...
+^C^C

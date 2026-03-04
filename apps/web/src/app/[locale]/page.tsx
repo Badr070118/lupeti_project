@@ -11,7 +11,6 @@ import { FeaturedProducts } from '@/components/home/FeaturedProducts';
 import { HeroShowcaseClient } from '@/components/hero/HeroShowcase.client';
 import { Hero3D } from '@/components/home/Hero3D';
 import { settingsService } from '@/services/settings.service';
-import { SearchBar } from '@/components/common/search-bar';
 
 type PageProps = {
   params: Promise<{ locale: string }>;
@@ -65,18 +64,6 @@ export default async function HomePage({ params }: PageProps) {
   return (
     <div className="space-y-20 pb-16">
       {homepage.showHeroShowcase ? <HeroShowcaseClient /> : null}
-      <section className="rounded-3xl border border-slate-100 bg-white p-8 shadow-sm">
-        <p className="text-sm uppercase tracking-wide text-slate-400">
-          {t('search.eyebrow')}
-        </p>
-        <h2 className="mt-2 text-2xl font-semibold text-slate-900">
-          {t('search.title')}
-        </h2>
-        <p className="mt-1 text-sm text-slate-500">{t('search.subtitle')}</p>
-        <div className="mt-4 max-w-xl">
-          <SearchBar />
-        </div>
-      </section>
       {homepage.showBrandMarquee ? <BrandCarousel /> : null}
       {homepage.showTrustBadges ? <TrustBadges /> : null}
       {homepage.showHero3d ? <Hero3D locale={locale} /> : null}

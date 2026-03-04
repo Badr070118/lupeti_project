@@ -75,7 +75,7 @@ Run the API and PostgreSQL without installing local Postgres:
 **Container endpoints & credentials**
 
 - API: `http://localhost:3000`
-- PostgreSQL: `postgres://lupeti:lupeti@localhost:5432/lupeti`
+- PostgreSQL: `postgres://lupeti:lupeti@localhost:5433/lupeti`
   - Username: `lupeti`
   - Password: `lupeti`
   - Database: `lupeti`

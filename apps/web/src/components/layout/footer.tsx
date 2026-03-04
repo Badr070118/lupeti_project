@@ -1,6 +1,7 @@
 import { getTranslations } from 'next-intl/server';
 import { Link } from '@/i18n/routing';
 import { settingsService } from '@/services/settings.service';
+import { PaymentMethods } from '@/components/footer/PaymentMethods';
 
 const FOOTER_COLUMNS = [
   {
@@ -80,11 +81,14 @@ export async function Footer() {
             <p>{supportEmail}</p>
             <p>{supportPhone}</p>
             {supportAddress ? <p>{supportAddress}</p> : null}
-            <p className="text-slate-400">
-              (c) {year} {storeName} - {t('contact.rights')}
-            </p>
           </div>
         </div>
+      </div>
+      <div className="mx-auto max-w-6xl px-4">
+        <PaymentMethods />
+        <p className="mt-6 text-sm text-slate-400">
+          (c) {year} {storeName} - {t('contact.rights')}
+        </p>
       </div>
     </footer>
   );
