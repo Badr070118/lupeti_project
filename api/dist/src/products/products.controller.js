@@ -50,6 +50,9 @@ let ProductsController = class ProductsController {
     addImage(id, dto) {
         return this.productsService.addImage(id, dto);
     }
+    setPrimaryImage(id, imageId) {
+        return this.productsService.setPrimaryImage(id, imageId);
+    }
     removeImage(imageId) {
         return this.productsService.removeImage(imageId);
     }
@@ -114,6 +117,16 @@ __decorate([
     __metadata("design:paramtypes", [String, create_product_image_dto_1.CreateProductImageDto]),
     __metadata("design:returntype", void 0)
 ], ProductsController.prototype, "addImage", null);
+__decorate([
+    (0, common_1.Post)(':id/images/:imageId/set-primary'),
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),
+    (0, roles_decorator_1.Roles)(role_enum_1.Role.ADMIN),
+    __param(0, (0, common_1.Param)('id', new common_1.ParseUUIDPipe())),
+    __param(1, (0, common_1.Param)('imageId', new common_1.ParseUUIDPipe())),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, String]),
+    __metadata("design:returntype", void 0)
+], ProductsController.prototype, "setPrimaryImage", null);
 __decorate([
     (0, common_1.Delete)('images/:imageId'),
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard, roles_guard_1.RolesGuard),

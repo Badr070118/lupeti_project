@@ -72,7 +72,10 @@ export default async function CategoryPage({
         items={[
           { label: t('breadcrumbs.home', { default: 'Home' }), href: '/' },
           { label: t('breadcrumbs.shop', { default: 'Shop' }), href: '/shop' },
-          { label: category.name, href: `/category/${category.slug}` },
+          {
+            label: category.name,
+            href: { pathname: '/category/[slug]', params: { slug: category.slug } },
+          },
         ]}
       />
       <div>

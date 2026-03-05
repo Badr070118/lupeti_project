@@ -1,7 +1,7 @@
 'use client';
 
 import { FormEvent, useCallback, useEffect, useMemo, useState } from 'react';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import type { Category, DiscountType, Product, ProductImage } from '@/types';
 import { adminService } from '@/services/admin.service';
 import { categoryService } from '@/services/category.service';
@@ -67,6 +67,7 @@ const toDateInput = (value?: string | null) => {
 };
 
 export function AdminProductManager() {
+  const locale = useLocale();
   const { accessToken } = useAuth();
   const { showToast } = useToast();
   const t = useTranslations('admin.products');
@@ -294,13 +295,14 @@ export function AdminProductManager() {
   };
 
   const startEdit = (product: Product) => {
-    const hasPromo =
-      Boolean(product.discountType) ||
-      Boolean(product.discountValue) ||
-      Boolean(product.promoStartAt) ||
-      Boolean(product.promoEndAt) ||
-      (product.originalPriceCents &&
-        product.originalPriceCents > product.priceCents);
+    const hasPromo = Boolean(
+      product.discountType ||
+        product.discountValue ||
+        product.promoStartAt ||
+        product.promoEndAt ||
+        (product.originalPriceCents !== null &&
+          product.originalPriceCents > product.priceCents),
+    );
 
     setSelected(product);
     setForm({
@@ -396,10 +398,10 @@ export function AdminProductManager() {
                 </td>
                 <td className="p-3 text-slate-600">{product.stock}</td>
                 <td className="p-3 font-semibold text-slate-900">
-                  {formatPrice(product.pricing.finalPriceCents, product.currency)}
+                  {formatPrice(product.pricing.finalPriceCents, product.currency, locale)}
                   {product.pricing.isPromoActive && (
                     <span className="ml-2 text-xs text-slate-400 line-through">
-                      {formatPrice(product.pricing.originalPriceCents, product.currency)}
+                      {formatPrice(product.pricing.originalPriceCents, product.currency, locale)}
                     </span>
                   )}
                 </td>

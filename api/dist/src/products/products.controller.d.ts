@@ -246,6 +246,9 @@ export declare class ProductsController {
         sortOrder: number;
         productId: string;
     }>;
+    setPrimaryImage(id: string, imageId: string): Promise<{
+        success: boolean;
+    }>;
     removeImage(imageId: string): Promise<{
         success: boolean;
     }>;

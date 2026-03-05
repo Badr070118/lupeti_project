@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import type { Cart } from '@/types';
 import { formatPrice } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -30,6 +30,7 @@ export function CartSummary({
   loading = false,
   showCheckoutCta = false,
 }: CartSummaryProps) {
+  const locale = useLocale();
   const t = useTranslations('cart');
   const [shippingCents, setShippingCents] = useState<number | null>(null);
 
@@ -100,7 +101,7 @@ export function CartSummary({
         <div className="mt-4 space-y-3 text-sm text-slate-600">
           <div className="flex justify-between">
             <span>{t('subtotal')}</span>
-            <span>{formatPrice(totals.subtotal, cart.items[0].product.currency)}</span>
+            <span>{formatPrice(totals.subtotal, cart.items[0].product.currency, locale)}</span>
           </div>
           <div className="flex justify-between">
             <span>{t('shipping')}</span>
@@ -109,12 +110,12 @@ export function CartSummary({
                 ? t('shippingNote')
                 : shippingCents === 0
                   ? t('freeShipping')
-                  : formatPrice(shippingCents, cart.items[0].product.currency)}
+                  : formatPrice(shippingCents, cart.items[0].product.currency, locale)}
             </span>
           </div>
           <div className="flex justify-between font-semibold text-slate-900">
             <span>{t('total')}</span>
-            <span>{formatPrice(totals.total, cart.items[0].product.currency)}</span>
+            <span>{formatPrice(totals.total, cart.items[0].product.currency, locale)}</span>
           </div>
         </div>
         <div className="mt-6 space-y-3">

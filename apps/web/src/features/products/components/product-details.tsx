@@ -1,6 +1,6 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { useMemo, useState } from 'react';
 import type { Product } from '@/types';
 import { formatPrice } from '@/lib/utils';
@@ -16,6 +16,7 @@ interface ProductDetailsProps {
 }
 
 export function ProductDetails({ product }: ProductDetailsProps) {
+  const locale = useLocale();
   const t = useTranslations('product');
   const { showToast } = useToast();
   const pricing =
@@ -82,11 +83,11 @@ export function ProductDetails({ product }: ProductDetailsProps) {
         <div className="flex items-center gap-4">
           <div>
             <p className="text-3xl font-bold text-slate-900">
-              {formatPrice(pricing.finalPriceCents, product.currency)}
+              {formatPrice(pricing.finalPriceCents, product.currency, locale)}
             </p>
             {pricing.isPromoActive && (
               <p className="text-sm text-slate-400 line-through">
-                {formatPrice(pricing.originalPriceCents, product.currency)}
+                {formatPrice(pricing.originalPriceCents, product.currency, locale)}
               </p>
             )}
           </div>

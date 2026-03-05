@@ -7,9 +7,18 @@ const FOOTER_COLUMNS = [
   {
     key: 'shop',
     links: [
-      { key: 'croquettes', href: '/category/dog' },
-      { key: 'accessories', href: '/category/accessories' },
-      { key: 'snacks', href: '/category/cat' },
+      {
+        key: 'croquettes',
+        href: { pathname: '/category/[slug]', params: { slug: 'dog' } },
+      },
+      {
+        key: 'accessories',
+        href: { pathname: '/category/[slug]', params: { slug: 'accessories' } },
+      },
+      {
+        key: 'snacks',
+        href: { pathname: '/category/[slug]', params: { slug: 'cat' } },
+      },
     ],
   },
   {

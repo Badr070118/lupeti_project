@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import { Trash2 } from 'lucide-react';
 import { useState } from 'react';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import type { CartItem } from '@/types';
 import { formatPrice } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
@@ -17,6 +17,7 @@ interface CartItemRowProps {
 }
 
 export function CartItemRow({ item, onUpdateQuantity, onRemove }: CartItemRowProps) {
+  const locale = useLocale();
   const [saving, setSaving] = useState(false);
   const { showToast } = useToast();
   const t = useTranslations('cart');
@@ -118,11 +119,11 @@ export function CartItemRow({ item, onUpdateQuantity, onRemove }: CartItemRowPro
       </div>
       <div className="text-right">
         <p className="text-base font-semibold text-slate-900">
-          {formatPrice(unitPrice * item.quantity, item.product.currency)}
+          {formatPrice(unitPrice * item.quantity, item.product.currency, locale)}
         </p>
         {unitPrice !== originalUnit && (
           <p className="text-xs text-slate-400 line-through">
-            {formatPrice(originalUnit * item.quantity, item.product.currency)}
+            {formatPrice(originalUnit * item.quantity, item.product.currency, locale)}
           </p>
         )}
       </div>

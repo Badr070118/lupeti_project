@@ -10,7 +10,7 @@ import { getTranslations } from 'next-intl/server';
 type RouteParams = { locale: string; slug: string };
 
 interface ProductPageProps {
-  params: Promise<RouteParams> | RouteParams;
+  params: Promise<RouteParams>;
 }
 
 async function resolveParams(params: ProductPageProps['params']): Promise<RouteParams> {

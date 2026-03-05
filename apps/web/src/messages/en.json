@@ -625,6 +625,7 @@
       },
       "empty": "Select a ticket to view the conversation.",
       "history": "Conversation",
+      "original": "Original message",
       "form": {
         "placeholder": "Write a reply",
         "submit": "Send reply"

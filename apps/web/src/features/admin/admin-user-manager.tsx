@@ -1,7 +1,7 @@
 'use client';
 
 import { FormEvent, useCallback, useEffect, useState } from 'react';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import type { AdminUserDetail, AdminUserSummary } from '@/types';
 import { adminService } from '@/services/admin.service';
 import { useAuth } from '@/hooks/use-auth';
@@ -11,19 +11,27 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select } from '@/components/ui/select';
 
-const INITIAL_FORM = {
+type UserFormState = {
+  email: string;
+  password: string;
+  name: string;
+  role: 'USER' | 'ADMIN';
+};
+
+const INITIAL_FORM: UserFormState = {
   email: '',
   password: '',
   name: '',
   role: 'USER',
-} as const;
+};
 
 export function AdminUserManager() {
+  const locale = useLocale();
   const { accessToken } = useAuth();
   const { showToast } = useToast();
   const t = useTranslations('admin.users');
   const [users, setUsers] = useState<AdminUserSummary[]>([]);
-  const [form, setForm] = useState({ ...INITIAL_FORM });
+  const [form, setForm] = useState<UserFormState>({ ...INITIAL_FORM });
   const [loading, setLoading] = useState(false);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [selectedUser, setSelectedUser] = useState<AdminUserDetail | null>(null);
@@ -227,7 +235,7 @@ export function AdminUserManager() {
                 onChange={(event) =>
                   setForm((prev) => ({
                     ...prev,
-                    role: event.target.value,
+                    role: event.target.value as UserFormState['role'],
                   }))
                 }
               >
@@ -258,7 +266,7 @@ export function AdminUserManager() {
                   <p>{t('details.orders', { count: selectedUser.ordersCount })}</p>
                   <p>
                     {t('details.totalSpent', {
-                      value: formatPrice(selectedUser.totalSpentCents),
+                      value: formatPrice(selectedUser.totalSpentCents, 'TRY', locale),
                     })}
                   </p>
                   {selectedUser.lastOrderAt ? (
@@ -287,7 +295,7 @@ export function AdminUserManager() {
                         <div className="flex items-center justify-between">
                           <span>{order.id}</span>
                           <span className="font-semibold text-slate-900">
-                            {formatPrice(order.totalCents, order.currency)}
+                            {formatPrice(order.totalCents, order.currency, locale)}
                           </span>
                         </div>
                         <div className="mt-1 flex items-center justify-between text-[0.7rem] text-slate-500">

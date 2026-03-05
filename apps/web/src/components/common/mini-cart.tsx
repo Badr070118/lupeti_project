@@ -1,9 +1,9 @@
 'use client';
 
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { ShoppingBag } from 'lucide-react';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { useAuth } from '@/hooks/use-auth';
 import { useCart } from '@/hooks/use-cart';
 import { formatPrice } from '@/lib/utils';
@@ -11,7 +11,9 @@ import { Link, usePathname } from '@/i18n/routing';
 import { resolveProductImage } from '@/lib/product-images';
 
 export function MiniCart() {
+  const locale = useLocale();
   const [open, setOpen] = useState(false);
+  const containerRef = useRef<HTMLDivElement | null>(null);
   const { accessToken } = useAuth();
   const { cart, loading } = useCart(accessToken);
   const t = useTranslations('cart');
@@ -25,11 +27,26 @@ export function MiniCart() {
     setOpen(false);
   }, [pathname]);
 
+  useEffect(() => {
+    if (!open) return;
+
+    const handleClickOutside = (event: MouseEvent) => {
+      if (!containerRef.current) return;
+      if (containerRef.current.contains(event.target as Node)) return;
+      setOpen(false);
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [open]);
+
   return (
-    <div className="relative">
+    <div ref={containerRef} className="relative">
       <button
         type="button"
-        className="relative inline-flex rounded-full bg-slate-900 p-2 text-white transition hover:bg-slate-800"
+        className="relative inline-flex rounded-full bg-rose-500 p-2 text-white transition hover:bg-rose-600"
         aria-label={nav('cart')}
         onClick={() => setOpen((prev) => !prev)}
       >
@@ -89,6 +106,7 @@ export function MiniCart() {
                           (item.product.pricing?.finalPriceCents ?? item.product.priceCents) *
                             item.quantity,
                           item.product.currency,
+                          locale,
                         )}
                       </p>
                     </div>
@@ -105,7 +123,7 @@ export function MiniCart() {
                 </Link>
                 <Link
                   href="/checkout"
-                  className="flex-1 rounded-full bg-slate-900 px-4 py-2 text-center text-xs font-semibold text-white"
+                  className="flex-1 rounded-full bg-rose-500 px-4 py-2 text-center text-xs font-semibold text-white hover:bg-rose-600"
                   onClick={() => setOpen(false)}
                 >
                   {t('checkout')}

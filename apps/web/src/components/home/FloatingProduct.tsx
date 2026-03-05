@@ -46,8 +46,8 @@ export function FloatingProduct({
       ease: 'power3.out',
     });
     if (glowRef.current) {
-      gsap.to((glowRef.current.material as MeshBasicMaterial).opacity, {
-        value: hovered ? 0.55 : 0.35,
+      gsap.to(glowRef.current.material as MeshBasicMaterial, {
+        opacity: hovered ? 0.55 : 0.35,
         duration: 0.35,
         ease: 'power3.out',
       });

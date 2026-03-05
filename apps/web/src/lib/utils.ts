@@ -4,15 +4,15 @@ export function cn(
   return classes.filter(Boolean).join(' ');
 }
 
-export function formatCurrency(value: number, currency = 'EUR') {
-  return new Intl.NumberFormat(undefined, {
+export function formatCurrency(value: number, currency = 'EUR', locale?: string) {
+  return new Intl.NumberFormat(locale, {
     style: 'currency',
     currency,
   }).format(value);
 }
 
-export function formatPrice(cents: number, currency = 'TRY') {
-  return formatCurrency(cents / 100, currency);
+export function formatPrice(cents: number, currency = 'TRY', locale?: string) {
+  return formatCurrency(cents / 100, currency, locale);
 }
 
 export const wait = (ms: number) =>

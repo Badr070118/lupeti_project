@@ -102,7 +102,7 @@ export function PetProductCarousel() {
 
                     <button
                       type="button"
-                      className="mt-3 w-full rounded-full bg-slate-900 px-4 py-2 text-sm font-medium text-white transition hover:bg-slate-700"
+                      className="mt-3 w-full rounded-full bg-rose-500 px-4 py-2 text-sm font-medium text-white transition hover:bg-rose-600"
                     >
                       Voir produit
                     </button>

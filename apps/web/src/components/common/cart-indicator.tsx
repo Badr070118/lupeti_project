@@ -48,7 +48,7 @@ export function CartIndicator() {
   return (
     <Link
       href="/cart"
-      className="relative inline-flex rounded-full bg-slate-900 p-2 text-white transition hover:bg-slate-800"
+      className="relative inline-flex rounded-full bg-rose-500 p-2 text-white transition hover:bg-rose-600"
       aria-label={t('cart')}
     >
       <ShoppingBag className="h-5 w-5" />

@@ -1,20 +1,37 @@
 import Image from 'next/image';
 import { getTranslations } from 'next-intl/server';
-import { Link } from '@/i18n/routing';
-import { TrustBadges } from '@/components/home/TrustBadges';
 import { buildMetadata } from '@/lib/metadata';
 import heroStaticOg from '@/../public/hero-static.jpg';
 import storyImage from '@/../public/images/hero/golden.jpg';
 import BrandCarousel from '@/components/BrandCarousel';
 import { CategoryCards } from '@/components/home/CategoryCards';
 import { FeaturedProducts } from '@/components/home/FeaturedProducts';
-import { HeroShowcaseClient } from '@/components/hero/HeroShowcase.client';
+import { HeroSlider } from '@/components/home/HeroSlider';
 import { Hero3D } from '@/components/home/Hero3D';
+import { StoreBenefits } from '@/components/layout/StoreBenefits';
 import { settingsService } from '@/services/settings.service';
+import type { HomepageSettings } from '@/types';
 
 type PageProps = {
   params: Promise<{ locale: string }>;
 };
+
+export const dynamic = 'force-dynamic';
+
+type HomepageViewSettings = Pick<
+  HomepageSettings,
+  | 'heroImageUrl'
+  | 'storyImageUrl'
+  | 'categoryDogImageUrl'
+  | 'categoryCatImageUrl'
+  | 'showHeroShowcase'
+  | 'showHero3d'
+  | 'showBrandMarquee'
+  | 'showFeatured'
+  | 'showCategoryCards'
+  | 'showStorySection'
+  | 'showTrustBadges'
+>;
 
 export async function generateMetadata({ params }: PageProps) {
   const { locale } = await params;
@@ -39,7 +56,7 @@ export async function generateMetadata({ params }: PageProps) {
 export default async function HomePage({ params }: PageProps) {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: 'home' });
-  const fallbackHomepage = {
+  const fallbackHomepage: HomepageViewSettings = {
     heroImageUrl: null,
     storyImageUrl: null,
     categoryDogImageUrl: null,
@@ -52,7 +69,7 @@ export default async function HomePage({ params }: PageProps) {
     showStorySection: true,
     showTrustBadges: true,
   };
-  let homepage = fallbackHomepage;
+  let homepage: HomepageViewSettings = fallbackHomepage;
   try {
     const settings = await settingsService.getPublic();
     homepage = settings.homepage;
@@ -63,9 +80,10 @@ export default async function HomePage({ params }: PageProps) {
 
   return (
     <div className="space-y-20 pb-16">
-      {homepage.showHeroShowcase ? <HeroShowcaseClient /> : null}
+      {homepage.showHeroShowcase ? (
+        <HeroSlider />
+      ) : null}
       {homepage.showBrandMarquee ? <BrandCarousel /> : null}
-      {homepage.showTrustBadges ? <TrustBadges /> : null}
       {homepage.showHero3d ? <Hero3D locale={locale} /> : null}
       {homepage.showCategoryCards ? (
         <CategoryCards
@@ -99,24 +117,9 @@ export default async function HomePage({ params }: PageProps) {
           </div>
         </section>
       ) : null}
-
-      <section className="rounded-3xl bg-slate-900 px-8 py-12 text-white lg:px-16">
-        <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
-          <div>
-            <p className="text-sm uppercase tracking-wide text-amber-300">
-              {t('final.eyebrow')}
-            </p>
-            <h2 className="text-3xl font-semibold">{t('final.title')}</h2>
-            <p className="mt-2 text-slate-300">{t('final.subtitle')}</p>
-          </div>
-          <Link
-            href="/shop"
-            className="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-semibold text-slate-900 transition hover:bg-slate-100"
-          >
-            {t('final.cta')}
-          </Link>
-        </div>
-      </section>
+      <div className="relative left-1/2 right-1/2 -mx-[50vw] w-screen">
+        <StoreBenefits />
+      </div>
     </div>
   );
 }

@@ -1,11 +1,12 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { ButtonHTMLAttributes, forwardRef } from 'react';
+import type { HTMLMotionProps } from 'framer-motion';
+import { forwardRef } from 'react';
 import { cn } from '@/lib/utils';
 import { hoverTransition } from '@/animations/transitions';
 
-type AnimatedButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
+type AnimatedButtonProps = Omit<HTMLMotionProps<'button'>, 'ref'> & {
   variant?: 'primary' | 'secondary' | 'ghost';
 };
 

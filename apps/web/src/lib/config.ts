@@ -16,8 +16,8 @@ export const env = {
   supportedLocales:
     process.env.NEXT_PUBLIC_SUPPORTED_LOCALES?.split(',').map((locale) =>
       locale.trim(),
-    ) ?? ['en'],
-  defaultLocale: process.env.NEXT_PUBLIC_DEFAULT_LOCALE ?? 'en',
+    ) ?? ['fr'],
+  defaultLocale: process.env.NEXT_PUBLIC_DEFAULT_LOCALE ?? 'fr',
   siteUrl:
     trimSlash(process.env.NEXT_PUBLIC_APP_URL) ??
     'http://localhost:3001',

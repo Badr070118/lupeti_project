@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { useAuth } from '@/hooks/use-auth';
 import { useWishlist } from '@/hooks/use-wishlist';
 import { formatPrice } from '@/lib/utils';
@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button';
 import { AddToCartButton } from '@/features/cart/components/add-to-cart-button';
 
 export function WishlistContent() {
+  const locale = useLocale();
   const { accessToken } = useAuth();
   const { items, loading, removeItem } = useWishlist(accessToken);
   const t = useTranslations('wishlist');
@@ -62,7 +63,7 @@ export function WishlistContent() {
             </div>
             <div className="flex flex-col items-start gap-3 md:items-end">
               <p className="text-lg font-semibold text-slate-900">
-                {formatPrice(price, product.currency)}
+                {formatPrice(price, product.currency, locale)}
               </p>
               <div className="flex flex-wrap gap-2">
                 <AddToCartButton productId={product.id} disabled={product.stock <= 0} />

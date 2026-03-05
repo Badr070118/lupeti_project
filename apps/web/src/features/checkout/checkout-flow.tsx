@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from 'react';
 import Image from 'next/image';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { ShieldCheck } from 'lucide-react';
 import { useRouter } from '@/i18n/routing';
 import type { Address, Cart, PaymentProvider, ShippingAddress } from '@/types';
@@ -35,6 +35,7 @@ const EMPTY_ADDRESS: ShippingAddress = {
 };
 
 export function CheckoutFlow({ cart, accessToken, onOrderCreated }: CheckoutFlowProps) {
+  const locale = useLocale();
   const t = useTranslations('checkout');
   const router = useRouter();
   const { showToast } = useToast();
@@ -351,6 +352,7 @@ export function CheckoutFlow({ cart, accessToken, onOrderCreated }: CheckoutFlow
                 {formatPrice(
                   shippingStandardCents,
                   activeCart.items[0]?.product.currency ?? 'TRY',
+                  locale,
                 )}
               </span>
             </label>
@@ -369,6 +371,7 @@ export function CheckoutFlow({ cart, accessToken, onOrderCreated }: CheckoutFlow
                 {formatPrice(
                   shippingExpressCents,
                   activeCart.items[0]?.product.currency ?? 'TRY',
+                  locale,
                 )}
               </span>
             </label>
@@ -492,6 +495,7 @@ export function CheckoutFlow({ cart, accessToken, onOrderCreated }: CheckoutFlow
                   (item.product.pricing?.finalPriceCents ?? item.product.priceCents) *
                     item.quantity,
                   item.product.currency,
+                  locale,
                 )}
               </span>
             </div>
@@ -501,7 +505,7 @@ export function CheckoutFlow({ cart, accessToken, onOrderCreated }: CheckoutFlow
           <div className="flex justify-between">
             <span>{t('subtotal')}</span>
             <span>
-              {formatPrice(subtotal, activeCart.items[0]?.product.currency ?? 'TRY')}
+              {formatPrice(subtotal, activeCart.items[0]?.product.currency ?? 'TRY', locale)}
             </span>
           </div>
           <div className="flex justify-between">
@@ -510,13 +514,14 @@ export function CheckoutFlow({ cart, accessToken, onOrderCreated }: CheckoutFlow
               {formatPrice(
                 shippingCents,
                 activeCart.items[0]?.product.currency ?? 'TRY',
+                locale,
               )}
             </span>
           </div>
           <div className="flex justify-between font-semibold text-slate-900">
             <span>{t('total')}</span>
             <span>
-              {formatPrice(total, activeCart.items[0]?.product.currency ?? 'TRY')}
+              {formatPrice(total, activeCart.items[0]?.product.currency ?? 'TRY', locale)}
             </span>
           </div>
         </div>

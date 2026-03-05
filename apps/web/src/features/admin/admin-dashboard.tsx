@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { useAuth } from '@/hooks/use-auth';
 import { useToast } from '@/hooks/use-toast';
 import { adminService } from '@/services/admin.service';
@@ -10,6 +10,7 @@ import type { AdminOverview } from '@/types';
 import { Card } from '@/components/ui/card';
 
 export function AdminDashboard() {
+  const locale = useLocale();
   const { accessToken } = useAuth();
   const { showToast } = useToast();
   const t = useTranslations('admin.dashboard');
@@ -42,23 +43,23 @@ export function AdminDashboard() {
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <StatCard
           label={t('products')}
-          value={data.products.total.toLocaleString()}
-          subtitle={t('stock', { value: data.products.stock.toLocaleString() })}
+          value={data.products.total.toLocaleString(locale)}
+          subtitle={t('stock', { value: data.products.stock.toLocaleString(locale) })}
         />
         <StatCard
           label={t('users')}
-          value={data.users.total.toLocaleString()}
-          subtitle={t('active', { value: data.users.active.toLocaleString() })}
+          value={data.users.total.toLocaleString(locale)}
+          subtitle={t('active', { value: data.users.active.toLocaleString(locale) })}
         />
         <StatCard
           label={t('orders')}
-          value={data.orders.total.toLocaleString()}
-          subtitle={formatPrice(data.orders.revenueCents)}
+          value={data.orders.total.toLocaleString(locale)}
+          subtitle={formatPrice(data.orders.revenueCents, 'TRY', locale)}
         />
         <StatCard
           label={t('tickets')}
-          value={data.tickets.total.toLocaleString()}
-          subtitle={t('open', { value: data.tickets.open.toLocaleString() })}
+          value={data.tickets.total.toLocaleString(locale)}
+          subtitle={t('open', { value: data.tickets.open.toLocaleString(locale) })}
         />
       </div>
 
@@ -76,23 +77,23 @@ export function AdminDashboard() {
             <div className="grid gap-3 md:grid-cols-2">
               <PerformanceItem
                 label={t('performance.orders7')}
-                value={data.performance.ordersLast7Days.toLocaleString()}
+                value={data.performance.ordersLast7Days.toLocaleString(locale)}
               />
               <PerformanceItem
                 label={t('performance.orders30')}
-                value={data.performance.ordersLast30Days.toLocaleString()}
+                value={data.performance.ordersLast30Days.toLocaleString(locale)}
               />
               <PerformanceItem
                 label={t('performance.revenue30')}
-                value={formatPrice(data.performance.revenueLast30Cents)}
+                value={formatPrice(data.performance.revenueLast30Cents, 'TRY', locale)}
               />
               <PerformanceItem
                 label={t('performance.average')}
-                value={formatPrice(data.performance.averageOrderValueCents)}
+                value={formatPrice(data.performance.averageOrderValueCents, 'TRY', locale)}
               />
               <PerformanceItem
                 label={t('performance.newCustomers')}
-                value={data.performance.newCustomersLast30Days.toLocaleString()}
+                value={data.performance.newCustomersLast30Days.toLocaleString(locale)}
               />
             </div>
           </div>
@@ -124,7 +125,7 @@ export function AdminDashboard() {
                       </p>
                     </div>
                     <span className="text-sm font-semibold text-emerald-600">
-                      {formatPrice(item.revenueCents)}
+                      {formatPrice(item.revenueCents, 'TRY', locale)}
                     </span>
                   </div>
                 ))}

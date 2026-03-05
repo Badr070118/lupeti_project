@@ -8,6 +8,8 @@ import { formatPrice } from '@/lib/utils';
 import { resolveProductImage } from '@/lib/product-images';
 
 export function QuickView() {
+  const locale =
+    typeof window !== 'undefined' ? window.location.pathname.split('/')[1] || 'en' : 'en';
   const product = useQuickView((state) => state.product);
   const close = useQuickView((state) => state.close);
 
@@ -60,11 +62,11 @@ export function QuickView() {
               <div className="flex items-end gap-3">
                 {product.pricing.isPromoActive && (
                   <span className="text-sm text-slate-400 line-through">
-                    {formatPrice(product.pricing.originalPriceCents, product.currency)}
+                    {formatPrice(product.pricing.originalPriceCents, product.currency, locale)}
                   </span>
                 )}
                 <span className="text-3xl font-bold text-[var(--primary)]">
-                  {formatPrice(product.pricing.finalPriceCents, product.currency)}
+                  {formatPrice(product.pricing.finalPriceCents, product.currency, locale)}
                 </span>
               </div>
               <button

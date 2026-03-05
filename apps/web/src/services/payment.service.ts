@@ -16,7 +16,11 @@ async function initiatePaytr(accessToken: string, orderId: string) {
     | { message?: string };
 
   if (!response.ok) {
-    throw new Error(payload?.message ?? 'Unable to initiate PayTR payment');
+    const message =
+      payload && typeof payload === 'object' && 'message' in payload
+        ? payload.message
+        : undefined;
+    throw new Error(message ?? 'Unable to initiate PayTR payment');
   }
 
   return payload as PaytrInitiateResponse;

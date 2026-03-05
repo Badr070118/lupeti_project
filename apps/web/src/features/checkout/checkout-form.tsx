@@ -7,7 +7,7 @@ import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
 import { orderService } from '@/services/order.service';
 import { paymentService } from '@/services/payment.service';
-import type { Cart, CheckoutPayload } from '@/types';
+import type { Cart, CheckoutPayload, ShippingAddress } from '@/types';
 
 interface CheckoutFormProps {
   cart: Cart | null;
@@ -16,6 +16,7 @@ interface CheckoutFormProps {
 }
 
 const DEFAULT_ADDRESS = {
+  fullName: '',
   line1: '',
   city: '',
   postalCode: '',
@@ -29,7 +30,7 @@ export function CheckoutForm({
 }: CheckoutFormProps) {
   const [submitting, setSubmitting] = useState(false);
   const [iframeUrl, setIframeUrl] = useState<string | null>(null);
-  const [address, setAddress] = useState<Record<string, string>>(DEFAULT_ADDRESS);
+  const [address, setAddress] = useState<ShippingAddress>(DEFAULT_ADDRESS);
   const { showToast } = useToast();
   const t = useTranslations('checkout');
 
@@ -86,6 +87,17 @@ export function CheckoutForm({
       className="space-y-6 rounded-3xl border border-slate-100 bg-white p-6 shadow-sm"
     >
       <div className="grid gap-4 md:grid-cols-2">
+        <Input
+          id="shipping-fullname"
+          name="fullName"
+          placeholder={t('address.fullName', { default: 'Nom complet' })}
+          required
+          value={address.fullName}
+          onChange={(event) =>
+            setAddress((prev) => ({ ...prev, fullName: event.target.value }))
+          }
+          className="md:col-span-2"
+        />
         <Input
           id="shipping-line1"
           name="line1"

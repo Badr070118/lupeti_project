@@ -1,10 +1,11 @@
 'use client';
 
+import type { ComponentProps } from 'react';
 import { Link } from '@/i18n/routing';
 
 interface BreadcrumbItem {
   label: string;
-  href: string;
+  href: ComponentProps<typeof Link>['href'];
 }
 
 interface BreadcrumbsProps {
@@ -15,7 +16,7 @@ export function Breadcrumbs({ items }: BreadcrumbsProps) {
   return (
     <nav className="flex flex-wrap items-center gap-2 text-xs uppercase tracking-[0.2em] text-slate-400">
       {items.map((item, index) => (
-        <span key={item.href} className="flex items-center gap-2">
+        <span key={`${item.label}-${index}`} className="flex items-center gap-2">
           <Link href={item.href} className="hover:text-rose-500">
             {item.label}
           </Link>

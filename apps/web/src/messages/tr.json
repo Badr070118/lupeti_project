@@ -515,6 +515,7 @@
       },
       "empty": "Konuşmayı görmek için bir ticket seçin.",
       "history": "Geçmiş",
+      "original": "Orijinal mesaj",
       "form": {
         "placeholder": "Yanıt yazın",
         "submit": "Gönder"

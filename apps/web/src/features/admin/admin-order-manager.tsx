@@ -1,7 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useState } from 'react';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import type { AdminOrder } from '@/types';
 import { adminService } from '@/services/admin.service';
 import { useAuth } from '@/hooks/use-auth';
@@ -22,6 +22,7 @@ const ORDER_STATUSES = [
 type OrderStatusValue = (typeof ORDER_STATUSES)[number];
 
 export function AdminOrderManager() {
+  const locale = useLocale();
   const { accessToken } = useAuth();
   const { showToast } = useToast();
   const t = useTranslations('admin.orders');
@@ -115,7 +116,7 @@ export function AdminOrderManager() {
                   {order.user?.email ?? t('details.noCustomer', { default: 'Unknown' })}
                 </td>
                 <td className="p-3 font-semibold text-slate-900">
-                  {formatPrice(order.totalCents, order.currency)}
+                  {formatPrice(order.totalCents, order.currency, locale)}
                 </td>
                 <td className="p-3 text-xs uppercase text-slate-500">
                   {t(`status.${order.status}`)}
@@ -184,8 +185,8 @@ export function AdminOrderManager() {
                       <span>{item.quantity} x</span>
                     </div>
                     <div className="mt-1 flex items-center justify-between text-[0.7rem] text-slate-500">
-                      <span>{formatPrice(item.priceCentsSnapshot, selected.currency)}</span>
-                      <span>{formatPrice(item.lineTotalCents, selected.currency)}</span>
+                      <span>{formatPrice(item.priceCentsSnapshot, selected.currency, locale)}</span>
+                      <span>{formatPrice(item.lineTotalCents, selected.currency, locale)}</span>
                     </div>
                   </div>
                 ))}
@@ -199,17 +200,17 @@ export function AdminOrderManager() {
               <div className="text-sm text-slate-600">
                 <p>
                   {t('details.subtotal', {
-                    value: formatPrice(selected.subtotalCents, selected.currency),
+                    value: formatPrice(selected.subtotalCents, selected.currency, locale),
                   })}
                 </p>
                 <p>
                   {t('details.shippingFee', {
-                    value: formatPrice(selected.shippingCents, selected.currency),
+                    value: formatPrice(selected.shippingCents, selected.currency, locale),
                   })}
                 </p>
                 <p className="font-semibold text-slate-900">
                   {t('details.total', {
-                    value: formatPrice(selected.totalCents, selected.currency),
+                    value: formatPrice(selected.totalCents, selected.currency, locale),
                   })}
                 </p>
               </div>

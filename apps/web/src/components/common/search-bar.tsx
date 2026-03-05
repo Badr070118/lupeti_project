@@ -122,7 +122,10 @@ export function SearchBar({
                         className="flex w-full items-center gap-3 px-4 py-2 text-left text-sm text-slate-700 hover:bg-slate-50"
                         onClick={() => {
                           setOpen(false);
-                          router.push(`/product/${product.slug}`);
+                          router.push({
+                            pathname: '/product/[slug]',
+                            params: { slug: product.slug },
+                          });
                         }}
                       >
                         <div className="relative h-9 w-9 overflow-hidden rounded-lg bg-slate-100">

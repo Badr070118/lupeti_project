@@ -12,9 +12,18 @@ const categoryIcons = {
 };
 
 const cards = [
-  { key: "dog", href: "/category/dog" },
-  { key: "cat", href: "/category/cat" },
-  { key: "accessories", href: "/category/accessories" },
+  {
+    key: "dog",
+    href: { pathname: "/category/[slug]" as const, params: { slug: "dog" } },
+  },
+  {
+    key: "cat",
+    href: { pathname: "/category/[slug]" as const, params: { slug: "cat" } },
+  },
+  {
+    key: "accessories",
+    href: { pathname: "/category/[slug]" as const, params: { slug: "accessories" } },
+  },
 ] as const;
 
 export function CategoryHighlights() {

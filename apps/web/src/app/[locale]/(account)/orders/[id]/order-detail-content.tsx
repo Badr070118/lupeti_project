@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { useAuth } from '@/hooks/use-auth';
 import { orderService } from '@/services/order.service';
 import { formatPrice } from '@/lib/utils';
@@ -15,6 +15,7 @@ interface OrderDetailContentProps {
 }
 
 export function OrderDetailContent({ id }: OrderDetailContentProps) {
+  const locale = useLocale();
   const { user, accessToken, loading } = useAuth();
   const t = useTranslations('orders');
   const [order, setOrder] = useState<Order | null>(null);
@@ -102,22 +103,22 @@ export function OrderDetailContent({ id }: OrderDetailContentProps) {
               <span>
                 {item.titleSnapshot} x {item.quantity}
               </span>
-              <span>{formatPrice(item.lineTotalCents, order.currency)}</span>
+              <span>{formatPrice(item.lineTotalCents, order.currency, locale)}</span>
             </div>
           ))}
         </div>
         <div className="mt-6 border-t border-slate-100 pt-4 text-sm text-slate-600">
           <div className="flex justify-between">
             <span>{t('subtotal')}</span>
-            <span>{formatPrice(order.subtotalCents, order.currency)}</span>
+            <span>{formatPrice(order.subtotalCents, order.currency, locale)}</span>
           </div>
           <div className="flex justify-between">
             <span>{t('shipping')}</span>
-            <span>{formatPrice(order.shippingCents, order.currency)}</span>
+            <span>{formatPrice(order.shippingCents, order.currency, locale)}</span>
           </div>
           <div className="flex justify-between font-semibold text-slate-900">
             <span>{t('total')}</span>
-            <span>{formatPrice(order.totalCents, order.currency)}</span>
+            <span>{formatPrice(order.totalCents, order.currency, locale)}</span>
           </div>
         </div>
       </div>

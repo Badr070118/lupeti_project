@@ -344,6 +344,9 @@ export declare class ProductsService {
         sortOrder: number;
         productId: string;
     }>;
+    setPrimaryImage(productId: string, imageId: string): Promise<{
+        success: boolean;
+    }>;
     removeImage(imageId: string): Promise<{
         success: boolean;
     }>;

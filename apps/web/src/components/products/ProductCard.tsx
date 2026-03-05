@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import { Eye, ShoppingCart } from 'lucide-react';
 import Image from 'next/image';
+import { useLocale } from 'next-intl';
 import { toast } from 'react-hot-toast';
 import type { Product } from '@/types';
 import { formatPrice } from '@/lib/utils';
@@ -16,6 +17,7 @@ type ProductCardProps = {
 };
 
 export function ProductCard({ product, index = 0 }: ProductCardProps) {
+  const locale = useLocale();
   const openQuickView = useQuickView((state) => state.open);
 
   const handleAdd = () => {
@@ -84,11 +86,11 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
         <div className="mt-auto flex items-baseline gap-2">
           {hasPromo && product.pricing.originalPriceCents && (
             <span className="text-sm text-slate-400 line-through">
-              {formatPrice(product.pricing.originalPriceCents, product.currency)}
+              {formatPrice(product.pricing.originalPriceCents, product.currency, locale)}
             </span>
           )}
           <span className="text-2xl font-bold text-[var(--primary)]">
-            {formatPrice(product.pricing.finalPriceCents, product.currency)}
+            {formatPrice(product.pricing.finalPriceCents, product.currency, locale)}
           </span>
         </div>
         <motion.button

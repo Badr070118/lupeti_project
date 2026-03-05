@@ -5,10 +5,8 @@ import { Menu, X } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/hooks/use-auth';
-import { LanguageSwitcher } from '@/components/common/language-switcher';
 import { Button } from '@/components/ui/button';
 import { Link, usePathname } from '@/i18n/routing';
-import { ThemeToggle } from '@/components/common/theme-toggle';
 import { MiniCart } from '@/components/common/mini-cart';
 import { SearchBar } from '@/components/common/search-bar';
 
@@ -61,12 +59,10 @@ export function Navbar() {
           {renderNavLinks()}
         </div>
 
-        <div className="flex items-center gap-4">
-          <div className="hidden w-64 md:block">
+        <div className="flex items-center gap-3">
+          <div className="hidden w-72 md:block lg:w-80">
             <SearchBar />
           </div>
-          <ThemeToggle />
-          <LanguageSwitcher />
           <MiniCart />
           {user && accessToken ? (
             <div className="hidden items-center gap-3 md:flex">

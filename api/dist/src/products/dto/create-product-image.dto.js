@@ -19,7 +19,11 @@ class CreateProductImageDto {
 }
 exports.CreateProductImageDto = CreateProductImageDto;
 __decorate([
-    (0, class_validator_1.IsUrl)(),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.Matches)(/^(https?:\/\/.+|\/(?:uploads|products)\/.+)$/i, {
+        message: 'url must be an absolute URL or start with /uploads/ or /products/',
+    }),
     __metadata("design:type", String)
 ], CreateProductImageDto.prototype, "url", void 0);
 __decorate([
