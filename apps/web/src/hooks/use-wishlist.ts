@@ -23,6 +23,7 @@ function buildGuestItems(products: Product[]): WishlistItem[] {
 export function useWishlist(accessToken: string | null) {
   const [items, setItems] = useState<WishlistItem[]>([]);
   const [loading, setLoading] = useState(true);
+  const [resolvedToken, setResolvedToken] = useState<string | null | undefined>(undefined);
 
   const refresh = useCallback(async () => {
     setLoading(true);
@@ -36,13 +37,21 @@ export function useWishlist(accessToken: string | null) {
       const data = await wishlistService.list(accessToken);
       setItems(data);
     } finally {
+      setResolvedToken(accessToken);
       setLoading(false);
     }
   }, [accessToken]);
 
   useEffect(() => {
-    void refresh();
-  }, [refresh]);
+    let active = true;
+    const request = accessToken
+      ? wishlistService.list(accessToken)
+      : productService.lookup(getGuestWishlist().productIds).then(buildGuestItems);
+    request.then((data) => { if (active) setItems(data); })
+      .catch(() => { if (active) setItems([]); })
+      .finally(() => { if (active) { setResolvedToken(accessToken); setLoading(false); } });
+    return () => { active = false; };
+  }, [accessToken]);
 
   const addItem = useCallback(
     async (productId: string) => {
@@ -70,5 +79,5 @@ export function useWishlist(accessToken: string | null) {
     [accessToken, refresh],
   );
 
-  return { items, loading, refresh, addItem, removeItem };
+  return { items: resolvedToken === accessToken ? items : [], loading: loading || resolvedToken !== accessToken, refresh, addItem, removeItem };
 }

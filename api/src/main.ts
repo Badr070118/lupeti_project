@@ -4,6 +4,8 @@ import { HttpAdapterHost, NestFactory } from '@nestjs/core';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
 import helmet from 'helmet';
+import { static as serveStatic } from 'express';
+import { resolve } from 'path';
 import { AppModule } from './app.module';
 import { GlobalExceptionFilter } from './common/filters/global-exception.filter';
 import { PrismaService } from './prisma/prisma.service';
@@ -20,6 +22,7 @@ async function bootstrap() {
   app.use(cookieParser());
   app.use(helmet());
   app.use(compression());
+  app.use('/uploads', serveStatic(configService.get<string>('UPLOADS_ROOT') ?? resolve(process.cwd(), '..', 'apps', 'web', 'public', 'uploads'), { fallthrough: false, index: false }));
 
   const frontendOrigin = configService.get<string>('FRONTEND_URL');
   if (!frontendOrigin) {

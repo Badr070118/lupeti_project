@@ -1,7 +1,7 @@
 'use client';
 
 import { useFrame } from '@react-three/fiber';
-import { Group, Mesh, MeshBasicMaterial, MeshStandardMaterial, PlaneGeometry } from 'three';
+import { Group, Mesh, MeshBasicMaterial } from 'three';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { meshBounds, useCursor, useTexture } from '@react-three/drei';
 import gsap from 'gsap';
@@ -23,11 +23,14 @@ export function FloatingProduct({
   scrollBoost,
   mobile,
 }: FloatingProductProps) {
-  const texture = useTexture(image);
-  useEffect(() => {
-    texture.flipY = true;
-    texture.needsUpdate = true;
-  }, [texture]);
+  const sourceTexture = useTexture(image);
+  const texture = useMemo(() => {
+    const copy = sourceTexture.clone();
+    copy.flipY = true;
+    copy.needsUpdate = true;
+    return copy;
+  }, [sourceTexture]);
+  useEffect(() => () => texture.dispose(), [texture]);
 
   const groupRef = useRef<Group>(null);
   const glowRef = useRef<Mesh>(null);

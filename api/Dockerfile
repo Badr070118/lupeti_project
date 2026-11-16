@@ -1,9 +1,9 @@
-FROM node:20-bullseye AS base
+FROM node:22-bullseye AS base
 WORKDIR /app
 
 FROM base AS deps
 COPY package*.json tsconfig*.json ./
-RUN npm install
+RUN npm ci
 
 FROM base AS builder
 WORKDIR /app

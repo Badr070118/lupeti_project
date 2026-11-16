@@ -32,12 +32,14 @@ export function AccountDashboard() {
   const { orders, loading: ordersLoading, refresh: refreshOrders } = useOrders(accessToken);
   const { showToast } = useToast();
   const t = useTranslations('account');
-  const [profileName, setProfileName] = useState(user?.name ?? '');
+  const [profileDraft, setProfileDraft] = useState<{ userId: string; name: string } | null>(null);
+  const profileName = profileDraft && profileDraft.userId === user?.id ? profileDraft.name : user?.name ?? '';
   const [savingProfile, setSavingProfile] = useState(false);
   const [addresses, setAddresses] = useState<Address[]>([]);
   const [addressForm, setAddressForm] = useState(EMPTY_ADDRESS);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [loadingAddresses, setLoadingAddresses] = useState(false);
+  const [addressesToken, setAddressesToken] = useState<string | null>(null);
 
   const loadAddresses = useCallback(async () => {
     if (!accessToken) return;
@@ -45,18 +47,21 @@ export function AccountDashboard() {
     try {
       const data = await accountService.listAddresses(accessToken);
       setAddresses(data);
+      setAddressesToken(accessToken);
     } finally {
       setLoadingAddresses(false);
     }
   }, [accessToken]);
 
   useEffect(() => {
-    setProfileName(user?.name ?? '');
-  }, [user?.name]);
-
-  useEffect(() => {
-    void loadAddresses();
-  }, [loadAddresses]);
+    if (!accessToken) return;
+    let active = true;
+    accountService.listAddresses(accessToken)
+      .then((data) => { if (active) setAddresses(data); })
+      .catch(() => { if (active) setAddresses([]); })
+      .finally(() => { if (active) setAddressesToken(accessToken); });
+    return () => { active = false; };
+  }, [accessToken]);
 
   if (loading) {
     return (
@@ -88,6 +93,7 @@ export function AccountDashboard() {
     try {
       await accountService.updateProfile(accessToken, { name: profileName });
       await refresh();
+      setProfileDraft(null);
       showToast({ title: t('profileSaved'), variant: 'success' });
     } catch (error) {
       showToast({
@@ -184,7 +190,7 @@ export function AccountDashboard() {
             <Input value={user.email} disabled className="soft-input" />
             <Input
               value={profileName}
-              onChange={(event) => setProfileName(event.target.value)}
+              onChange={(event) => setProfileDraft({ userId: user.id, name: event.target.value })}
               placeholder={t('profileName')}
               className="soft-input"
             />
@@ -195,7 +201,7 @@ export function AccountDashboard() {
         </div>
         <div className="rounded-3xl border border-slate-100 bg-white p-6 shadow-sm">
           <p className="text-lg font-semibold text-slate-900">{t('addressesTitle')}</p>
-          {loadingAddresses ? (
+          {loadingAddresses || addressesToken !== accessToken ? (
             <p className="mt-3 text-sm text-slate-500">{t('loadingAddresses')}</p>
           ) : addresses.length ? (
             <div className="mt-4 space-y-3">

@@ -53,8 +53,6 @@ export function SearchBar({
   useEffect(() => {
     const term = query.trim();
     if (!open || term.length < 2) {
-      setSuggestions([]);
-      setLoading(false);
       return;
     }
     let active = true;
@@ -90,6 +88,8 @@ export function SearchBar({
           value={query}
           onChange={(event) => {
             setQuery(event.target.value);
+            setSuggestions([]);
+            setLoading(false);
             setOpen(true);
           }}
           onFocus={() => setOpen(true)}
@@ -102,7 +102,7 @@ export function SearchBar({
           className="soft-input pl-10"
           autoComplete="off"
         />
-        {open && (loading || suggestions.length > 0) ? (
+        {open && query.trim().length >= 2 && (loading || suggestions.length > 0) ? (
           <div className="absolute left-0 right-0 top-full z-50 mt-2 overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-xl">
             {loading ? (
               <div className="px-4 py-3 text-xs text-slate-500">

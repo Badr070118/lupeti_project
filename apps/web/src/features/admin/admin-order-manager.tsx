@@ -27,7 +27,8 @@ export function AdminOrderManager() {
   const { showToast } = useToast();
   const t = useTranslations('admin.orders');
   const [orders, setOrders] = useState<AdminOrder[]>([]);
-  const [selected, setSelected] = useState<AdminOrder | null>(null);
+  const [selection, setSelected] = useState<AdminOrder | null>(null);
+  const selected = selection ?? orders[0] ?? null;
   const [loading, setLoading] = useState(false);
 
   const fetchOrders = useCallback(() => {
@@ -47,12 +48,6 @@ export function AdminOrderManager() {
   useEffect(() => {
     fetchOrders();
   }, [fetchOrders]);
-
-  useEffect(() => {
-    if (!selected && orders.length > 0) {
-      setSelected(orders[0]);
-    }
-  }, [orders, selected]);
 
   const updateStatus = async (status: OrderStatusValue) => {
     if (!selected || !accessToken) return;

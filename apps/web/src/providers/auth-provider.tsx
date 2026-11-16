@@ -58,8 +58,13 @@ export function AuthProvider({ children }: PropsWithChildren) {
   }, [applySession]);
 
   useEffect(() => {
-    void refresh();
-  }, [refresh]);
+    let active = true;
+    authService.refresh()
+      .then((session) => { if (active) applySession(session); })
+      .catch(() => { if (active) applySession(null); })
+      .finally(() => { if (active) setLoading(false); });
+    return () => { active = false; };
+  }, [applySession]);
 
   const login = useCallback(
     async (email: string, password: string) => {
@@ -83,7 +88,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
         setLoading(false);
       }
     },
-    [applySession, showToast, t],
+    [applySession, mergeGuestCart, showToast, t],
   );
 
   const register = useCallback(
@@ -108,7 +113,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
         setLoading(false);
       }
     },
-    [applySession, showToast, t],
+    [applySession, mergeGuestCart, showToast, t],
   );
 
   const logout = useCallback(async () => {

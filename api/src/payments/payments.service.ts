@@ -126,8 +126,8 @@ export class PaymentsService {
       );
     }
 
-    await this.prisma.payment.update({
-      where: { id: payment.id },
+    await this.prisma.payment.updateMany({
+      where: { id: payment.id, status: PaymentStatus.INITIATED },
       data: { status: PaymentStatus.PENDING },
     });
 
@@ -204,6 +204,22 @@ export class PaymentsService {
     const nextOrderStatus = isSuccess ? OrderStatus.PAID : OrderStatus.FAILED;
 
     await this.prisma.$transaction(async (tx) => {
+      await tx.$queryRaw`SELECT id FROM "Order" WHERE id = ${payment.orderId}::uuid FOR UPDATE`;
+      const current = await tx.order.findUnique({
+        where: { id: payment.orderId },
+        include: { payment: true, items: true },
+      });
+      if (!current || !current.payment) throw new NotFoundException('Order not found');
+      if (current.payment.status === nextPaymentStatus) return;
+      if (current.status !== OrderStatus.PENDING_PAYMENT ||
+          (current.payment.status !== PaymentStatus.INITIATED && current.payment.status !== PaymentStatus.PENDING)) {
+        throw new ConflictException('Payment or order is already finalized');
+      }
+      if (!isSuccess) {
+        for (const item of [...current.items].sort((a, b) => a.productId.localeCompare(b.productId))) {
+          await tx.product.update({ where: { id: item.productId }, data: { stock: { increment: item.quantity } } });
+        }
+      }
       await tx.payment.update({
         where: { id: payment.id },
         data: { status: nextPaymentStatus },

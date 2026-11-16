@@ -15,7 +15,8 @@ export function AdminSupportManager() {
   const { showToast } = useToast();
   const t = useTranslations('admin.support');
   const [tickets, setTickets] = useState<SupportTicket[]>([]);
-  const [selected, setSelected] = useState<SupportTicket | null>(null);
+  const [selection, setSelected] = useState<SupportTicket | null>(null);
+  const selected = selection ?? tickets[0] ?? null;
   const [reply, setReply] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -36,12 +37,6 @@ export function AdminSupportManager() {
   useEffect(() => {
     fetchTickets();
   }, [fetchTickets]);
-
-  useEffect(() => {
-    if (tickets.length > 0 && !selected) {
-      setSelected(tickets[0]);
-    }
-  }, [tickets, selected]);
 
   const sendReply = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();

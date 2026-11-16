@@ -33,8 +33,10 @@ export function AdminUserManager() {
   const [users, setUsers] = useState<AdminUserSummary[]>([]);
   const [form, setForm] = useState<UserFormState>({ ...INITIAL_FORM });
   const [loading, setLoading] = useState(false);
-  const [selectedId, setSelectedId] = useState<string | null>(null);
-  const [selectedUser, setSelectedUser] = useState<AdminUserDetail | null>(null);
+  const [selection, setSelectedId] = useState<string | null>(null);
+  const selectedId = selection ?? users[0]?.id ?? null;
+  const [selectedUserResult, setSelectedUser] = useState<AdminUserDetail | null>(null);
+  const selectedUser = accessToken && selectedUserResult?.id === selectedId ? selectedUserResult : null;
 
   const fetchUsers = useCallback(() => {
     if (!accessToken) return;
@@ -55,20 +57,13 @@ export function AdminUserManager() {
   }, [fetchUsers]);
 
   useEffect(() => {
-    if (!selectedId && users.length > 0) {
-      setSelectedId(users[0].id);
-    }
-  }, [users, selectedId]);
-
-  useEffect(() => {
-    if (!accessToken || !selectedId) {
-      setSelectedUser(null);
-      return;
-    }
+    if (!accessToken || !selectedId) return;
+    let active = true;
     adminService
       .getUser(accessToken, selectedId)
-      .then(setSelectedUser)
-      .catch(() => setSelectedUser(null));
+      .then((user) => { if (active) setSelectedUser(user); })
+      .catch(() => { if (active) setSelectedUser(null); });
+    return () => { active = false; };
   }, [accessToken, selectedId]);
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {

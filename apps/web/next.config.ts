@@ -28,7 +28,15 @@ const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts');
 
 const nextConfig: NextConfig = {
   images: {
+    qualities: [75, 100],
     remotePatterns: [],
+  },
+  async rewrites() {
+    return {
+      beforeFiles: [
+        { source: '/uploads/:path*', destination: `${process.env.API_INTERNAL_URL ?? 'http://localhost:3000'}/uploads/:path*` },
+      ],
+    };
   },
   async headers() {
     return [

@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import type { HomepageSettings } from '@/types';
 import { adminService } from '@/services/admin.service';
@@ -25,6 +25,7 @@ export function AdminContentManager() {
   const [previewUrls, setPreviewUrls] = useState<Partial<Record<keyof PendingImages, string>>>(
     {},
   );
+  const previewUrlsRef = useRef<Partial<Record<keyof PendingImages, string>>>({});
   const [loading, setLoading] = useState(false);
 
   const fetchSettings = useCallback(() => {
@@ -45,21 +46,9 @@ export function AdminContentManager() {
     fetchSettings();
   }, [fetchSettings]);
 
-  useEffect(() => {
-    const urls: Partial<Record<keyof PendingImages, string>> = {};
-    const revoke: string[] = [];
-    (Object.keys(pendingImages) as Array<keyof PendingImages>).forEach((key) => {
-      const file = pendingImages[key];
-      if (!file) return;
-      const url = URL.createObjectURL(file);
-      urls[key] = url;
-      revoke.push(url);
-    });
-    setPreviewUrls((prev) => ({ ...prev, ...urls }));
-    return () => {
-      revoke.forEach((url) => URL.revokeObjectURL(url));
-    };
-  }, [pendingImages]);
+  useEffect(() => () => {
+    Object.values(previewUrlsRef.current).forEach((url) => URL.revokeObjectURL(url));
+  }, []);
 
   const updateHomepage = async () => {
     if (!accessToken || !homepage) return;
@@ -93,6 +82,9 @@ export function AdminContentManager() {
       const updated = await adminService.updateHomepageSettings(accessToken, updates);
       setHomepage(updated);
       setPendingImages({});
+      Object.values(previewUrlsRef.current).forEach((url) => URL.revokeObjectURL(url));
+      previewUrlsRef.current = {};
+      setPreviewUrls({});
       showToast({ title: t('updated'), variant: 'success' });
     } catch (error) {
       showToast({
@@ -183,6 +175,8 @@ export function AdminContentManager() {
           <div key={item.id} className="admin-form__section space-y-3">
             <p className="admin-form__heading">{item.label}</p>
             {previewUrls[item.field] || item.current ? (
+              // Local upload previews may use blob URLs.
+              // eslint-disable-next-line @next/next/no-img-element
               <img
                 src={previewUrls[item.field] ?? item.current ?? ''}
                 alt={item.label}
@@ -200,12 +194,15 @@ export function AdminContentManager() {
                 className="soft-input"
                 type="file"
                 accept="image/*"
-                onChange={(event) =>
-                  setPendingImages((prev) => ({
-                    ...prev,
-                    [item.field]: event.target.files?.[0] ?? null,
-                  }))
-                }
+                onChange={(event) => {
+                  const file = event.target.files?.[0] ?? null;
+                  const previousUrl = previewUrlsRef.current[item.field];
+                  if (previousUrl) URL.revokeObjectURL(previousUrl);
+                  const url = file ? URL.createObjectURL(file) : undefined;
+                  previewUrlsRef.current = { ...previewUrlsRef.current, [item.field]: url };
+                  setPreviewUrls(previewUrlsRef.current);
+                  setPendingImages((prev) => ({ ...prev, [item.field]: file }));
+                }}
               />
             </div>
           </div>

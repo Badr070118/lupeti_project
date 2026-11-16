@@ -27,12 +27,13 @@ export class SupportNotifierService {
       });
     } else {
       this.transporter = null;
+      this.logger.warn('SMTP is not configured; email delivery is disabled');
     }
   }
 
   async notifySupport(subject: string, body: string) {
     if (!this.supportInbox) {
-      this.logger.log(`[support-mail] ${subject} -> ${body}`);
+      this.logger.warn('Support email not sent: SUPPORT_EMAIL is not configured');
       return;
     }
     await this.sendMail(this.supportInbox, subject, body);
@@ -43,7 +44,7 @@ export class SupportNotifierService {
       return;
     }
     if (!this.transporter) {
-      this.logger.log(`[support-mail:user:${email}] ${subject} -> ${body}`);
+      this.logger.warn('Customer email not sent: SMTP is not configured');
       return;
     }
     await this.sendMail(email, subject, body);
@@ -51,6 +52,7 @@ export class SupportNotifierService {
 
   private async sendMail(to: string, subject: string, text: string) {
     if (!this.transporter) {
+      this.logger.warn('Email not sent: SMTP is not configured');
       return;
     }
     await this.transporter.sendMail({

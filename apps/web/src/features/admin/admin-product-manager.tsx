@@ -74,7 +74,8 @@ export function AdminProductManager() {
   const [products, setProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [form, setForm] = useState<ProductFormState>(INITIAL_FORM);
-  const [selected, setSelected] = useState<Product | null>(null);
+  const [selection, setSelected] = useState<Product | null>(null);
+  const selected = selection ? products.find((product) => product.id === selection.id) ?? selection : null;
   const [loading, setLoading] = useState(false);
 
   const fetchProducts = useCallback(() => {
@@ -104,14 +105,6 @@ export function AdminProductManager() {
       })
       .catch(() => undefined);
   }, [accessToken, fetchProducts, form.categoryId]);
-
-  useEffect(() => {
-    if (!selected) return;
-    const updated = products.find((product) => product.id === selected.id);
-    if (updated) {
-      setSelected(updated);
-    }
-  }, [products, selected]);
 
   const resetForm = useCallback(() => {
     setSelected(null);

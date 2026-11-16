@@ -1,14 +1,24 @@
-FROM node:20-bookworm-slim
+FROM node:22-bookworm-slim
 
 WORKDIR /app
 
 ENV NEXT_TELEMETRY_DISABLED=1
+ENV API_INTERNAL_URL=http://api:3000
+ARG NEXT_PUBLIC_API_URL=/api/proxy
+ARG NEXT_PUBLIC_APP_URL=http://localhost:3001
+ARG NEXT_PUBLIC_SUPPORTED_LOCALES=fr
+ARG NEXT_PUBLIC_DEFAULT_LOCALE=fr
+ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL \
+    NEXT_PUBLIC_APP_URL=$NEXT_PUBLIC_APP_URL \
+    NEXT_PUBLIC_SUPPORTED_LOCALES=$NEXT_PUBLIC_SUPPORTED_LOCALES \
+    NEXT_PUBLIC_DEFAULT_LOCALE=$NEXT_PUBLIC_DEFAULT_LOCALE
 
 COPY package*.json ./
 RUN npm ci
 
 COPY . .
+RUN npm run build
 
 EXPOSE 3001
 
-CMD ["npm", "run", "dev", "--", "--hostname", "0.0.0.0"]
+CMD ["npm", "run", "start", "--", "-p", "3001", "--hostname", "0.0.0.0"]

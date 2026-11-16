@@ -83,6 +83,7 @@ async function hydrateGuestCart(): Promise<Cart | null> {
 export function useCart(accessToken: string | null) {
   const [cart, setCart] = useState<Cart | null>(null);
   const [loading, setLoading] = useState(true);
+  const [resolvedToken, setResolvedToken] = useState<string | null | undefined>(undefined);
 
   const refresh = useCallback(async () => {
     setLoading(true);
@@ -95,13 +96,19 @@ export function useCart(accessToken: string | null) {
       const data = await cartService.getCart(accessToken);
       setCart(data);
     } finally {
+      setResolvedToken(accessToken);
       setLoading(false);
     }
   }, [accessToken]);
 
   useEffect(() => {
-    void refresh();
-  }, [refresh]);
+    let active = true;
+    const request = accessToken ? cartService.getCart(accessToken) : hydrateGuestCart();
+    request.then((data) => { if (active) setCart(data); })
+      .catch(() => { if (active) setCart(null); })
+      .finally(() => { if (active) { setResolvedToken(accessToken); setLoading(false); } });
+    return () => { active = false; };
+  }, [accessToken]);
 
   useEffect(() => {
     const handler = () => {
@@ -168,5 +175,5 @@ export function useCart(accessToken: string | null) {
     setCart(updated);
   }, [accessToken, refresh]);
 
-  return { cart, setCart, loading, refresh, addItem, updateItem, removeItem, clearCart };
+  return { cart: resolvedToken === accessToken ? cart : null, setCart, loading: loading || resolvedToken !== accessToken, refresh, addItem, updateItem, removeItem, clearCart };
 }

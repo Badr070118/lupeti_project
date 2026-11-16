@@ -4,6 +4,8 @@ import { locales } from '@/i18n/routing';
 import { productService } from '@/services/product.service';
 import { categoryService } from '@/services/category.service';
 
+export const dynamic = 'force-dynamic';
+
 const BASE_PATHS = [
   '',
   '/shop',
@@ -20,7 +22,6 @@ const BASE_PATHS = [
   '/shipping-returns',
   '/privacy',
   '/terms',
-  '/admin',
   '/success',
   '/fail',
 ];

@@ -16,8 +16,8 @@ export class CheckoutDto {
 
   @IsOptional()
   @IsString()
-  @IsIn(['PAYTR', 'COD', 'STRIPE'], {
-    message: 'paymentProvider must be PAYTR, COD, or STRIPE',
+  @IsIn(['PAYTR', 'COD'], {
+    message: 'paymentProvider must be PAYTR or COD',
   })
-  paymentProvider?: 'PAYTR' | 'COD' | 'STRIPE';
+  paymentProvider?: 'PAYTR' | 'COD';
 }

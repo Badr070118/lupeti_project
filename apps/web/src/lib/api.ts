@@ -45,7 +45,7 @@ export async function fetchApi<T>(
     method: options.method ?? 'GET',
     credentials: 'include',
     headers,
-    cache: options.cache ?? 'no-store',
+    cache: options.cache ?? (options.next?.revalidate !== undefined ? undefined : 'no-store'),
     next: options.next,
   };
 

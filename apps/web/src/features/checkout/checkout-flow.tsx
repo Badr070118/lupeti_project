@@ -100,30 +100,6 @@ export function CheckoutFlow({ cart, accessToken, onOrderCreated }: CheckoutFlow
       .catch(() => {});
   }, [accessToken]);
 
-  useEffect(() => {
-    if (selectedAddressId === 'new') {
-      return;
-    }
-    const selected = addresses.find((item) => item.id === selectedAddressId);
-    if (!selected) return;
-    setAddress({
-      fullName: selected.fullName ?? '',
-      phone: selected.phone ?? '',
-      line1: selected.line1,
-      line2: selected.line2 ?? '',
-      city: selected.city,
-      state: selected.state ?? '',
-      postalCode: selected.postalCode,
-      country: selected.country,
-    });
-  }, [addresses, selectedAddressId]);
-
-  useEffect(() => {
-    if (paymentProvider !== 'PAYTR' && paytrIframeUrl) {
-      setPaytrIframeUrl(null);
-    }
-  }, [paymentProvider, paytrIframeUrl]);
-
   const activeCart = paytrIframeUrl && cartSnapshot ? cartSnapshot : cart;
 
   const unavailableItems = useMemo(() => {
@@ -239,7 +215,16 @@ export function CheckoutFlow({ cart, accessToken, onOrderCreated }: CheckoutFlow
                   id="address-select"
                   className="soft-input"
                   value={selectedAddressId}
-                  onChange={(event) => setSelectedAddressId(event.target.value)}
+                  onChange={(event) => {
+                    const id = event.target.value;
+                    setSelectedAddressId(id);
+                    const selected = addresses.find((item) => item.id === id);
+                    if (selected) setAddress({
+                      fullName: selected.fullName ?? '', phone: selected.phone ?? '',
+                      line1: selected.line1, line2: selected.line2 ?? '', city: selected.city,
+                      state: selected.state ?? '', postalCode: selected.postalCode, country: selected.country,
+                    });
+                  }}
                 >
                   <option value="new">{t('address.new')}</option>
                   {addresses.map((addr) => (
@@ -387,7 +372,7 @@ export function CheckoutFlow({ cart, accessToken, onOrderCreated }: CheckoutFlow
                   name="payment"
                   className="mr-3"
                   checked={paymentProvider === 'COD'}
-                  onChange={() => setPaymentProvider('COD')}
+                  onChange={() => { setPaymentProvider('COD'); setPaytrIframeUrl(null); }}
                 />
                 {t('payment.cod')}
               </span>

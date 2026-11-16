@@ -46,13 +46,17 @@ export class OrdersService {
       dto.shippingMethod ?? 'STANDARD'
     ).toUpperCase() as 'STANDARD' | 'EXPRESS';
     const paymentProvider = (
-      dto.paymentProvider ?? 'PAYTR'
+      dto.paymentProvider ?? 'COD'
     ).toUpperCase() as PaymentProvider;
+    if (paymentProvider === PaymentProvider.PAYTR && !storeSettings.paytrEnabled) {
+      throw new ConflictException('PayTR payments are currently disabled');
+    }
     const shippingCents =
       shippingMethod === 'EXPRESS'
         ? storeSettings.shippingExpressCents
         : storeSettings.shippingStandardCents;
     const order = await this.prisma.$transaction(async (tx) => {
+      await tx.$queryRaw`SELECT id FROM "Cart" WHERE "userId" = ${userId}::uuid FOR UPDATE`;
       const cart = await tx.cart.findUnique({
         where: { userId },
         include: {
@@ -130,15 +134,18 @@ export class OrdersService {
         },
       });
 
-      for (const item of cart.items) {
-        await tx.product.update({
-          where: { id: item.productId },
+      for (const item of [...cart.items].sort((a, b) => a.productId.localeCompare(b.productId))) {
+        const reserved = await tx.product.updateMany({
+          where: { id: item.productId, isActive: true, stock: { gte: item.quantity } },
           data: {
             stock: {
               decrement: item.quantity,
             },
           },
         });
+        if (reserved.count !== 1) {
+          throw new ConflictException(`Insufficient stock for ${item.product.title}`);
+        }
       }
 
       await tx.cartItem.deleteMany({
@@ -236,10 +243,20 @@ export class OrdersService {
 
   async updateStatus(id: string, dto: UpdateOrderStatusDto) {
     try {
-      const updated = await this.prisma.order.update({
-        where: { id },
-        data: { status: dto.status },
-        include: orderInclude,
+      const updated = await this.prisma.$transaction(async (tx) => {
+        await tx.$queryRaw`SELECT id FROM "Order" WHERE id = ${id}::uuid FOR UPDATE`;
+        const current = await tx.order.findUnique({ where: { id }, include: orderInclude });
+        if (!current) throw new NotFoundException('Order not found');
+        if (current.status === dto.status) return current;
+        if (current.status === OrderStatus.CANCELLED || current.status === OrderStatus.FAILED || current.status === OrderStatus.DELIVERED) {
+          throw new ConflictException('A final order cannot be reopened');
+        }
+        if (dto.status === OrderStatus.CANCELLED || dto.status === OrderStatus.FAILED) {
+          for (const item of [...current.items].sort((a, b) => a.productId.localeCompare(b.productId))) {
+            await tx.product.update({ where: { id: item.productId }, data: { stock: { increment: item.quantity } } });
+          }
+        }
+        return tx.order.update({ where: { id }, data: { status: dto.status }, include: orderInclude });
       });
       this.notifyOrderStatusChange(updated).catch((error) => {
         this.logger.warn(`Order status email failed for ${updated.id}: ${error}`);

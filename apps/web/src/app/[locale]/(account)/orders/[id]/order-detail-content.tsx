@@ -18,19 +18,18 @@ export function OrderDetailContent({ id }: OrderDetailContentProps) {
   const locale = useLocale();
   const { user, accessToken, loading } = useAuth();
   const t = useTranslations('orders');
-  const [order, setOrder] = useState<Order | null>(null);
-  const [loadingOrder, setLoadingOrder] = useState(true);
+  const [result, setResult] = useState<{ id: string; order: Order | null } | null>(null);
+  const order = result?.id === id ? result.order : null;
+  const loadingOrder = !!accessToken && result?.id !== id;
 
   useEffect(() => {
-    if (!accessToken) {
-      setLoadingOrder(false);
-      return;
-    }
-    setLoadingOrder(true);
+    if (!accessToken) return;
+    let active = true;
     orderService
       .getMine(accessToken, id)
-      .then((data) => setOrder(data))
-      .finally(() => setLoadingOrder(false));
+      .then((data) => { if (active) setResult({ id, order: data }); })
+      .catch(() => { if (active) setResult({ id, order: null }); });
+    return () => { active = false; };
   }, [accessToken, id]);
 
   if (loading) {

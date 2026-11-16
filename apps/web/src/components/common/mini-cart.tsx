@@ -12,20 +12,16 @@ import { resolveProductImage } from '@/lib/product-images';
 
 export function MiniCart() {
   const locale = useLocale();
-  const [open, setOpen] = useState(false);
+  const [openPath, setOpenPath] = useState<string | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const { accessToken } = useAuth();
   const { cart, loading } = useCart(accessToken);
   const t = useTranslations('cart');
   const nav = useTranslations('nav');
   const pathname = usePathname();
+  const open = openPath === pathname;
 
   const quantity = cart?.items.reduce((sum, item) => sum + item.quantity, 0) ?? 0;
-
-  useEffect(() => {
-    if (!open) return;
-    setOpen(false);
-  }, [pathname]);
 
   useEffect(() => {
     if (!open) return;
@@ -33,7 +29,7 @@ export function MiniCart() {
     const handleClickOutside = (event: MouseEvent) => {
       if (!containerRef.current) return;
       if (containerRef.current.contains(event.target as Node)) return;
-      setOpen(false);
+      setOpenPath(null);
     };
 
     document.addEventListener('mousedown', handleClickOutside);
@@ -48,7 +44,7 @@ export function MiniCart() {
         type="button"
         className="relative inline-flex rounded-full bg-rose-500 p-2 text-white transition hover:bg-rose-600"
         aria-label={nav('cart')}
-        onClick={() => setOpen((prev) => !prev)}
+        onClick={() => setOpenPath(open ? null : pathname)}
       >
         <ShoppingBag className="h-5 w-5" />
         {quantity > 0 && (
@@ -65,7 +61,7 @@ export function MiniCart() {
             <button
               type="button"
               className="text-xs uppercase tracking-[0.2em] text-slate-400"
-              onClick={() => setOpen(false)}
+              onClick={() => setOpenPath(null)}
             >
               {t('close', { default: 'Close' })}
             </button>
@@ -117,14 +113,14 @@ export function MiniCart() {
                 <Link
                   href="/cart"
                   className="flex-1 rounded-full border border-slate-200 px-4 py-2 text-center text-xs font-semibold text-slate-600"
-                  onClick={() => setOpen(false)}
+                  onClick={() => setOpenPath(null)}
                 >
                   {t('viewCart', { default: 'View cart' })}
                 </Link>
                 <Link
                   href="/checkout"
                   className="flex-1 rounded-full bg-rose-500 px-4 py-2 text-center text-xs font-semibold text-white hover:bg-rose-600"
-                  onClick={() => setOpen(false)}
+                  onClick={() => setOpenPath(null)}
                 >
                   {t('checkout')}
                 </Link>

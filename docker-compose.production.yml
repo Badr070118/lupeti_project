@@ -1,0 +1,53 @@
+services:
+  db:
+    image: postgres:16
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: lupeti
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD}
+      POSTGRES_DB: lupeti
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U lupeti -d lupeti']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  api:
+    build: ./api
+    restart: unless-stopped
+    env_file: ./api/.env
+    environment:
+      DATABASE_URL: postgresql://lupeti:${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD}@db:5432/lupeti?schema=public
+      FRONTEND_URL: ${PUBLIC_URL:?Set PUBLIC_URL}
+      NODE_ENV: production
+      COOKIE_SECURE: 'true'
+      UPLOADS_ROOT: /app/uploads
+      UPLOADS_PUBLIC_BASE: /uploads
+    volumes:
+      - ./apps/web/public/uploads:/app/uploads
+    depends_on:
+      db:
+        condition: service_healthy
+
+  web:
+    build:
+      context: ./apps/web
+      args:
+        NEXT_PUBLIC_API_URL: /api/proxy
+        NEXT_PUBLIC_APP_URL: ${PUBLIC_URL:?Set PUBLIC_URL}
+        NEXT_PUBLIC_SUPPORTED_LOCALES: fr
+        NEXT_PUBLIC_DEFAULT_LOCALE: fr
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      API_INTERNAL_URL: http://api:3000
+      NEXT_PUBLIC_APP_URL: ${PUBLIC_URL:?Set PUBLIC_URL}
+    ports:
+      - '127.0.0.1:3001:3001'
+    depends_on:
+      - api
+
+volumes:
+  postgres-data:
