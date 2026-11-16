@@ -1,11 +1,11 @@
 import Image from 'next/image';
 
-export function HeroSlider() {
+export function HeroSlider({ imageUrl }: { imageUrl: string }) {
   return (
     <section className="w-full">
       <div className="overflow-hidden rounded-3xl bg-slate-100 shadow-[0_18px_50px_rgba(15,23,42,0.18)]">
         <Image
-          src="/images/hero/lupeti_homepage2.jpeg"
+          src={imageUrl}
           alt="Hero animals 2"
           width={1920}
           height={1080}

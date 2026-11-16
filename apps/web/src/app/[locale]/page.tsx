@@ -7,7 +7,7 @@ import BrandCarousel from '@/components/BrandCarousel';
 import { CategoryCards } from '@/components/home/CategoryCards';
 import { FeaturedProducts } from '@/components/home/FeaturedProducts';
 import { HeroSlider } from '@/components/home/HeroSlider';
-import { Hero3D } from '@/components/home/Hero3D';
+import { homepageHeroImage } from '@/lib/homepage-images';
 import { StoreBenefits } from '@/components/layout/StoreBenefits';
 import { settingsService } from '@/services/settings.service';
 import type { HomepageSettings } from '@/types';
@@ -39,7 +39,7 @@ export async function generateMetadata({ params }: PageProps) {
   let heroImage = heroStaticOg.src;
   try {
     const settings = await settingsService.getPublic();
-    heroImage = settings.homepage.heroImageUrl ?? heroStaticOg.src;
+    heroImage = homepageHeroImage(settings.homepage.heroImageUrl);
   } catch {
     heroImage = heroStaticOg.src;
   }
@@ -81,10 +81,9 @@ export default async function HomePage({ params }: PageProps) {
   return (
     <div className="space-y-20 pb-16">
       {homepage.showHeroShowcase ? (
-        <HeroSlider />
+        <HeroSlider imageUrl={homepageHeroImage(homepage.heroImageUrl)} />
       ) : null}
       {homepage.showBrandMarquee ? <BrandCarousel /> : null}
-      {homepage.showHero3d ? <Hero3D locale={locale} /> : null}
       {homepage.showCategoryCards ? (
         <CategoryCards
           dogImageUrl={homepage.categoryDogImageUrl}
@@ -117,9 +116,11 @@ export default async function HomePage({ params }: PageProps) {
           </div>
         </section>
       ) : null}
-      <div className="relative left-1/2 right-1/2 -mx-[50vw] w-screen">
-        <StoreBenefits />
-      </div>
+      {homepage.showTrustBadges ? (
+        <div className="relative left-1/2 right-1/2 -mx-[50vw] w-screen">
+          <StoreBenefits />
+        </div>
+      ) : null}
     </div>
   );
 }

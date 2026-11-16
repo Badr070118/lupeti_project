@@ -217,7 +217,10 @@
       "disabled": "Unavailable",
       "secureBadge": "Secure 3D payment via PayTR",
       "iframeTitle": "Complete your card payment",
-      "iframeHint": "The secure PayTR form will load below."
+      "iframeHint": "The secure PayTR form will load below.",
+      "pendingOrder": "Order {orderId} has been created and is awaiting payment. You can retry without creating another order.",
+      "returnTitle": "Payment return",
+      "returnBody": "Your payment is being verified. Check your orders for its confirmed status."
     },
     "subtotal": "Subtotal",
     "shipping": "Shipping",

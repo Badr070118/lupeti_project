@@ -52,6 +52,7 @@ export function CheckoutFlow({ cart, accessToken, onOrderCreated }: CheckoutFlow
   const [paytrEnabled, setPaytrEnabled] = useState(true);
   const [paytrIframeUrl, setPaytrIframeUrl] = useState<string | null>(null);
   const [cartSnapshot, setCartSnapshot] = useState<Cart | null>(null);
+  const [pendingOrderId, setPendingOrderId] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const canProceedFromAddress = Boolean(
     address.fullName &&
@@ -100,7 +101,7 @@ export function CheckoutFlow({ cart, accessToken, onOrderCreated }: CheckoutFlow
       .catch(() => {});
   }, [accessToken]);
 
-  const activeCart = paytrIframeUrl && cartSnapshot ? cartSnapshot : cart;
+  const activeCart = pendingOrderId && cartSnapshot ? cartSnapshot : cart;
 
   const unavailableItems = useMemo(() => {
     if (!activeCart) return [];
@@ -139,13 +140,13 @@ export function CheckoutFlow({ cart, accessToken, onOrderCreated }: CheckoutFlow
   }
 
   const handleSubmit = async () => {
-    if (step !== 3) {
+    if (step !== 3 || loading) {
       return;
     }
     if (paytrIframeUrl) {
       return;
     }
-    if (unavailableItems.length > 0) {
+    if (!pendingOrderId && unavailableItems.length > 0) {
       showToast({
         title: t('stockError'),
         variant: 'error',
@@ -161,23 +162,28 @@ export function CheckoutFlow({ cart, accessToken, onOrderCreated }: CheckoutFlow
     }
     setLoading(true);
     try {
-      if (paymentProvider === 'PAYTR' && cart && cart.items.length > 0) {
-        setCartSnapshot(cart);
+      let orderId = pendingOrderId;
+      if (!orderId) {
+        const order = await orderService.checkout(accessToken, {
+          shippingAddress: address,
+          shippingMethod,
+          paymentProvider,
+        });
+        orderId = order.id;
+        if (paymentProvider === 'PAYTR') {
+          setCartSnapshot(cart);
+          setPendingOrderId(orderId);
+        }
       }
-      const order = await orderService.checkout(accessToken, {
-        shippingAddress: address,
-        shippingMethod,
-        paymentProvider,
-      });
       if (paymentProvider === 'PAYTR') {
-        const payment = await paymentService.initiatePaytr(accessToken, order.id);
+        const payment = await paymentService.initiatePaytr(accessToken, orderId);
         setPaytrIframeUrl(payment.iframeUrl);
         return;
       }
       onOrderCreated?.();
       router.push({
         pathname: '/checkout/success',
-        query: { orderId: order.id },
+        query: { orderId },
       });
     } catch (error) {
       showToast({
@@ -373,6 +379,7 @@ export function CheckoutFlow({ cart, accessToken, onOrderCreated }: CheckoutFlow
                   className="mr-3"
                   checked={paymentProvider === 'COD'}
                   onChange={() => { setPaymentProvider('COD'); setPaytrIframeUrl(null); }}
+                  disabled={Boolean(pendingOrderId) || loading}
                 />
                 {t('payment.cod')}
               </span>
@@ -386,7 +393,7 @@ export function CheckoutFlow({ cart, accessToken, onOrderCreated }: CheckoutFlow
                     className="mr-3"
                     checked={paymentProvider === 'PAYTR'}
                     onChange={() => setPaymentProvider('PAYTR')}
-                    disabled={!paytrEnabled}
+                    disabled={!paytrEnabled || loading}
                   />
                   {t('payment.paytr')}
                 </span>
@@ -421,13 +428,17 @@ export function CheckoutFlow({ cart, accessToken, onOrderCreated }: CheckoutFlow
           </div>
         )}
 
+        {pendingOrderId ? (
+          <p className="text-sm text-slate-600">{t('payment.pendingOrder', { orderId: pendingOrderId })}</p>
+        ) : null}
+
         <div className="flex flex-wrap gap-3">
           {step > 1 ? (
             <Button
               type="button"
               variant="ghost"
               onClick={() => setStep((prev) => prev - 1)}
-              disabled={Boolean(paytrIframeUrl)}
+              disabled={Boolean(pendingOrderId) || loading}
             >
               {t('back')}
             </Button>
@@ -454,7 +465,7 @@ export function CheckoutFlow({ cart, accessToken, onOrderCreated }: CheckoutFlow
               type="button"
               className="flex-1"
               loading={loading}
-              disabled={loading || unavailableItems.length > 0 || Boolean(paytrIframeUrl)}
+              disabled={loading || (!pendingOrderId && unavailableItems.length > 0) || Boolean(paytrIframeUrl)}
               onClick={handleSubmit}
             >
               {paymentProvider === 'PAYTR' ? t('submitPaytr') : t('submit')}
@@ -462,7 +473,7 @@ export function CheckoutFlow({ cart, accessToken, onOrderCreated }: CheckoutFlow
           )}
         </div>
 
-        {unavailableItems.length > 0 ? (
+        {!pendingOrderId && unavailableItems.length > 0 ? (
           <p className="text-sm text-rose-500">{t('stockError')}</p>
         ) : null}
       </form>

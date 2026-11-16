@@ -1,10 +1,11 @@
-import { IsNumberString, IsOptional, IsString } from 'class-validator';
+import { IsIn, IsNumberString, IsOptional, IsString } from 'class-validator';
 
 export class PaytrCallbackDto {
   @IsString()
   merchant_oid!: string;
 
   @IsString()
+  @IsIn(['success', 'failed'])
   status!: string;
 
   @IsNumberString()
@@ -24,4 +25,16 @@ export class PaytrCallbackDto {
   @IsOptional()
   @IsString()
   payment_type?: string;
+
+  @IsOptional()
+  @IsString()
+  test_mode?: string;
+
+  @IsOptional()
+  @IsString()
+  currency?: string;
+
+  @IsOptional()
+  @IsNumberString()
+  payment_amount?: string;
 }

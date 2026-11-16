@@ -1,43 +1,44 @@
-'use client';
-
-import { motion } from 'framer-motion';
+import Image from 'next/image';
 import Link from 'next/link';
-import { Scene3D } from './Scene3D';
+import { ArrowDownRight, ArrowRight } from 'lucide-react';
 import '@/styles/hero3d.css';
 
-type Hero3DProps = {
-  locale: string;
-};
+type Hero3DProps = { locale: string };
+
+const products = [
+  { slug: 'tender-turkey-puppy-bites', image: '/products/tender-turkey-puppy-bites.png', category: 'Pour les chiens', name: 'Les essentiels pour chien', number: '01' },
+  { slug: 'slow-roasted-quail-feast', image: '/products/slow-roasted-quail-feast.png', category: 'Pour les chats', name: 'Le meilleur pour les chats', number: '02' },
+  { slug: 'highland-salmon-casserole', image: '/products/highland-salmon-casserole.png', category: 'Notre sélection', name: 'Des repas qui font plaisir', number: '03' },
+];
 
 export function Hero3D({ locale }: Hero3DProps) {
   return (
-    <section className="hero3d">
-      <div className="hero3d__glow" />
-      <div className="hero3d__content">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7 }}
-          className="hero3d__text"
-        >
-          <p className="hero3d__label">LUPETI</p>
-          <h2 className="hero3d__title">Premium nutrition for dogs &amp; cats</h2>
-          <p className="hero3d__paragraph">
-            Crafted croquettes and mindful treats presented as a living gallery. Each card highlights
-            a real best seller from our pantry.
-          </p>
-          <Link className="hero3d__cta" href={`/${locale}/shop`}>
-            Shop now
+    <section className="hero3d" aria-labelledby="selection-title">
+      <div className="hero3d__heading">
+        <div>
+          <p className="hero3d__eyebrow"><span /> La sélection Lupeti</p>
+          <h2 id="selection-title">Bien nourris.<br /><em>Bien heureux.</em></h2>
+        </div>
+        <div className="hero3d__intro">
+          <p>De bons repas pour leurs petits et grands moments de bonheur.</p>
+          <Link className="hero3d__shop" href={`/${locale}/shop`}>
+            Voir toute la boutique <ArrowRight size={18} aria-hidden="true" />
           </Link>
-        </motion.div>
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.15, duration: 0.7 }}
-          className="hero3d__canvas-wrapper"
-        >
-          <Scene3D />
-        </motion.div>
+        </div>
+      </div>
+      <div className="hero3d__products">
+        {products.map((product) => (
+          <Link key={product.slug} href={`/${locale}/product/${product.slug}`} className="hero3d__product">
+            <div className="hero3d__product-top"><span>{product.category}</span><span>{product.number}</span></div>
+            <div className="hero3d__image">
+              <Image src={product.image} alt="" fill sizes="(max-width: 640px) 78vw, (max-width: 900px) 45vw, 30vw" />
+            </div>
+            <div className="hero3d__product-bottom">
+              <span>{product.name}</span>
+              <span className="hero3d__arrow"><ArrowDownRight size={19} aria-hidden="true" /></span>
+            </div>
+          </Link>
+        ))}
       </div>
     </section>
   );

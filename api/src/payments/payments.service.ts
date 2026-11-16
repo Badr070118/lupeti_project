@@ -13,6 +13,7 @@ import {
   Prisma,
 } from '@prisma/client';
 import { createHmac } from 'crypto';
+import { isIP } from 'net';
 import { PrismaService } from '../prisma/prisma.service';
 import { SettingsService } from '../settings/settings.service';
 import { PaytrInitiateDto } from './dto/paytr-initiate.dto';
@@ -185,8 +186,10 @@ export class PaymentsService {
       throw new ForbiddenException('Invalid signature');
     }
 
-    const amountMatches =
-      Number(payload.total_amount) === Number(payment.amountCents);
+    const amountMatches = (payload.payment_amount !== undefined
+      ? Number(payload.payment_amount) === payment.amountCents
+      : payload.status === 'failed' || Number(payload.total_amount) === payment.amountCents) &&
+      (payload.status !== 'success' || Number(payload.total_amount) >= payment.amountCents);
 
     if (!amountMatches) {
       await this.recordEvent(
@@ -313,10 +316,10 @@ export class PaymentsService {
     const failUrl = this.requireConfig('PAYTR_FAIL_URL', 'PAYTR_MERCHANT_FAIL_URL');
     const callbackUrl = this.requireConfig('PAYTR_CALLBACK_URL');
 
-    const userIp = rawIp || '127.0.0.1';
+    const userIp = this.resolveCustomerIp(rawIp);
     const merchantOid = payment.providerReference ?? payment.id;
     const paymentAmount = payment.amountCents;
-    const currency = (payment.currency ?? 'TRY').toUpperCase();
+    const currency = payment.currency.toUpperCase() === 'TRY' ? 'TL' : payment.currency.toUpperCase();
     const testMode = this.isTestMode() ? '1' : '0';
     const noInstallment = '1';
     const maxInstallment = '0';
@@ -380,6 +383,25 @@ export class PaymentsService {
   private normalizePaytrMerchantOid(value: string) {
     const normalized = value.replace(/[^a-zA-Z0-9]/g, '');
     return normalized.length ? normalized : value;
+  }
+
+  private resolveCustomerIp(rawIp: string) {
+    const normalize = (value: string) => value.trim().replace(/^::ffff:/i, '');
+    const isPublic = (value: string) => {
+      if (!isIP(value)) return false;
+      if (value.includes(':')) return !/^(::1$|f[cd]|fe[89ab])/i.test(value);
+      const [first, second] = value.split('.').map(Number);
+      return first !== 0 && first !== 10 && first !== 127 && first < 224 &&
+        !(first === 172 && second >= 16 && second <= 31) &&
+        !(first === 192 && second === 168) && !(first === 169 && second === 254) &&
+        !(first === 100 && second >= 64 && second <= 127);
+    };
+    const clientIp = normalize(rawIp);
+    if (isPublic(clientIp)) return clientIp;
+    const testIp = normalize(this.config.get<string>('PAYTR_TEST_PUBLIC_IP') ?? '');
+    if (this.isTestMode() && isPublic(testIp)) return testIp;
+    if (this.isTestMode()) return clientIp || '127.0.0.1';
+    throw new ConflictException('A public client IP is required by PayTR. For local tests configure PAYTR_TEST_PUBLIC_IP.');
   }
 
   private async requestPaytrToken(params: URLSearchParams) {

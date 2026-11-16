@@ -155,6 +155,7 @@ export interface Order {
   createdAt: string;
   updatedAt: string;
   items: OrderItem[];
+  payment?: { provider: PaymentProvider } | null;
 }
 
 export interface CheckoutPayload {

@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
 import { useAuth } from '@/hooks/use-auth';
 import { orderService } from '@/services/order.service';
+import { paymentService } from '@/services/payment.service';
 import { formatPrice } from '@/lib/utils';
 import { OrderStatusBadge } from '@/features/orders/order-status-badge';
 import { Button } from '@/components/ui/button';
@@ -18,7 +19,11 @@ export function OrderDetailContent({ id }: OrderDetailContentProps) {
   const locale = useLocale();
   const { user, accessToken, loading } = useAuth();
   const t = useTranslations('orders');
+  const checkoutText = useTranslations('checkout');
   const [result, setResult] = useState<{ id: string; order: Order | null } | null>(null);
+  const [paymentUrl, setPaymentUrl] = useState<string | null>(null);
+  const [paymentError, setPaymentError] = useState<string | null>(null);
+  const [paymentLoading, setPaymentLoading] = useState(false);
   const order = result?.id === id ? result.order : null;
   const loadingOrder = !!accessToken && result?.id !== id;
 
@@ -76,6 +81,25 @@ export function OrderDetailContent({ id }: OrderDetailContentProps) {
 
   return (
     <div className="space-y-6">
+      {order.status === 'PENDING_PAYMENT' && order.payment?.provider === 'PAYTR' ? (
+        <div className="rounded-3xl border border-slate-100 bg-white p-6 shadow-sm">
+          <Button disabled={paymentLoading || Boolean(paymentUrl)} onClick={async () => {
+            if (!accessToken) return;
+            setPaymentError(null);
+            setPaymentLoading(true);
+            try {
+              const payment = await paymentService.initiatePaytr(accessToken, order.id);
+              setPaymentUrl(payment.iframeUrl);
+            } catch (error) {
+              setPaymentError(error instanceof Error ? error.message : checkoutText('failed'));
+            } finally {
+              setPaymentLoading(false);
+            }
+          }}>{checkoutText('submitPaytr')}</Button>
+          {paymentError ? <p role="alert" className="mt-3 text-sm text-rose-600">{paymentError}</p> : null}
+          {paymentUrl ? <iframe title="PayTR secure payment" src={paymentUrl} className="mt-4 h-[680px] w-full border border-slate-200 bg-white" allow="payment" /> : null}
+        </div>
+      ) : null}
       <div className="rounded-3xl border border-slate-100 bg-white p-8 shadow-sm">
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div>

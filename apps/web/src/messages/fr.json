@@ -218,7 +218,10 @@
       "disabled": "Unavailable",
       "secureBadge": "Paiement 3D Secure via PayTR",
       "iframeTitle": "Finaliser le paiement",
-      "iframeHint": "Le formulaire PayTR securise s'affiche ci-dessous."
+      "iframeHint": "Le formulaire PayTR securise s'affiche ci-dessous.",
+      "pendingOrder": "Commande {orderId} creee et en attente de paiement. Vous pouvez reessayer sans recreer la commande.",
+      "returnTitle": "Retour du paiement",
+      "returnBody": "Votre paiement est en cours de verification. Consultez vos commandes pour connaitre son statut confirme."
     },
     "subtotal": "Subtotal",
     "shipping": "Shipping",
@@ -592,19 +595,19 @@
       "loading": "Chargement du contenu...",
       "sections": "Sections",
       "toggles": {
-        "heroShowcase": "Hero anime",
+        "heroShowcase": "Bannière principale",
         "hero3d": "Hero 3D",
         "brandMarquee": "Bandeau marques",
         "featured": "Produits en vedette",
-        "categoryCards": "Cartes categories",
+        "categoryCards": "Sélection chiens et chats",
         "story": "Section histoire",
         "trustBadges": "Badges de confiance"
       },
       "images": {
-        "hero": "Image hero",
+        "hero": "Image de la bannière principale",
         "story": "Image histoire",
-        "categoryDog": "Image categorie chien",
-        "categoryCat": "Image categorie chat",
+        "categoryDog": "Image de la sélection chiens",
+        "categoryCat": "Image de la sélection chats",
         "upload": "Televerser une image",
         "empty": "Aucune image configuree."
       },

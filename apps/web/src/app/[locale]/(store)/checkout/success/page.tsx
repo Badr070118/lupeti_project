@@ -28,8 +28,8 @@ export default async function CheckoutSuccessPage({
 
   return (
     <div className="mx-auto max-w-xl space-y-4 rounded-3xl border border-slate-100 bg-white p-10 text-center shadow-sm">
-      <h1 className="text-3xl font-bold text-emerald-600">{t('successTitle')}</h1>
-      <p className="text-sm text-slate-600">{t('successBody')}</p>
+      <h1 className="text-3xl font-bold text-emerald-600">{orderId ? t('successTitle') : t('payment.returnTitle')}</h1>
+      <p className="text-sm text-slate-600">{orderId ? t('successBody') : t('payment.returnBody')}</p>
       {orderId ? (
         <p className="text-sm font-semibold text-slate-900">
           {t('successOrder', { orderId })}

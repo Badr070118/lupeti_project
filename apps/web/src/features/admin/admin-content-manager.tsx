@@ -8,6 +8,7 @@ import { useAuth } from '@/hooks/use-auth';
 import { useToast } from '@/hooks/use-toast';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { categoryImage, homepageHeroImage } from '@/lib/homepage-images';
 
 type PendingImages = {
   heroImage?: File | null;
@@ -56,7 +57,6 @@ export function AdminContentManager() {
     try {
       const updates: Partial<HomepageSettings> = {
         showHeroShowcase: homepage.showHeroShowcase,
-        showHero3d: homepage.showHero3d,
         showBrandMarquee: homepage.showBrandMarquee,
         showFeatured: homepage.showFeatured,
         showCategoryCards: homepage.showCategoryCards,
@@ -116,7 +116,6 @@ export function AdminContentManager() {
           <div className="grid gap-3 md:grid-cols-2">
             {[
               { key: 'showHeroShowcase', label: t('toggles.heroShowcase') },
-              { key: 'showHero3d', label: t('toggles.hero3d') },
               { key: 'showBrandMarquee', label: t('toggles.brandMarquee') },
               { key: 'showFeatured', label: t('toggles.featured') },
               { key: 'showCategoryCards', label: t('toggles.categoryCards') },
@@ -150,7 +149,7 @@ export function AdminContentManager() {
           {
             id: 'hero-image',
             label: t('images.hero'),
-            current: homepage.heroImageUrl,
+            current: homepageHeroImage(homepage.heroImageUrl),
             field: 'heroImage' as const,
           },
           {
@@ -162,13 +161,13 @@ export function AdminContentManager() {
           {
             id: 'dog-image',
             label: t('images.categoryDog'),
-            current: homepage.categoryDogImageUrl,
+            current: categoryImage(homepage.categoryDogImageUrl, 'dog'),
             field: 'categoryDogImage' as const,
           },
           {
             id: 'cat-image',
             label: t('images.categoryCat'),
-            current: homepage.categoryCatImageUrl,
+            current: categoryImage(homepage.categoryCatImageUrl, 'cat'),
             field: 'categoryCatImage' as const,
           },
         ].map((item) => (

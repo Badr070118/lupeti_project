@@ -17,6 +17,8 @@
 - **Cart persistence**: guest carts are stored in `localStorage` plus a `lupeti_cart_id` cookie; items merge into the authenticated cart on login.
 - **Payments**: COD is supported by default; PayTR is available when the API env vars are set.
 
+For local PayTR tests, set `PAYTR_TEST_MODE=1` in `api/.env`. PayTR recommends a public customer IP even for local tests; if necessary, set `PAYTR_TEST_PUBLIC_IP` to the public IP of the machine running the test and recreate the API container. This override is used only in test mode when the detected client IP is private. Without it, the detected local IP is sent and PayTR may reject the request. Configure the callback URL in the PayTR merchant panel to a publicly reachable HTTPS endpoint; localhost cannot receive PayTR notifications. The return page alone does not confirm payment. A pending PayTR payment can be retried from the order detail page.
+
 ## Production deployment
 
 The default Compose file is for local use and exposes the database and API. For deployment use `docker compose --env-file .env.production -f docker-compose.production.yml up -d --build` behind a TLS reverse proxy forwarding the public HTTPS domain to `127.0.0.1:3001`. Create `.env.production` from `.env.production.example`, choose the real HTTPS `PUBLIC_URL`, and generate a long random alphanumeric PostgreSQL password. These values are build-time settings: rebuild web after changing the URL. Never commit secrets.
