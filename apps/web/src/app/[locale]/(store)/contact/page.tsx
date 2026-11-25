@@ -17,8 +17,8 @@ const metaCopy = {
     description: 'Contactez Lupeti pour les commandes, livraisons et conseils.',
   },
   tr: {
-    title: 'Lupeti iletisim',
-    description: 'Siparis, teslimat ve urun sorulari icin Lupeti ile iletisim kurun.',
+    title: 'Lupeti iletişim',
+    description: 'Sipariş, teslimat ve ürün sorularınız için Lupeti ile iletişime geçin.',
   },
 };
 

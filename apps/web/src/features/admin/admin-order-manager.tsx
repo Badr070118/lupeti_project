@@ -7,6 +7,7 @@ import { adminService } from '@/services/admin.service';
 import { useAuth } from '@/hooks/use-auth';
 import { useToast } from '@/hooks/use-toast';
 import { formatPrice } from '@/lib/utils';
+import { orderItemTitle } from '@/lib/product-copy';
 import { Button } from '@/components/ui/button';
 import { Select } from '@/components/ui/select';
 
@@ -176,7 +177,7 @@ export function AdminOrderManager() {
                     className="rounded-2xl border border-slate-100 bg-slate-50 px-3 py-2 text-xs text-slate-600"
                   >
                     <div className="flex items-center justify-between">
-                      <span className="font-semibold text-slate-900">{item.titleSnapshot}</span>
+                      <span className="font-semibold text-slate-900">{orderItemTitle(item.titleSnapshot)}</span>
                       <span>{item.quantity} x</span>
                     </div>
                     <div className="mt-1 flex items-center justify-between text-[0.7rem] text-slate-500">

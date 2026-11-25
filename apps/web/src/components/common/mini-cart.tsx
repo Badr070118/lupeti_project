@@ -115,7 +115,7 @@ export function MiniCart() {
                   className="flex-1 rounded-full border border-slate-200 px-4 py-2 text-center text-xs font-semibold text-slate-600"
                   onClick={() => setOpenPath(null)}
                 >
-                  {t('viewCart', { default: 'View cart' })}
+                  {t('viewCart', { default: 'Sepeti görüntüle' })}
                 </Link>
                 <Link
                   href="/checkout"
@@ -127,7 +127,7 @@ export function MiniCart() {
               </div>
               {!accessToken && (
                 <p className="mt-3 text-xs text-slate-400">
-                  {t('guestNote', { default: 'Sign in to complete checkout.' })}
+                  {t('guestNote', { default: 'Siparişi tamamlamak için giriş yapın.' })}
                 </p>
               )}
             </>

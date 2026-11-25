@@ -6,7 +6,7 @@ export function HeroStatic() {
     <div className="relative h-[360px] w-full overflow-hidden rounded-3xl bg-gradient-to-tr from-amber-100 via-rose-100 to-blue-100">
       <Image
         src={heroStaticImage}
-        alt="Stylized pet bowl illustration"
+        alt="Evcil hayvan mama kabı çizimi"
         fill
         sizes="(max-width:768px) 100vw, 50vw"
         className="object-cover"

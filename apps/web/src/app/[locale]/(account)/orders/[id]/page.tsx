@@ -12,7 +12,7 @@ export async function generateMetadata({
   const { locale, id } = await params;
   return buildMetadata({
     title: `Order ${id} | Lupeti`,
-    description: 'Order details and delivery status.',
+    description: 'Sipariş ayrıntılarını ve teslimat durumunu görüntüleyin.',
     path: `/${locale}/orders/${id}`,
   });
 }

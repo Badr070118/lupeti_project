@@ -39,7 +39,7 @@ export function CartItemRow({ item, onUpdateQuantity, onRemove }: CartItemRowPro
   };
 
   const removeItem = async () => {
-    if (!window.confirm(t('confirmRemove', { default: 'Remove this item from your cart?' }))) {
+    if (!window.confirm(t('confirmRemove', { default: 'Bu ürün sepetten kaldırılsın mı?' }))) {
       return;
     }
     setSaving(true);

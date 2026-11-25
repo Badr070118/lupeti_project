@@ -39,7 +39,7 @@ export function HeroVisual() {
     return (
       <div className="flex h-64 items-center justify-center rounded-3xl bg-gradient-to-br from-rose-100 via-white to-sky-100">
         <div className="rounded-full bg-white/70 px-6 py-3 text-sm font-semibold text-slate-600 shadow-lg">
-          Nourish playfully, even in still moments.
+          Beslenme saatlerine neşe katın.
         </div>
       </div>
     );

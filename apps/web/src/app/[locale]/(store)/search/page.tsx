@@ -23,8 +23,8 @@ const metaCopy = {
     description: 'Trouvez les produits qui correspondent a vos rituels.',
   },
   tr: {
-    title: 'Urun arama | Lupeti',
-    description: 'Rituelunuze uygun urunleri bulun.',
+    title: 'Ürün arama | Lupeti',
+    description: 'Aradığınız evcil hayvan ürünlerini bulun.',
   },
 };
 

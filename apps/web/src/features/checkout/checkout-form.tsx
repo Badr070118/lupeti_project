@@ -90,7 +90,7 @@ export function CheckoutForm({
         <Input
           id="shipping-fullname"
           name="fullName"
-          placeholder={t('address.fullName', { default: 'Nom complet' })}
+          placeholder={t('address.fullName', { default: 'Ad ve soyad' })}
           required
           value={address.fullName}
           onChange={(event) =>
@@ -151,7 +151,7 @@ export function CheckoutForm({
       {iframeUrl ? (
         <div className="rounded-2xl border border-slate-100 bg-slate-50 p-4">
           <iframe
-            title="PayTR secure payment"
+            title="PayTR ile güvenli ödeme"
             src={iframeUrl}
             className="h-[680px] w-full rounded-xl border border-slate-200 bg-white"
             allow="payment"

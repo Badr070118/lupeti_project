@@ -45,7 +45,7 @@ export function Navbar() {
           <button
             type="button"
             className="md:hidden"
-            aria-label="Toggle navigation menu"
+            aria-label="Gezinme menüsünü aç veya kapat"
             onClick={() => setOpen((prev) => !prev)}
           >
             {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}

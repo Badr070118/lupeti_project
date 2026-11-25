@@ -135,7 +135,7 @@ export function CartSummary({
               onClick={() => {
                 if (
                   !window.confirm(
-                    t('confirmClear', { default: 'Clear all items from your cart?' }),
+                    t('confirmClear', { default: 'Sepetteki tüm ürünler kaldırılsın mı?' }),
                   )
                 ) {
                   return;
@@ -143,7 +143,7 @@ export function CartSummary({
                 void onClearCart();
               }}
             >
-              {t('clearCart', { default: 'Clear cart' })}
+              {t('clearCart', { default: 'Sepeti boşalt' })}
             </Button>
           ) : null}
           <p className="text-xs text-slate-400">{t('note')}</p>

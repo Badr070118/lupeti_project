@@ -27,6 +27,7 @@ const INITIAL_FORM: UserFormState = {
 
 export function AdminUserManager() {
   const locale = useLocale();
+  const orderStatus = useTranslations('admin.orders.status');
   const { accessToken } = useAuth();
   const { showToast } = useToast();
   const t = useTranslations('admin.users');
@@ -136,7 +137,7 @@ export function AdminUserManager() {
                   <p className="font-semibold text-slate-900">{user.email}</p>
                   <p className="text-xs text-slate-500">{user.name ?? t('noName')}</p>
                 </td>
-                <td className="p-3 text-xs uppercase text-slate-500">{user.role}</td>
+                <td className="p-3 text-xs uppercase text-slate-500">{t(user.role === 'ADMIN' ? 'roles.admin' : 'roles.user')}</td>
                 <td className="p-3 text-sm text-slate-600">
                   {user.ordersCount > 0
                     ? t('ordersCount', { count: user.ordersCount })
@@ -294,7 +295,7 @@ export function AdminUserManager() {
                           </span>
                         </div>
                         <div className="mt-1 flex items-center justify-between text-[0.7rem] text-slate-500">
-                          <span>{order.status}</span>
+                          <span>{orderStatus(order.status)}</span>
                           <span>
                             {new Intl.DateTimeFormat('en', {
                               dateStyle: 'medium',

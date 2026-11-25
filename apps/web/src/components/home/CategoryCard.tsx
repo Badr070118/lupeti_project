@@ -22,7 +22,7 @@ export function CategoryCard({ title, subtitle, image, link, number }: CategoryC
       <span className="category-showcase__copy">
         <span className="category-showcase__label">{subtitle}</span>
         <span className="category-showcase__title">{title}</span>
-        <span className="category-showcase__link">Découvrir la sélection <ArrowUpRight size={17} aria-hidden="true" /></span>
+        <span className="category-showcase__link">Seçkiyi keşfet <ArrowUpRight size={17} aria-hidden="true" /></span>
       </span>
     </Link>
   );

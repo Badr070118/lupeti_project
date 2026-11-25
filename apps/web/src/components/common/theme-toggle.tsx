@@ -37,7 +37,7 @@ export function ThemeToggle() {
 
   const icon = theme === 'dark' ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />;
   return (
-    <button type="button" className="theme-btn" onClick={handleToggle} aria-label="Toggle theme">
+    <button type="button" className="theme-btn" onClick={handleToggle} aria-label="Temayı değiştir">
       {icon}
       <span className="text-xs font-semibold">{theme === 'dark' ? 'Light' : 'Dark'}</span>
     </button>

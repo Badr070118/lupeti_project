@@ -12,8 +12,8 @@ export async function generateMetadata({
 }: CheckoutSuccessProps): Promise<Metadata> {
   const { locale } = await params;
   return buildMetadata({
-    title: 'Order placed | Lupeti',
-    description: 'Your order was created successfully.',
+    title: 'Sipariş alındı | Lupeti',
+    description: 'Siparişiniz başarıyla oluşturuldu.',
     path: `/${locale}/checkout/success`,
   });
 }

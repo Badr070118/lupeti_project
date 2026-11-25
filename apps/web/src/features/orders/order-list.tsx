@@ -58,7 +58,7 @@ export function OrderList({ orders = [] }: OrderListProps) {
               href={{ pathname: '/orders/[id]', params: { id: order.id } }}
               className="text-sm font-semibold text-rose-500 hover:text-rose-600"
             >
-              {t('viewDetails', { default: 'View details' })}
+              {t('viewDetails', { default: 'Ayrıntıları gör' })}
             </Link>
           </div>
         </div>

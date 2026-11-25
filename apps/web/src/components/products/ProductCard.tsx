@@ -39,7 +39,7 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
     >
       {hasPromo && (
         <div className="promo-badge absolute right-4 top-4 z-10 rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wide text-white">
-          Promo
+          İndirim
         </div>
       )}
       <div className="relative aspect-square overflow-hidden">
@@ -54,7 +54,7 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
           />
         ) : (
           <div className="flex h-full items-center justify-center bg-slate-50 text-slate-400">
-            No image
+            Görsel yok
           </div>
         )}
         <div className="absolute inset-0 flex items-center justify-center gap-3 bg-black/40 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
@@ -62,7 +62,7 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
             type="button"
             onClick={() => openQuickView(product)}
             className="rounded-full bg-white p-3 text-slate-900 shadow-lg transition hover:scale-105"
-            aria-label="Quick view"
+            aria-label="Hızlı incele"
           >
             <Eye className="h-5 w-5" />
           </button>
@@ -70,7 +70,7 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
             type="button"
             onClick={handleAdd}
             className="rounded-full bg-[var(--primary)] p-3 text-white shadow-lg transition hover:scale-105"
-            aria-label="Add to cart"
+            aria-label="Sepete ekle"
           >
             <ShoppingCart className="h-5 w-5" />
           </button>
@@ -100,7 +100,7 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
           onClick={handleAdd}
           className="rounded-2xl bg-[var(--primary)] py-3 text-sm font-semibold text-white shadow hover:bg-[var(--primary-dark)]"
         >
-          Ajouter au panier
+          Sepete ekle
         </motion.button>
       </div>
     </motion.div>

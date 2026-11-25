@@ -11,8 +11,8 @@ export async function generateMetadata({
 }: PrivacyPageProps): Promise<Metadata> {
   const { locale } = await params;
   return buildMetadata({
-    title: 'Privacy policy | Lupeti',
-    description: 'Learn how Lupeti protects your data and privacy.',
+    title: 'Gizlilik politikası | Lupeti',
+    description: 'Lupeti’nin verilerinizi ve gizliliğinizi nasıl koruduğunu öğrenin.',
     path: `/${locale}/privacy`,
   });
 }

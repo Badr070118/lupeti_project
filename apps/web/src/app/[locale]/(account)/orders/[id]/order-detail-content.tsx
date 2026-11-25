@@ -6,6 +6,7 @@ import { useAuth } from '@/hooks/use-auth';
 import { orderService } from '@/services/order.service';
 import { paymentService } from '@/services/payment.service';
 import { formatPrice } from '@/lib/utils';
+import { orderItemTitle } from '@/lib/product-copy';
 import { OrderStatusBadge } from '@/features/orders/order-status-badge';
 import { Button } from '@/components/ui/button';
 import { Link } from '@/i18n/routing';
@@ -97,7 +98,7 @@ export function OrderDetailContent({ id }: OrderDetailContentProps) {
             }
           }}>{checkoutText('submitPaytr')}</Button>
           {paymentError ? <p role="alert" className="mt-3 text-sm text-rose-600">{paymentError}</p> : null}
-          {paymentUrl ? <iframe title="PayTR secure payment" src={paymentUrl} className="mt-4 h-[680px] w-full border border-slate-200 bg-white" allow="payment" /> : null}
+          {paymentUrl ? <iframe title="PayTR ile güvenli ödeme" src={paymentUrl} className="mt-4 h-[680px] w-full border border-slate-200 bg-white" allow="payment" /> : null}
         </div>
       ) : null}
       <div className="rounded-3xl border border-slate-100 bg-white p-8 shadow-sm">
@@ -124,7 +125,7 @@ export function OrderDetailContent({ id }: OrderDetailContentProps) {
           {order.items.map((item) => (
             <div key={item.id} className="flex justify-between">
               <span>
-                {item.titleSnapshot} x {item.quantity}
+                {orderItemTitle(item.titleSnapshot)} x {item.quantity}
               </span>
               <span>{formatPrice(item.lineTotalCents, order.currency, locale)}</span>
             </div>

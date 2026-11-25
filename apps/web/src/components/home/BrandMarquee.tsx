@@ -19,7 +19,7 @@ export function BrandMarquee() {
   return (
     <section className="overflow-hidden rounded-3xl bg-gradient-to-r from-slate-50 to-white py-12">
       <h2 className="mb-8 text-center text-2xl font-semibold text-slate-800">
-        Nos marques partenaires
+        İş ortağı markalarımız
       </h2>
       <div className="relative">
         <motion.div

@@ -17,9 +17,9 @@ async function FeaturedProductsContent() {
           <p className="text-sm text-slate-500">{t('subtitle')}</p>
         </div>
         <div className="flex gap-3 text-sm text-slate-500">
-          <span>Livraison 48h</span>
+          <span>48 saatte teslimat</span>
           <span>•</span>
-          <span>Retours offerts</span>
+          <span>Ücretsiz iade</span>
         </div>
       </div>
       <FeaturedProductsShowcase products={featured.data} />

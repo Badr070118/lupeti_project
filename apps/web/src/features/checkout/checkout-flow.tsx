@@ -449,7 +449,7 @@ export function CheckoutFlow({ cart, accessToken, onOrderCreated }: CheckoutFlow
               onClick={() => {
                 if (step === 1 && !canProceedFromAddress) {
                   showToast({
-                    title: t('addressMissing', { default: 'Please complete the address.' }),
+                    title: t('addressMissing', { default: 'Lütfen adres bilgilerini tamamlayın.' }),
                     variant: 'error',
                   });
                   return;
@@ -532,7 +532,7 @@ export function CheckoutFlow({ cart, accessToken, onOrderCreated }: CheckoutFlow
               </p>
             </div>
             <iframe
-              title="PayTR secure payment"
+              title="PayTR ile güvenli ödeme"
               src={paytrIframeUrl}
               className="h-[680px] w-full rounded-xl border border-slate-200 bg-white"
               allow="payment"

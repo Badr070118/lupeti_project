@@ -23,17 +23,17 @@ export const promoSlides: PromoSlide[] = [
     left: {
       brand: 'Brit Care',
       brandLogo: '/brands/brit-care.png',
-      productName: 'Slow Roasted Quail Feast',
+      productName: 'Yavaş Kavrulmuş Bıldırcınlı Kedi Maması',
       productImg: '/products/slow-roasted-quail-feast.png',
-      note: 'Premium by nature',
+      note: 'Doğal içeriklerle',
     },
     centerImg: '/hero/hero-animals-1.webp',
     right: {
       brand: 'Farmina',
       brandLogo: '/brands/farmina.png',
-      productName: 'Highland Salmon Casserole',
+      productName: 'Somonlu ve Balkabaklı Kedi Güveci',
       productImg: '/products/highland-salmon-casserole.png',
-      note: 'Happy pet, happy you',
+      note: 'Evcil dostunuz için lezzet',
     },
   },
   {
@@ -41,17 +41,17 @@ export const promoSlides: PromoSlide[] = [
     left: {
       brand: 'Acana',
       brandLogo: '/brands/acana.png',
-      productName: 'Anatolian Lamb Herbs Kibble',
+      productName: 'Kuzu Etli ve Otlu Köpek Maması',
       productImg: '/products/anatolian-lamb-herbs-kibble.png',
-      note: 'Crafted for active pets',
+      note: 'Hareketli dostlar için',
     },
     centerImg: '/images/hero/golden.jpg',
     right: {
       brand: 'Orijen',
       brandLogo: '/brands/orijen.png',
-      productName: 'Tender Turkey Puppy Bites',
+      productName: 'Hindi Etli Yavru Köpek Lokmaları',
       productImg: '/products/tender-turkey-puppy-bites.png',
-      note: 'Rich in natural protein',
+      note: 'Doğal protein bakımından zengin',
     },
   },
 ];
@@ -62,55 +62,55 @@ export type PetProductCard = {
   productImg: string;
   title: string;
   price: string;
-  tag: 'Chat' | 'Chien';
+  tag: 'Kedi' | 'Köpek';
 };
 
 export const petProductCards: PetProductCard[] = [
   {
     id: 'c1',
-    tag: 'Chat',
-    title: 'Highland Salmon Casserole',
-    price: '199 DH',
+    tag: 'Kedi',
+    title: 'Somonlu ve Balkabaklı Kedi Güveci',
+    price: '₺215,00',
     petImg: '/images/hero/cat.jpg',
     productImg: '/products/highland-salmon-casserole.png',
   },
   {
     id: 'c2',
-    tag: 'Chien',
-    title: 'Anatolian Lamb Herbs Kibble',
-    price: '249 DH',
+    tag: 'Köpek',
+    title: 'Kuzu Etli ve Otlu Köpek Maması',
+    price: '₺189,00',
     petImg: '/images/hero/dog.jpg',
     productImg: '/products/anatolian-lamb-herbs-kibble.png',
   },
   {
     id: 'c3',
-    tag: 'Chat',
-    title: 'Charcoal Digestive Biscuits',
-    price: '109 DH',
+    tag: 'Kedi',
+    title: 'Rezene ve Kömürlü Sindirim Bisküvisi',
+    price: '₺69,00',
     petImg: '/hero/hero-animals-1.webp',
     productImg: '/products/charcoal-digestive-biscuits.png',
   },
   {
     id: 'c4',
-    tag: 'Chien',
-    title: 'Tender Turkey Puppy Bites',
-    price: '149 DH',
+    tag: 'Köpek',
+    title: 'Hindi Etli Yavru Köpek Lokmaları',
+    price: '₺159,00',
     petImg: '/images/hero/golden.jpg',
     productImg: '/products/tender-turkey-puppy-bites.png',
   },
   {
     id: 'c5',
-    tag: 'Chat',
-    title: 'Olive Oil Shine Coat Treats',
-    price: '49 DH',
+    tag: 'Kedi',
+    title: 'Zeytinyağlı Tüy Bakımı Ödülü',
+    price: '₺75,00',
     petImg: '/hero/hero-animals-2.webp',
     productImg: '/products/olive-oil-shine-coat-treats.png',
   },
   {
     id: 'c6',
-    tag: 'Chien',
-    title: 'Coastal Sardine Crunch',
-    price: '69 DH',
+    tag: 'Köpek',
+    title: 'Çıtır Sardalyalı Ödül Maması',
+    price: '₺99,00',
     petImg: '/images/hero/dog.jpg',
     productImg: '/products/coastal-sardine-crunch.png',
   },

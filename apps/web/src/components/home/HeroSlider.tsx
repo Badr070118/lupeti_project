@@ -6,7 +6,7 @@ export function HeroSlider({ imageUrl }: { imageUrl: string }) {
       <div className="overflow-hidden rounded-3xl bg-slate-100 shadow-[0_18px_50px_rgba(15,23,42,0.18)]">
         <Image
           src={imageUrl}
-          alt="Hero animals 2"
+          alt="Lupeti evcil hayvanları"
           width={1920}
           height={1080}
           priority

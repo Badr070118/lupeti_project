@@ -2,28 +2,28 @@ import { BadgeCheck, Headphones, PawPrint, ShieldCheck, Truck } from 'lucide-rea
 
 const BENEFITS = [
   {
-    title: 'Livraison Rapide',
-    description: 'Expedition rapide et securisee pour tous vos produits.',
+    title: 'Hızlı teslimat',
+    description: 'Siparişleriniz için hızlı ve güvenli gönderim.',
     Icon: Truck,
   },
   {
-    title: 'Support 24/7',
-    description: 'Notre equipe est disponible pour vous aider a tout moment.',
+    title: '7/24 destek',
+    description: 'Ekibimiz her zaman size yardımcı olmaya hazır.',
     Icon: Headphones,
   },
   {
-    title: 'Satisfaction Garantie',
-    description: 'Produits de qualite selectionnes pour vos animaux.',
+    title: 'Memnuniyet garantisi',
+    description: 'Evcil dostlarınız için özenle seçilmiş ürünler.',
     Icon: BadgeCheck,
   },
   {
-    title: 'Produits Specialises',
-    description: 'Une large selection pour chiens et chats.',
+    title: 'Özel ürünler',
+    description: 'Kediler ve köpekler için geniş ürün seçkisi.',
     Icon: PawPrint,
   },
   {
-    title: 'Paiement Securise',
-    description: 'Transactions protegees avec un paiement fiable et securise.',
+    title: 'Güvenli ödeme',
+    description: 'Güvenli ödeme altyapısıyla korunan işlemler.',
     Icon: ShieldCheck,
   },
 ] as const;

@@ -738,7 +738,7 @@ export function AdminProductManager() {
                       onClick={() => setAsCover(image)}
                       disabled={loading}
                     >
-                      Set as primary
+                      Ana görsel olarak ayarla
                     </Button>
                     <Button
                       size="sm"

@@ -46,7 +46,7 @@ export const ToastViewport = ({ toasts, onDismiss }: ToastViewportProps) => {
             </div>
             <button
               type="button"
-              aria-label="Dismiss notification"
+              aria-label="Bildirimi kapat"
               onClick={() => onDismiss(toast.id)}
               className="rounded-full p-1 text-slate-500 hover:bg-slate-100"
             >

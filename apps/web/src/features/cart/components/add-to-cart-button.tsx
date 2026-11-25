@@ -65,8 +65,8 @@ export function AddToCartButton({
       }}
     >
       {disabled
-        ? disabledLabel ?? t('outOfStock', { default: 'Out of stock' })
-        : t('addToCartButton', { default: 'Add to cart' })}
+        ? disabledLabel ?? t('outOfStock', { default: 'Stokta yok' })
+        : t('addToCartButton', { default: 'Sepete ekle' })}
     </Button>
   );
 }

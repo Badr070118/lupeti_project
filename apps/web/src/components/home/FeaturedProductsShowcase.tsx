@@ -14,9 +14,9 @@ type FeaturedProductsShowcaseProps = {
 };
 
 const filterOptions = [
-  { label: 'Tous', value: 'all' },
-  { label: 'Chiens', value: 'dogs' },
-  { label: 'Chats', value: 'cats' },
+  { label: 'Tümü', value: 'all' },
+  { label: 'Köpekler', value: 'dogs' },
+  { label: 'Kediler', value: 'cats' },
 ];
 
 function matchFilter(product: Product, filter: string) {
@@ -60,7 +60,7 @@ export function FeaturedProductsShowcase({ products }: FeaturedProductsShowcaseP
           className="w-full md:w-auto"
           onClick={() => router.push('/shop')}
         >
-          Voir tout
+          Tümünü gör
         </AnimatedButton>
       </div>
     </div>

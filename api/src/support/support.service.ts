@@ -65,7 +65,7 @@ export class SupportService {
     });
 
     await this.notifier.notifySupport(
-      `New ticket: ${ticket.subject}`,
+      `Yeni destek talebi: ${ticket.subject}`,
       `${ticket.email}\n\n${ticket.message}`,
     );
 
@@ -156,7 +156,7 @@ export class SupportService {
 
     await this.notifier.notifyCustomer(
       ticket.email,
-      `Reply to your ticket "${ticket.subject}"`,
+      `Destek talebinize yanıt: "${ticket.subject}"`,
       dto.message,
     );
 

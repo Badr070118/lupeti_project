@@ -67,8 +67,8 @@ export function HeroPromoSlider() {
     <section className="space-y-4">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Home Promo</p>
-          <h2 className="mt-1 text-2xl font-semibold text-slate-900 sm:text-3xl">Hero Promo Slider</h2>
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Ana sayfa kampanyaları</p>
+          <h2 className="mt-1 text-2xl font-semibold text-slate-900 sm:text-3xl">Kampanya slaytları</h2>
         </div>
         <CarouselControls
           current={index}
@@ -89,7 +89,7 @@ export function HeroPromoSlider() {
             <div className="relative h-[260px] overflow-hidden rounded-2xl sm:h-[340px] lg:h-full lg:min-h-[360px]">
               <img
                 src={active.centerImg}
-                alt="Animal promo"
+                alt="Evcil hayvan kampanyası"
                 className="h-full w-full object-cover"
                 loading="lazy"
               />

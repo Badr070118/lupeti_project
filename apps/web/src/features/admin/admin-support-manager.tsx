@@ -14,6 +14,8 @@ export function AdminSupportManager() {
   const { accessToken } = useAuth();
   const { showToast } = useToast();
   const t = useTranslations('admin.support');
+  const categoryText = useTranslations('support.categories');
+  const roleText = useTranslations('admin.users.roles');
   const [tickets, setTickets] = useState<SupportTicket[]>([]);
   const [selection, setSelected] = useState<SupportTicket | null>(null);
   const selected = selection ?? tickets[0] ?? null;
@@ -99,10 +101,10 @@ export function AdminSupportManager() {
               >
                 <td className="p-3">
                   <p className="font-semibold text-slate-900">{ticket.subject}</p>
-                  <p className="text-xs text-slate-500">{ticket.category}</p>
+                  <p className="text-xs text-slate-500">{categoryText(ticket.category.toLowerCase())}</p>
                 </td>
                 <td className="p-3 text-slate-600">{ticket.email}</td>
-                <td className="p-3 text-xs uppercase text-slate-500">{ticket.status}</td>
+                <td className="p-3 text-xs uppercase text-slate-500">{t(ticket.status === 'IN_PROGRESS' ? 'status.inProgress' : ticket.status === 'OPEN' ? 'status.open' : 'status.closed')}</td>
               </tr>
             ))}
           </tbody>
@@ -154,7 +156,7 @@ export function AdminSupportManager() {
               <div className="support-history text-xs text-[color:var(--text)]">
                 <div className="support-message mb-3">
                   <p className="text-xs uppercase tracking-[0.2em] text-[color:var(--muted)]">
-                    {t('original', { default: 'Original message' })}
+                    {t('original', { default: 'İlk mesaj' })}
                   </p>
                   <p className="mt-1">{selected.message}</p>
                 </div>
@@ -166,7 +168,7 @@ export function AdminSupportManager() {
                     }`}
                   >
                     <p className="text-xs uppercase tracking-[0.2em] opacity-70">
-                      {reply.authorRole}
+                      {roleText(reply.authorRole === 'ADMIN' ? 'admin' : 'user')}
                     </p>
                     <p className="mt-1">{reply.body}</p>
                   </div>

@@ -6,9 +6,9 @@ import '@/styles/hero3d.css';
 type Hero3DProps = { locale: string };
 
 const products = [
-  { slug: 'tender-turkey-puppy-bites', image: '/products/tender-turkey-puppy-bites.png', category: 'Pour les chiens', name: 'Les essentiels pour chien', number: '01' },
-  { slug: 'slow-roasted-quail-feast', image: '/products/slow-roasted-quail-feast.png', category: 'Pour les chats', name: 'Le meilleur pour les chats', number: '02' },
-  { slug: 'highland-salmon-casserole', image: '/products/highland-salmon-casserole.png', category: 'Notre sélection', name: 'Des repas qui font plaisir', number: '03' },
+  { slug: 'tender-turkey-puppy-bites', image: '/products/tender-turkey-puppy-bites.png', category: 'Köpekler için', name: 'Köpekler için temel ürünler', number: '01' },
+  { slug: 'slow-roasted-quail-feast', image: '/products/slow-roasted-quail-feast.png', category: 'Kediler için', name: 'Kediler için seçtiklerimiz', number: '02' },
+  { slug: 'highland-salmon-casserole', image: '/products/highland-salmon-casserole.png', category: 'Seçkimiz', name: 'Lezzetli öğünler', number: '03' },
 ];
 
 export function Hero3D({ locale }: Hero3DProps) {
@@ -16,13 +16,13 @@ export function Hero3D({ locale }: Hero3DProps) {
     <section className="hero3d" aria-labelledby="selection-title">
       <div className="hero3d__heading">
         <div>
-          <p className="hero3d__eyebrow"><span /> La sélection Lupeti</p>
-          <h2 id="selection-title">Bien nourris.<br /><em>Bien heureux.</em></h2>
+          <p className="hero3d__eyebrow"><span /> Lupeti seçkisi</p>
+          <h2 id="selection-title">İyi beslenen<br /><em>mutlu dostlar.</em></h2>
         </div>
         <div className="hero3d__intro">
-          <p>De bons repas pour leurs petits et grands moments de bonheur.</p>
+          <p>Mutlu anları için lezzetli öğünler.</p>
           <Link className="hero3d__shop" href={`/${locale}/shop`}>
-            Voir toute la boutique <ArrowRight size={18} aria-hidden="true" />
+            Tümünü göre la boutique <ArrowRight size={18} aria-hidden="true" />
           </Link>
         </div>
       </div>

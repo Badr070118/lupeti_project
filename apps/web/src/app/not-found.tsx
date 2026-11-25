@@ -5,12 +5,12 @@ export default function NotFound() {
   return (
     <div className="space-y-4 text-center">
       <p className="text-sm uppercase tracking-wide text-rose-500">404</p>
-      <h1 className="text-3xl font-bold text-slate-900">Page not found</h1>
+      <h1 className="text-3xl font-bold text-slate-900">Sayfa bulunamadı</h1>
       <p className="text-slate-500">
-        We could not find what you were looking for. Explore our shop instead.
+        Aradığınız sayfayı bulamadık. Mağazamıza göz atabilirsiniz.
       </p>
       <Button asChild>
-        <Link href="/">Back to home</Link>
+        <Link href="/">Ana sayfaya dön</Link>
       </Button>
     </div>
   );

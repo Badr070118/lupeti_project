@@ -106,7 +106,7 @@ export function SearchBar({
           <div className="absolute left-0 right-0 top-full z-50 mt-2 overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-xl">
             {loading ? (
               <div className="px-4 py-3 text-xs text-slate-500">
-                Loading...
+                Yükleniyor…
               </div>
             ) : (
               <ul className="py-2">

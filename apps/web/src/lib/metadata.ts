@@ -35,6 +35,7 @@ export function buildMetadata({
       description,
       url: canonical,
       siteName: env.appName,
+      locale: 'tr_TR',
       type: 'website',
       images: resolvedImages.map((url) => ({
         url,

@@ -1,4 +1,5 @@
 import { env } from './config';
+import { apiErrorMessage } from './api-error-message';
 
 type NextFetchRequestConfig = {
   revalidate?: number | false;
@@ -66,7 +67,7 @@ export async function fetchApi<T>(
   } catch (error) {
     throw new ApiError(
       0,
-      'Unable to reach the API. Please try again shortly.',
+      'Sunucuya bağlanılamadı. Lütfen biraz sonra tekrar deneyin.',
       error,
     );
   }
@@ -75,8 +76,7 @@ export async function fetchApi<T>(
     const errorBody = await safeJson(response);
     throw new ApiError(
       response.status,
-      errorBody?.message ??
-        `Request failed with status ${response.statusText}`,
+      apiErrorMessage(response.status, errorBody?.message),
       errorBody,
     );
   }

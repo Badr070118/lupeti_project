@@ -288,15 +288,15 @@ export class OrdersService {
     },
   ) {
     if (!email) return;
-    const subject = `Lupeti order confirmation #${order.id}`;
+    const subject = `Lupeti sipariş onayı #${order.id}`;
     const body = [
-      `Hello,`,
+      `Merhaba,`,
       ``,
-      `Thank you for your order with Lupeti.`,
-      `Order ID: ${order.id}`,
-      `Status: ${this.formatStatus(order.status)}`,
+      `Lupeti siparişiniz için teşekkür ederiz.`,
+      `Sipariş numarası: ${order.id}`,
+      `Durum: ${this.formatStatus(order.status)}`,
       ``,
-      `Items:`,
+      `Ürünler:`,
       ...order.items.map(
         (item) =>
           `- ${item.titleSnapshot} x${item.quantity} (${this.formatMoney(
@@ -305,11 +305,11 @@ export class OrdersService {
           )})`,
       ),
       ``,
-      `Total: ${this.formatMoney(order.totalCents, order.currency)}`,
+      `Toplam: ${this.formatMoney(order.totalCents, order.currency)}`,
       ``,
-      `We will keep you updated as your order progresses.`,
+      `Siparişiniz ilerledikçe sizi bilgilendireceğiz.`,
       ``,
-      `Lupeti Support`,
+      `Lupeti Destek`,
     ].join('\n');
     await this.notifier.notifyCustomer(email, subject, body);
   }
@@ -320,34 +320,34 @@ export class OrdersService {
       select: { email: true },
     });
     if (!user?.email) return;
-    const subject = `Your Lupeti order #${order.id} is now ${this.formatStatus(order.status)}`;
+    const subject = `Lupeti siparişiniz #${order.id}: ${this.formatStatus(order.status)}`;
     const body = [
-      `Hello,`,
+      `Merhaba,`,
       ``,
-      `Your order status has been updated.`,
-      `Order ID: ${order.id}`,
-      `Current status: ${this.formatStatus(order.status)}`,
+      `Siparişinizin durumu güncellendi.`,
+      `Sipariş numarası: ${order.id}`,
+      `Güncel durum: ${this.formatStatus(order.status)}`,
       ``,
-      `Thank you for shopping with Lupeti.`,
+      `Lupeti’den alışveriş yaptığınız için teşekkür ederiz.`,
       ``,
-      `Lupeti Support`,
+      `Lupeti Destek`,
     ].join('\n');
     await this.notifier.notifyCustomer(user.email, subject, body);
   }
 
   private formatStatus(status: OrderStatus) {
     const map: Record<OrderStatus, string> = {
-      PENDING_PAYMENT: 'Pending payment',
-      PAID: 'Paid',
-      FAILED: 'Payment failed',
-      CANCELLED: 'Cancelled',
-      SHIPPED: 'Shipped',
-      DELIVERED: 'Delivered',
+      PENDING_PAYMENT: 'Ödeme bekleniyor',
+      PAID: 'Ödendi',
+      FAILED: 'Ödeme başarısız',
+      CANCELLED: 'İptal edildi',
+      SHIPPED: 'Kargoya verildi',
+      DELIVERED: 'Teslim edildi',
     };
     return map[status] ?? status;
   }
 
   private formatMoney(cents: number, currency: string) {
-    return `${(cents / 100).toFixed(2)} ${currency}`;
+    return new Intl.NumberFormat('tr-TR', { style: 'currency', currency }).format(cents / 100);
   }
 }

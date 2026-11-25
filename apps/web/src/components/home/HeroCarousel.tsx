@@ -23,25 +23,25 @@ type Slide = {
 const slides: Slide[] = [
   {
     image: '/products/slow-roasted-quail-feast.jpg',
-    title: 'Promotions Janvier',
-    subtitle: 'Jusqu’à -20% sur vos recettes préférées',
-    cta: 'Découvrir',
+    title: 'Ocak indirimleri',
+    subtitle: 'Sevdiğiniz mamalarda %20’ye varan indirim',
+    cta: 'Keşfet',
     href: '/shop',
     category: 'dogs',
   },
   {
     image: '/products/charcoal-digestive-biscuits.jpg',
-    title: 'Collection Bien-être',
-    subtitle: 'Des snacks fonctionnels pour chats sensibles',
-    cta: 'Voir les nouveautés',
+    title: 'Bakım koleksiyonu',
+    subtitle: 'Hassas kediler için özel ödül mamaları',
+    cta: 'Yeni ürünleri gör',
     href: '/category/cat',
     category: 'cats',
   },
   {
     image: '/products/anatolian-lamb-herbs-kibble.jpg',
-    title: 'Rituels quotidiens',
-    subtitle: 'Nutrition consciente pour chiens actifs',
-    cta: 'Composer mon panier',
+    title: 'Günlük rutinler',
+    subtitle: 'Hareketli köpekler için özenli beslenme',
+    cta: 'Sepetimi oluştur',
     href: '/category/dog',
     category: 'dogs',
   },
@@ -80,7 +80,7 @@ export function HeroCarousel() {
                   className="inline-flex w-fit items-center gap-2 rounded-full bg-white/15 px-4 py-1 text-sm uppercase tracking-widest"
                   whileHover={{ scale: 1.05 }}
                 >
-                  {slide.category === 'dogs' ? 'Chiens' : 'Chats'}
+                  {slide.category === 'dogs' ? 'Köpekler' : 'Kediler'}
                 </motion.span>
                 <h1 className="text-4xl font-bold leading-tight md:text-6xl">{slide.title}</h1>
                 <p className="max-w-xl text-lg text-white/80">{slide.subtitle}</p>
@@ -95,7 +95,7 @@ export function HeroCarousel() {
                       router.push(slide.category === 'dogs' ? '/category/dog' : '/category/cat')
                     }
                   >
-                    {slide.category === 'dogs' ? 'Boutique Chiens' : 'Boutique Chats'}
+                    {slide.category === 'dogs' ? 'Köpek mağazası' : 'Kedi mağazası'}
                   </AnimatedButton>
                 </div>
               </div>

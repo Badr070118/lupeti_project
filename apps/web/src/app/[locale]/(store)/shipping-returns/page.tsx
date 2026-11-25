@@ -11,8 +11,8 @@ export async function generateMetadata({
 }: ShippingReturnsProps): Promise<Metadata> {
   const { locale } = await params;
   return buildMetadata({
-    title: 'Shipping & Returns | Lupeti',
-    description: 'Shipping options, delivery timelines, and return guidance.',
+    title: 'Teslimat ve iade | Lupeti',
+    description: 'Teslimat seçenekleri, kargo süreleri ve iade bilgileri.',
     path: `/${locale}/shipping-returns`,
   });
 }

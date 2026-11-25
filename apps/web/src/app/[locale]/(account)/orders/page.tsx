@@ -17,7 +17,7 @@ const metaCopy = {
   },
   tr: {
     title: 'Siparislerim | Lupeti',
-    description: 'Lupeti siparislerinizi takip edin.',
+    description: 'Lupeti siparişlerinizi takip edin.',
   },
 };
 

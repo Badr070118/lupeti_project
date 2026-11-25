@@ -47,8 +47,8 @@ export function PetProductCarousel() {
     <section className="space-y-4">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">New Picks</p>
-          <h2 className="mt-1 text-2xl font-semibold text-slate-900 sm:text-3xl">Product + Pet Carousel</h2>
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Yeni seçkiler</p>
+          <h2 className="mt-1 text-2xl font-semibold text-slate-900 sm:text-3xl">Evcil hayvan ürünleri slaytları</h2>
         </div>
         <CarouselControls
           current={activePage}
@@ -104,7 +104,7 @@ export function PetProductCarousel() {
                       type="button"
                       className="mt-3 w-full rounded-full bg-rose-500 px-4 py-2 text-sm font-medium text-white transition hover:bg-rose-600"
                     >
-                      Voir produit
+                      Ürünü gör
                     </button>
                   </div>
                 </div>

@@ -1,4 +1,5 @@
 import type { PaytrInitiateResponse } from '@/types';
+import { apiErrorMessage } from '@/lib/api-error-message';
 
 async function initiatePaytr(accessToken: string, orderId: string) {
   const response = await fetch('/api/payment/paytr/initiate', {
@@ -20,7 +21,7 @@ async function initiatePaytr(accessToken: string, orderId: string) {
       payload && typeof payload === 'object' && 'message' in payload
         ? payload.message
         : undefined;
-    throw new Error(message ?? 'Unable to initiate PayTR payment');
+    throw new Error(apiErrorMessage(response.status, message, 'Kartla ödeme başlatılamadı. Lütfen tekrar deneyin.'));
   }
 
   return payload as PaytrInitiateResponse;

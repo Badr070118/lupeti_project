@@ -11,8 +11,8 @@ export async function generateMetadata({
 }: TermsPageProps): Promise<Metadata> {
   const { locale } = await params;
   return buildMetadata({
-    title: 'Terms of service | Lupeti',
-    description: 'Review Lupeti terms for purchases and site usage.',
+    title: 'Kullanım koşulları | Lupeti',
+    description: 'Lupeti alışveriş ve site kullanım koşullarını inceleyin.',
     path: `/${locale}/terms`,
   });
 }

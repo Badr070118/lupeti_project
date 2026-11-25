@@ -8,8 +8,6 @@ import { formatPrice } from '@/lib/utils';
 import { resolveProductImage } from '@/lib/product-images';
 
 export function QuickView() {
-  const locale =
-    typeof window !== 'undefined' ? window.location.pathname.split('/')[1] || 'en' : 'en';
   const product = useQuickView((state) => state.product);
   const close = useQuickView((state) => state.close);
 
@@ -33,7 +31,7 @@ export function QuickView() {
               type="button"
               className="absolute right-4 top-4 rounded-full bg-white/80 p-2 text-slate-600 shadow-md transition hover:text-slate-900"
               onClick={close}
-              aria-label="Close quick view"
+              aria-label="Hızlı incelemeyi kapat"
             >
               <X className="h-5 w-5" />
             </button>
@@ -47,7 +45,7 @@ export function QuickView() {
                 />
               ) : (
                 <div className="flex h-full items-center justify-center text-slate-400">
-                  No preview
+                  Önizleme yok
                 </div>
               )}
             </div>
@@ -62,11 +60,11 @@ export function QuickView() {
               <div className="flex items-end gap-3">
                 {product.pricing.isPromoActive && (
                   <span className="text-sm text-slate-400 line-through">
-                    {formatPrice(product.pricing.originalPriceCents, product.currency, locale)}
+                    {formatPrice(product.pricing.originalPriceCents, product.currency)}
                   </span>
                 )}
                 <span className="text-3xl font-bold text-[var(--primary)]">
-                  {formatPrice(product.pricing.finalPriceCents, product.currency, locale)}
+                  {formatPrice(product.pricing.finalPriceCents, product.currency)}
                 </span>
               </div>
               <button
@@ -74,7 +72,7 @@ export function QuickView() {
                 onClick={close}
                 className="w-full rounded-full bg-[var(--primary)] py-3 text-white shadow-lg transition hover:bg-[var(--primary-dark)]"
               >
-                Ajouter au panier
+                Sepete ekle
               </button>
             </div>
           </motion.div>

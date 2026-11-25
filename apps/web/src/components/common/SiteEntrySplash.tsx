@@ -42,7 +42,7 @@ export function SiteEntrySplash() {
       className={`fixed inset-0 z-[9999] flex items-center justify-center bg-[radial-gradient(circle_at_20%_20%,rgba(56,189,248,0.2),transparent_45%),radial-gradient(circle_at_80%_10%,rgba(52,211,153,0.24),transparent_45%),linear-gradient(135deg,#020617,#0f172a,#111827)] px-4 transition-opacity duration-700 ${
         fadingOut ? 'opacity-0' : 'opacity-100'
       }`}
-      aria-label="Chargement de Lupeti"
+      aria-label="Lupeti yükleniyor"
       role="status"
     >
       <div className="relative w-full max-w-md overflow-hidden rounded-3xl border border-white/15 bg-white/10 p-8 text-white shadow-[0_35px_80px_rgba(2,6,23,0.55)] backdrop-blur-xl">
@@ -61,13 +61,13 @@ export function SiteEntrySplash() {
         </div>
 
         <p className="text-center text-[11px] uppercase tracking-[0.32em] text-cyan-100/90">
-          Lupeti Shop
+          Lupeti Mağazası
         </p>
         <h2 className="mt-2 text-center text-3xl font-extrabold tracking-wide">
-          Bienvenue
+          Hoş geldiniz
         </h2>
         <p className="mt-3 text-center text-sm text-slate-200">
-          Preparation de votre univers animaux et e-commerce...
+          Evcil dostlarınız için mağazamız hazırlanıyor…
         </p>
 
         <div className="mt-7 h-1.5 overflow-hidden rounded-full bg-white/15">

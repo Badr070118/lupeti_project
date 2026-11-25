@@ -4,7 +4,7 @@ export function cn(
   return classes.filter(Boolean).join(' ');
 }
 
-export function formatCurrency(value: number, currency = 'EUR', locale?: string) {
+export function formatCurrency(value: number, currency = 'TRY', locale = 'tr-TR') {
   return new Intl.NumberFormat(locale, {
     style: 'currency',
     currency,

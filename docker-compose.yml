@@ -41,16 +41,16 @@ services:
       args:
         NEXT_PUBLIC_API_URL: /api/proxy
         NEXT_PUBLIC_APP_URL: http://localhost:3001
-        NEXT_PUBLIC_SUPPORTED_LOCALES: fr
-        NEXT_PUBLIC_DEFAULT_LOCALE: fr
+        NEXT_PUBLIC_SUPPORTED_LOCALES: tr
+        NEXT_PUBLIC_DEFAULT_LOCALE: tr
     restart: unless-stopped
     environment:
       NODE_ENV: production
       NEXT_PUBLIC_API_URL: /api/proxy
       API_INTERNAL_URL: http://api:3000
       NEXT_PUBLIC_APP_URL: http://localhost:3001
-      NEXT_PUBLIC_SUPPORTED_LOCALES: fr
-      NEXT_PUBLIC_DEFAULT_LOCALE: fr
+      NEXT_PUBLIC_SUPPORTED_LOCALES: tr
+      NEXT_PUBLIC_DEFAULT_LOCALE: tr
     ports:
       - '3001:3001'
     depends_on:

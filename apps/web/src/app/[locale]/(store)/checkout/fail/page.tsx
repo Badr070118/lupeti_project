@@ -11,8 +11,8 @@ export async function generateMetadata({
 }: CheckoutFailProps): Promise<Metadata> {
   const { locale } = await params;
   return buildMetadata({
-    title: 'Payment failed | Lupeti',
-    description: 'Something went wrong with your PayTR payment attempt.',
+    title: 'Ödeme başarısız | Lupeti',
+    description: 'PayTR ile ödeme sırasında bir sorun oluştu.',
     path: `/${locale}/checkout/fail`,
   });
 }
@@ -24,8 +24,7 @@ export default async function CheckoutFailPage() {
     <div className="mx-auto max-w-xl space-y-4 rounded-3xl border border-slate-100 bg-white p-10 text-center shadow-sm">
       <h1 className="text-3xl font-bold text-rose-600">{t('fail')}</h1>
       <p className="text-sm text-slate-600">
-        The payment could not be completed. Please return to the checkout page
-        and try again with a different card or method.
+        Ödeme tamamlanamadı. Ödeme sayfasına dönüp farklı bir kartla veya başka bir yöntemle tekrar deneyin.
       </p>
     </div>
   );

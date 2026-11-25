@@ -22,7 +22,7 @@ export async function generateMetadata({
   const { locale, slug } = await params;
   return buildMetadata({
     title: `Category: ${slug} | ${env.appName}`,
-    description: `Browse ${slug} essentials from Lupeti.`,
+    description: `Lupeti’de evcil dostunuz için bu kategorideki ürünleri keşfedin.`,
     path: `/${locale}/category/${slug}`,
   });
 }

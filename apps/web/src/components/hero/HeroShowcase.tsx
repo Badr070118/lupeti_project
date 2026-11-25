@@ -7,7 +7,7 @@ export function HeroShowcase() {
     <section className="relative w-full aspect-[43/24] overflow-hidden rounded-[32px] shadow-[0_20px_60px_rgba(15,23,42,0.18)]">
       <Image
         src="/images/hero/lupeti_homepage2.jpeg"
-        alt="Lupeti homepage hero"
+        alt="Lupeti ana sayfa görseli"
         fill
         priority
         quality={100}

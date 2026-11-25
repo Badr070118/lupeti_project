@@ -24,8 +24,8 @@ export async function generateMetadata({
   const product = await productService.get(slug);
   if (!product) {
     return buildMetadata({
-      title: `Product unavailable | ${env.appName}`,
-      description: 'This recipe is currently unavailable.',
+      title: `Ürün kullanılamıyor | ${env.appName}`,
+      description: 'Bu ürün şu anda satışta değil.',
       path: `/${locale}/product/${slug}`,
     });
   }
@@ -62,10 +62,10 @@ export default async function ProductPage({ params }: ProductPageProps) {
         <section className="space-y-4">
           <div>
             <p className="text-sm uppercase tracking-wide text-slate-400">
-              {t('related.eyebrow', { default: 'Keep browsing' })}
+              {t('related.eyebrow', { default: 'Keşfetmeye devam edin' })}
             </p>
             <h2 className="text-2xl font-semibold text-slate-900">
-              {t('related.title', { default: 'Related products' })}
+              {t('related.title', { default: 'Benzer ürünler' })}
             </h2>
           </div>
           <ProductGrid products={relatedProducts} />

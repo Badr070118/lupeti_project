@@ -128,13 +128,13 @@ export function ProductDetails({ product }: ProductDetailsProps) {
                 .writeText(url)
                 .then(() =>
                   showToast({
-                    title: t('shareSuccess', { default: 'Link copied to clipboard' }),
+                    title: t('shareSuccess', { default: 'Bağlantı panoya kopyalandı.' }),
                     variant: 'success',
                   }),
                 )
                 .catch(() =>
                   showToast({
-                    title: t('shareError', { default: 'Unable to copy link' }),
+                    title: t('shareError', { default: 'Bağlantı kopyalanamadı.' }),
                     variant: 'error',
                   }),
                 );

@@ -8,7 +8,7 @@ export default function BrandCarousel() {
     <section className="rounded-3xl border border-slate-100 bg-white py-10 shadow-sm">
       <div className="mx-auto max-w-6xl px-6">
         <h2 className="text-center text-xl font-semibold text-slate-900">
-          Nos marques partenaires
+          İş ortağı markalarımız
         </h2>
       </div>
       <div className="mt-8 overflow-hidden">

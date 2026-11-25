@@ -17,9 +17,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = buildMetadata({
-  title: 'Nourri | Conscious nutrition for pets',
+  title: 'Lupeti | Evcil hayvan ürünleri',
   description:
-    'Nourri is a multilingual pet commerce experience for croquettes, accessories, and playful rituals.',
+    'Kedi ve köpekler için mama, ödül maması ve aksesuarları Lupeti’de keşfedin.',
   path: '/',
 });
 
@@ -29,7 +29,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" data-theme="light" suppressHydrationWarning>
+    <html lang="tr" data-theme="light" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         suppressHydrationWarning

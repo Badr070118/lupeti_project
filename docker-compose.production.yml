@@ -37,8 +37,8 @@ services:
       args:
         NEXT_PUBLIC_API_URL: /api/proxy
         NEXT_PUBLIC_APP_URL: ${PUBLIC_URL:?Set PUBLIC_URL}
-        NEXT_PUBLIC_SUPPORTED_LOCALES: fr
-        NEXT_PUBLIC_DEFAULT_LOCALE: fr
+        NEXT_PUBLIC_SUPPORTED_LOCALES: tr
+        NEXT_PUBLIC_DEFAULT_LOCALE: tr
     restart: unless-stopped
     environment:
       NODE_ENV: production

@@ -6,14 +6,14 @@ const PAYMENT_ITEMS = [
   { key: 'mastercard', label: 'Mastercard', src: '/payments/mastercard.svg' },
   { key: 'amex', label: 'American Express', src: '/payments/amex.svg' },
   { key: 'paypal', label: 'PayPal', src: '/payments/paypal.svg' },
-  { key: 'cash-on-delivery', label: 'Cash on delivery', src: '/payments/cashondelivery.jpg' },
+  { key: 'cash-on-delivery', label: 'Kapıda ödeme', src: '/payments/cashondelivery.jpg' },
 ] as const;
 
 export function PaymentMethods() {
   return (
     <section className="mt-10 border-t border-slate-200 pt-6">
       <p className="text-sm font-semibold uppercase tracking-wide text-slate-500">
-        Moyens de paiement
+        Ödeme yöntemleri
       </p>
 
       <div className="mt-4 flex flex-wrap items-center gap-3">

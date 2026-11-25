@@ -42,17 +42,11 @@ async function getSessionUser(req: NextRequest) {
 }
 
 export default async function middleware(req: NextRequest) {
-  if (req.nextUrl.pathname === '/en' || req.nextUrl.pathname === '/tr') {
+  const legacyPath = req.nextUrl.pathname.replace(/^\/(en|fr)(?=\/|$)/, `/${defaultLocale}`);
+  if (legacyPath !== req.nextUrl.pathname) {
     const url = req.nextUrl.clone();
-    url.pathname = '/fr';
-    return NextResponse.redirect(url);
-  }
-
-  const forcedFrenchPath = req.nextUrl.pathname.replace(/^\/(en|tr)(?=\/|$)/, '/fr');
-  if (forcedFrenchPath !== req.nextUrl.pathname) {
-    const url = req.nextUrl.clone();
-    url.pathname = forcedFrenchPath;
-    return NextResponse.redirect(url);
+    url.pathname = legacyPath;
+    return NextResponse.redirect(url, 308);
   }
 
   const locale = resolveLocale(req.nextUrl.pathname) ?? defaultLocale;
@@ -81,7 +75,7 @@ export default async function middleware(req: NextRequest) {
 export const config = {
   matcher: [
     '/',
-    '/(fr)/:path*',
+    '/(tr)/:path*',
     '/((?!_next|_vercel|api|.*\\..*).*)',
   ],
 };

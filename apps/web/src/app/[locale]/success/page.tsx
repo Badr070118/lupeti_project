@@ -40,8 +40,7 @@ export default async function SuccessPage() {
     <div className="mx-auto max-w-xl space-y-4 rounded-3xl border border-slate-100 bg-white p-10 text-center shadow-sm">
       <h1 className="text-3xl font-bold text-emerald-600">{t('success')}</h1>
       <p className="text-sm text-slate-600">
-        PayTR notified us of your successful payment. You can close this tab and
-        return to the shop.
+        PayTR ödeme sonucunu bildirir. Siparişinizin güncel durumunu hesabınızdan takip edebilirsiniz.
       </p>
     </div>
   );

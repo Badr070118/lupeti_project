@@ -39,7 +39,7 @@ type ProductSeed = {
 
 const localImage = (slug: string, title: string, sortOrder = 0) => ({
   url: `/products/${slug}.jpg`,
-  altText: `${title} packaging`,
+  altText: `${title} ambalajı`,
   sortOrder,
 });
 
@@ -93,8 +93,8 @@ async function seedCustomerUser() {
 
 async function seedCatalog() {
   const categories = [
-    { slug: 'dog', name: 'Dog Essentials' },
-    { slug: 'cat', name: 'Cat Comfort' },
+    { slug: 'dog', name: 'Köpek Ürünleri' },
+    { slug: 'cat', name: 'Kedi Ürünleri' },
   ];
 
   for (const category of categories) {
@@ -116,8 +116,8 @@ async function seedCatalog() {
   const products: ProductSeed[] = [
     {
       slug: 'anatolian-lamb-herbs-kibble',
-      title: 'Anatolian Lamb & Herbs Kibble',
-      description: 'Slow-dried lamb croquettes infused with thyme and sage for active dogs.',
+      title: 'Kuzu Etli ve Otlu Köpek Maması',
+      description: 'Hareketli köpekler için kekik ve adaçayıyla tatlandırılmış, yavaş kurutulan kuzu etli kuru mama.',
       priceCents: 18900,
       currency: 'TRY',
       stock: 120,
@@ -127,13 +127,13 @@ async function seedCatalog() {
       discountType: DiscountType.PERCENT,
       discountValue: 15,
       images: [
-        localImage('anatolian-lamb-herbs-kibble', 'Anatolian Lamb & Herbs Kibble'),
+        localImage('anatolian-lamb-herbs-kibble', 'Kuzu Etli ve Otlu Köpek Maması'),
       ],
     },
     {
       slug: 'tender-turkey-puppy-bites',
-      title: 'Tender Turkey Puppy Bites',
-      description: 'Mini bites with DHA and probiotics crafted for growing puppies.',
+      title: 'Hindi Etli Yavru Köpek Lokmaları',
+      description: 'Büyüme çağındaki yavru köpekler için DHA ve probiyotik içeren küçük lokmalar.',
       priceCents: 15900,
       stock: 95,
       categorySlug: 'dog',
@@ -142,59 +142,59 @@ async function seedCatalog() {
       discountType: DiscountType.AMOUNT,
       discountValue: 1500,
       images: [
-        localImage('tender-turkey-puppy-bites', 'Tender Turkey Puppy Bites'),
+        localImage('tender-turkey-puppy-bites', 'Hindi Etli Yavru Köpek Lokmaları'),
       ],
     },
     {
       slug: 'coastal-sardine-crunch',
-      title: 'Coastal Sardine Crunch',
-      description: 'Airy sardine snacks rich in omega oils for shiny coats.',
+      title: 'Çıtır Sardalyalı Ödül Maması',
+      description: 'Parlak tüyler için omega yağları bakımından zengin, hafif sardalyalı ödül maması.',
       priceCents: 9900,
       stock: 140,
       categorySlug: 'cat',
       isFeatured: true,
       images: [
-        localImage('coastal-sardine-crunch', 'Coastal Sardine Crunch'),
+        localImage('coastal-sardine-crunch', 'Çıtır Sardalyalı Ödül Maması'),
       ],
     },
     {
       slug: 'charcoal-digestive-biscuits',
-      title: 'Charcoal Digestive Biscuits',
-      description: 'Crunchy biscuits with charcoal and fennel to soothe tummies.',
+      title: 'Rezene ve Kömürlü Sindirim Bisküvisi',
+      description: 'Hassas midelere yönelik rezene ve kömür içeren çıtır bisküviler.',
       priceCents: 6900,
       stock: 80,
       categorySlug: 'dog',
       images: [
-        localImage('charcoal-digestive-biscuits', 'Charcoal Digestive Biscuits'),
+        localImage('charcoal-digestive-biscuits', 'Rezene ve Kömürlü Sindirim Bisküvisi'),
       ],
     },
     {
       slug: 'highland-salmon-casserole',
-      title: 'Highland Salmon Casserole',
-      description: 'Human-grade salmon and pumpkin casserole for picky cats.',
+      title: 'Somonlu ve Balkabaklı Kedi Güveci',
+      description: 'Seçici kediler için insan tüketimine uygun kalitede somon ve balkabağıyla hazırlanan güveç.',
       priceCents: 21500,
       stock: 60,
       categorySlug: 'cat',
       originalPriceCents: 23900,
       images: [
-        localImage('highland-salmon-casserole', 'Highland Salmon Casserole'),
+        localImage('highland-salmon-casserole', 'Somonlu ve Balkabaklı Kedi Güveci'),
       ],
     },
     {
       slug: 'olive-oil-shine-coat-treats',
-      title: 'Olive Oil Shine Coat Treats',
-      description: 'Functional treats with kelp and cold-pressed olive oil for coat health.',
+      title: 'Zeytinyağlı Tüy Bakımı Ödülü',
+      description: 'Tüy sağlığını desteklemek için deniz yosunu ve soğuk sıkım zeytinyağıyla hazırlanan ödül maması.',
       priceCents: 7500,
       stock: 150,
       categorySlug: 'dog',
       images: [
-        localImage('olive-oil-shine-coat-treats', 'Olive Oil Shine Coat Treats'),
+        localImage('olive-oil-shine-coat-treats', 'Zeytinyağlı Tüy Bakımı Ödülü'),
       ],
     },
     {
       slug: 'fermented-kefir-nibbles',
-      title: 'Fermented Kefir Nibbles',
-      description: 'Crunchy nuggets fermented with kefir cultures to support digestion.',
+      title: 'Fermente Kefirli Çıtır Lokmalar',
+      description: 'Sindirimi desteklemek için kefir kültürleriyle fermente edilen çıtır lokmalar.',
       priceCents: 8500,
       stock: 110,
       categorySlug: 'cat',
@@ -202,40 +202,40 @@ async function seedCatalog() {
       discountValue: 10,
       isFeatured: true,
       images: [
-        localImage('fermented-kefir-nibbles', 'Fermented Kefir Nibbles'),
+        localImage('fermented-kefir-nibbles', 'Fermente Kefirli Çıtır Lokmalar'),
       ],
     },
     {
       slug: 'midnight-herring-supper',
-      title: 'Midnight Herring Supper',
-      description: 'Moist pâté with Baltic herring and chamomile for calm evenings.',
+      title: 'Ringa Balıklı ve Papatyalı Ezme',
+      description: 'Sakin akşamlar için Baltık ringa balığı ve papatyayla hazırlanan yumuşak ezme.',
       priceCents: 17900,
       stock: 70,
       categorySlug: 'cat',
       images: [
-        localImage('midnight-herring-supper', 'Midnight Herring Supper'),
+        localImage('midnight-herring-supper', 'Ringa Balıklı ve Papatyalı Ezme'),
       ],
     },
     {
       slug: 'sun-baked-goat-milk-bites',
-      title: 'Sun-baked Goat Milk Bites',
-      description: 'Protein-rich bites with goat milk and turmeric for sensitive dogs.',
+      title: 'Keçi Sütlü ve Zerdeçallı Lokmalar',
+      description: 'Hassas köpekler için keçi sütü ve zerdeçalla hazırlanan, protein açısından zengin lokmalar.',
       priceCents: 14300,
       stock: 105,
       categorySlug: 'dog',
       images: [
-        localImage('sun-baked-goat-milk-bites', 'Sun-baked Goat Milk Bites'),
+        localImage('sun-baked-goat-milk-bites', 'Keçi Sütlü ve Zerdeçallı Lokmalar'),
       ],
     },
     {
       slug: 'slow-roasted-quail-feast',
-      title: 'Slow Roasted Quail Feast',
-      description: 'Premium quail kibble with cranberries tailored for indoor cats.',
+      title: 'Yavaş Kavrulmuş Bıldırcınlı Kedi Maması',
+      description: 'Evde yaşayan kediler için bıldırcın ve turna yemişi içeren özel kuru mama.',
       priceCents: 20500,
       stock: 90,
       categorySlug: 'cat',
       images: [
-        localImage('slow-roasted-quail-feast', 'Slow Roasted Quail Feast'),
+        localImage('slow-roasted-quail-feast', 'Yavaş Kavrulmuş Bıldırcınlı Kedi Maması'),
       ],
     },
   ];
@@ -308,9 +308,9 @@ async function seedSupportTickets() {
     create: {
       id: '00000000-0000-0000-0000-000000000001',
       email: 'customer@local.test',
-      subject: 'Livraison en retard',
+      subject: 'Teslimat gecikmesi',
       message:
-        'Bonjour, ma commande Lupeti #1001 semble bloquée depuis 48h. Pouvez-vous vérifier ?',
+        'Merhaba, Lupeti #1001 numaralı siparişim 48 saattir ilerlemiyor. Kontrol edebilir misiniz?',
       category: TicketCategory.DELIVERY,
       status: TicketStatus.OPEN,
       userId: null,
@@ -322,7 +322,7 @@ async function seedSupportTickets() {
       ticketId: ticket.id,
       authorId: admin.id,
       authorRole: Role.ADMIN,
-      body: 'Nous vérifions auprès du transporteur et revenons vers vous sous 24h.',
+      body: 'Kargo firmasıyla görüşüp 24 saat içinde size bilgi vereceğiz.',
     },
   });
 }
@@ -331,10 +331,10 @@ async function seedSettings() {
   await prisma.storeSettings.upsert({
     where: { id: '00000000-0000-0000-0000-000000000010' },
     update: {
-      storeName: 'Lupeti Pet Shop',
+      storeName: 'Lupeti',
       supportEmail: supportEmail,
       supportPhone: '+90 212 000 0000',
-      supportAddress: 'Istanbul, TR',
+      supportAddress: 'İstanbul, Türkiye',
       shippingStandardCents: 0,
       shippingExpressCents: 2500,
       currency: 'TRY',
@@ -344,10 +344,10 @@ async function seedSettings() {
     },
     create: {
       id: '00000000-0000-0000-0000-000000000010',
-      storeName: 'Lupeti Pet Shop',
+      storeName: 'Lupeti',
       supportEmail: supportEmail,
       supportPhone: '+90 212 000 0000',
-      supportAddress: 'Istanbul, TR',
+      supportAddress: 'İstanbul, Türkiye',
       shippingStandardCents: 0,
       shippingExpressCents: 2500,
       currency: 'TRY',

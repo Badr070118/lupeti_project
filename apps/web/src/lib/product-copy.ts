@@ -94,44 +94,44 @@ const productCopy: ProductCopyMap = {
   },
   tr: {
     'anatolian-lamb-herbs-kibble': {
-      title: 'Anadolu kuzu & ot mama',
-      description: 'Aktif dostlar için kekik ve adaçayı ile fırınlanmış kuzu kroket.',
+      title: 'Kuzu Etli ve Otlu Köpek Maması',
+      description: 'Hareketli köpekler için kekik ve adaçayıyla tatlandırılmış, yavaş kurutulan kuzu etli kuru mama.',
     },
     'tender-turkey-puppy-bites': {
-      title: 'Hassas hindi yavru lokması',
-      description: 'Büyüyen yavrulara uygun DHA ve probiyotik destekli mini taneler.',
+      title: 'Hindi Etli Yavru Köpek Lokmaları',
+      description: 'Büyüme çağındaki yavru köpekler için DHA ve probiyotik içeren küçük lokmalar.',
     },
     'coastal-sardine-crunch': {
-      title: 'Kıyı sardalya çıtırı',
-      description: 'Parlak tüyler için omega zengini sardalya atıştırmalıkları.',
+      title: 'Çıtır Sardalyalı Ödül Maması',
+      description: 'Parlak tüyler için omega yağları bakımından zengin, hafif sardalyalı ödül maması.',
     },
     'charcoal-digestive-biscuits': {
-      title: 'Karbonlu sindirim bisküvisi',
-      description: 'Hassas mideleri yatıştıran rezene ve kömürlü bisküviler.',
+      title: 'Rezene ve Kömürlü Sindirim Bisküvisi',
+      description: 'Hassas midelere yönelik rezene ve kömür içeren çıtır bisküviler.',
     },
     'highland-salmon-casserole': {
-      title: 'Dağ somon güveci',
-      description: 'Seçici kedilere özel somon ve balkabaklı gurme güveç.',
+      title: 'Somonlu ve Balkabaklı Kedi Güveci',
+      description: 'Seçici kediler için insan tüketimine uygun kalitede somon ve balkabağıyla hazırlanan güveç.',
     },
     'olive-oil-shine-coat-treats': {
-      title: 'Zeytinyağlı parlaklık ödülü',
-      description: 'Tüy sağlığı için soğuk sıkım zeytinyağı ve yosunlu fonksiyonel ödül.',
+      title: 'Zeytinyağlı Tüy Bakımı Ödülü',
+      description: 'Tüy sağlığını desteklemek için deniz yosunu ve soğuk sıkım zeytinyağıyla hazırlanan ödül maması.',
     },
     'fermented-kefir-nibbles': {
-      title: 'Fermente kefir lokmaları',
-      description: 'Sindirim sistemini destekleyen kefir kültürlü çıtır lokmalar.',
+      title: 'Fermente Kefirli Çıtır Lokmalar',
+      description: 'Sindirimi desteklemek için kefir kültürleriyle fermente edilen çıtır lokmalar.',
     },
     'midnight-herring-supper': {
-      title: 'Gece yarısı ringa menüsü',
-      description: 'Baltık ringası ve papatya ile huzurlu akşamlar sağlayan püre.',
+      title: 'Ringa Balıklı ve Papatyalı Ezme',
+      description: 'Sakin akşamlar için Baltık ringa balığı ve papatyayla hazırlanan yumuşak ezme.',
     },
     'sun-baked-goat-milk-bites': {
-      title: 'Güneşte kurutulmuş keçi sütlü ısırık',
-      description: 'Hassas köpekler için keçi sütlü ve zerdeçallı proteinli lokmalar.',
+      title: 'Keçi Sütlü ve Zerdeçallı Lokmalar',
+      description: 'Hassas köpekler için keçi sütü ve zerdeçalla hazırlanan, protein açısından zengin lokmalar.',
     },
     'slow-roasted-quail-feast': {
-      title: 'Yavaş kavrulmuş bıldırcın şöleni',
-      description: 'Ev kedilerine özel kızılcık destekli bıldırcın maması.',
+      title: 'Yavaş Kavrulmuş Bıldırcınlı Kedi Maması',
+      description: 'Evde yaşayan kediler için bıldırcın ve turna yemişi içeren özel kuru mama.',
     },
   },
 };
@@ -146,3 +146,21 @@ export function getProductCopy(product: Product, locale: string) {
   };
 }
 
+
+// Existing order snapshots keep their stored title and display the known Turkish equivalent.
+const historicalOrderTitles = new Map([
+  ['Anatolian Lamb & Herbs Kibble', productCopy.tr['anatolian-lamb-herbs-kibble'].title],
+  ['Tender Turkey Puppy Bites', productCopy.tr['tender-turkey-puppy-bites'].title],
+  ['Coastal Sardine Crunch', productCopy.tr['coastal-sardine-crunch'].title],
+  ['Charcoal Digestive Biscuits', productCopy.tr['charcoal-digestive-biscuits'].title],
+  ['Highland Salmon Casserole', productCopy.tr['highland-salmon-casserole'].title],
+  ['Olive Oil Shine Coat Treats', productCopy.tr['olive-oil-shine-coat-treats'].title],
+  ['Fermented Kefir Nibbles', productCopy.tr['fermented-kefir-nibbles'].title],
+  ['Midnight Herring Supper', productCopy.tr['midnight-herring-supper'].title],
+  ['Sun-baked Goat Milk Bites', productCopy.tr['sun-baked-goat-milk-bites'].title],
+  ['Slow Roasted Quail Feast', productCopy.tr['slow-roasted-quail-feast'].title],
+]);
+
+export function orderItemTitle(storedTitle: string) {
+  return historicalOrderTitles.get(storedTitle) ?? storedTitle;
+}
